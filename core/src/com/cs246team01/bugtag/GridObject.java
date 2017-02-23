@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.GridPoint2;
  * The base class for all objects to appear on the grid
  */
 
-public class GridObject {
+abstract public class GridObject {
 
     //data
     private GridPoint2 currentPosition = new GridPoint2();
@@ -37,5 +37,14 @@ public class GridObject {
     //getters
     public GridPoint2 getPosition() { return currentPosition; }
     public int getPriority()   { return priority;        }
+
+    //method for moving the objects
+    public void move(int direction){
+
+
+    }
+
+    //abstract method for drawing
+    abstract void draw();
 
 }
