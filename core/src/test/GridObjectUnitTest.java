@@ -32,7 +32,7 @@ public class GridObjectUnitTest {
         @Test
         public void priority_change() throws Exception {
 
-            GridObject go = new Obstacle();
+            Bug go = new Bug();
             go.setPriority(12);
             assertEquals(12, go.getPriority());
         }

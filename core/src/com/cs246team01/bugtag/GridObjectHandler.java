@@ -1,5 +1,10 @@
 package com.cs246team01.bugtag;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,13 +20,20 @@ public class GridObjectHandler {
     //of the main game
     public GridObjectHandler(){
 
-    //populate grid object list here
+        gridObjects = new ArrayList<GridObject>();
+
+        Texture bugOne = new Texture("yellow_idle.png");
+        Bug playerOne = new Bug(bugOne);
+
+        gridObjects.add(playerOne);
+
+
+
     }
 
     //this is the only method we will call in the render method
     public void run(){
         update();
-        draw();
     }
 
     //this method checks if we should stop the game
@@ -34,13 +46,14 @@ public class GridObjectHandler {
     private void update(){
         //movement code here...
 
-        //then draw everything
-        draw();
+
     }
 
     //keeping it modularized
-    private void draw(){
+    public void draw(SpriteBatch batch){
 
+        for(GridObject g : gridObjects)
+        batch.draw(g.getTexture(), g.getX(), g.getY());
 
     }
 }

@@ -10,12 +10,15 @@ import com.cs246team01.bugtag.GridObjectHandler;
 public class MainGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
+	Texture playerOne;
+
     GridObjectHandler bugGame;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+		playerOne = new Texture("yellow_idle.png");
 		bugGame = new GridObjectHandler();
 	}
 
@@ -27,7 +30,8 @@ public class MainGame extends ApplicationAdapter {
         //this is where we run our game
 		bugGame.run();
 
-		batch.draw(img, 0, 0);
+		//batch.draw(img, 0, 0);
+		bugGame.draw(batch);
 		batch.end();
 	}
 	

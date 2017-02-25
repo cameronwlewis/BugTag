@@ -5,6 +5,7 @@ package com.cs246team01.bugtag;
  */
 
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 
 /**
@@ -15,8 +16,9 @@ import com.badlogic.gdx.math.GridPoint2;
 abstract public class GridObject {
 
     //data
-    private GridPoint2 currentPosition = new GridPoint2();
-    private int priority;
+    protected GridPoint2 currentPosition = new GridPoint2();
+    protected int priority;
+    Texture objectTexture;
 
     //default constructor
     public GridObject() {
@@ -33,10 +35,14 @@ abstract public class GridObject {
     //setters
     public void setPosition(GridPoint2 pos)        { currentPosition = pos; }
     public void setPriority(int myPriority)   { priority = myPriority; }
+    public void setTexture(Texture myTexture) { this.objectTexture = myTexture; }
 
     //getters
     public GridPoint2 getPosition() { return currentPosition; }
     public int getPriority()   { return priority;        }
+    public int getX() { return currentPosition.x; }
+    public int getY() { return currentPosition.y; }
+    public Texture getTexture() { return objectTexture; }
 
     //method for moving the objects
     public void move(int direction) {
