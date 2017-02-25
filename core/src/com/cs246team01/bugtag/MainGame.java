@@ -11,11 +11,18 @@ public class MainGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	Texture playerOne;
+	GameTime timer;
+	float totalTime;
 
     GridObjectHandler bugGame;
 	
 	@Override
 	public void create () {
+		//Since this is a constant (or is it?)
+		//we can just assign a hardcoded value
+		totalTime = 60;
+		timer = new GameTime(totalTime);
+
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 		playerOne = new Texture("yellow_idle.png");
@@ -33,6 +40,11 @@ public class MainGame extends ApplicationAdapter {
 		//batch.draw(img, 0, 0);
 		bugGame.draw(batch);
 		batch.end();
+
+		//run timer
+		timer.run();
+
+		//Display timer pending
 	}
 	
 	@Override
