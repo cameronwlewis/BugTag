@@ -39,8 +39,7 @@ abstract public class GridObject {
     public int getPriority()   { return priority;        }
 
     //method for moving the objects
-    public void move(int direction){
-
+    public void move(int direction) {
 
     }
 
