@@ -16,7 +16,8 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 	float totalTime;
 
     GridObjectHandler bugGame;
-	boolean move;
+	int moveInt;
+
 
 
 	//use this for taggin' them bugs
@@ -34,7 +35,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 		playerOne = new Texture("yellow_idle.png");
 		bugGame = new GridObjectHandler();
 		Gdx.input.setInputProcessor(this);
-		move = false;
+		moveInt = 0;
 	}
 
 	@Override
@@ -43,7 +44,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
         //this is where we run our game
-		bugGame.run(move);
+		bugGame.run(moveInt);
 
 		//batch.draw(img, 0, 0);
 		bugGame.draw(batch);
@@ -55,7 +56,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 		//Display timer pending
 
 		//reset movement
-		move = false;
+		moveInt = 0;
 	}
 	
 	@Override
@@ -73,7 +74,10 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		move = true;
+		if (screenX < Gdx.graphics.getWidth()/2)
+			moveInt = 1;
+		else if (screenX > Gdx.graphics.getWidth()/2)
+			moveInt = 3;
 		return false;
 	}
 

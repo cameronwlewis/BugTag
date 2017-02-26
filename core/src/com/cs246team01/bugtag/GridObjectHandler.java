@@ -32,7 +32,7 @@ public class GridObjectHandler {
     }
 
     //this is the only method we will call in the render method
-    public void run(boolean move) {
+    public void run(int move) {
         update(move);
     }
 
@@ -45,11 +45,25 @@ public class GridObjectHandler {
 
 
     //checks if screen has been tapped and moves the bug
-    private void update(boolean move) {
-        //movement code here...
-        if (move)
-            gridObjects.get(0).moveUp();
 
+    /**************************************
+     * Update(int move)
+     * This method goes through each object in the game and determines which direction
+     * they need to move. It passes in a movement direction which will be determined by a
+     * control pad on the screen
+     *
+     * @param move
+     */
+    private void update(int move) {
+        //movement code here...
+
+        for (GridObject g : gridObjects)
+
+            if (g instanceof Bug) {
+
+                Bug b = (Bug) g;
+                handleMove(b, move);
+            }
 
 
     }
@@ -63,4 +77,23 @@ public class GridObjectHandler {
     }
 
 
+    public void handleMove(Bug b, int moveInt) {
+
+        switch (moveInt) {
+            case 1:
+                b.moveLeft();
+                break;
+            case 2:
+                b.moveUp();
+                break;
+            case 3:
+                b.moveRight();
+                break;
+            case 4:
+                b.moveDown();
+                break;
+        }
+
+
+    }
 }

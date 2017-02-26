@@ -54,7 +54,7 @@ abstract public class GridObject {
 
     /**********************************************************
      * Movement comments:
-     * Using LibGDX, the screen is divided in this manner
+     * Using LibGDX, the screen is divided in this manner (phone is held sideways)
      *
      *      x = 0                                   x = width
      *   y = 0  ---------------------------------------
@@ -97,10 +97,18 @@ abstract public class GridObject {
 
     public void moveLeft(){
 
+        if(this.currentPosition.x > 6)
+            this.currentPosition.x -= Gdx.graphics.getWidth() / MAXSTEPS;
+        else
+            this.hide();
     }
 
     public void moveRight(){
 
+        if(this.currentPosition.x < Gdx.graphics.getWidth() - 6 )
+            this.currentPosition.x += Gdx.graphics.getWidth() / MAXSTEPS;
+        else
+            this.hide();
     }
 
     abstract void hide();
