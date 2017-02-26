@@ -10,15 +10,12 @@ import com.cs246team01.bugtag.GridObjectHandler;
 
 public class MainGame extends ApplicationAdapter implements InputProcessor{
 	SpriteBatch batch;
-	Texture img;
-	Texture playerOne;
+
 	GameTime timer;
 	float totalTime;
 
     GridObjectHandler bugGame;
 	int moveInt;
-
-
 
 	//use this for taggin' them bugs
 	private static final String TAG = "DebugTagger";
@@ -31,11 +28,12 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 		timer = new GameTime(totalTime);
 
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
-		playerOne = new Texture("yellow_idle.png");
+
 		bugGame = new GridObjectHandler();
-		Gdx.input.setInputProcessor(this);
-		moveInt = 0;
+
+        Gdx.input.setInputProcessor(this);
+
+        moveInt = 0;
 	}
 
 	@Override
@@ -62,8 +60,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
-	}
+    }
 
 
 

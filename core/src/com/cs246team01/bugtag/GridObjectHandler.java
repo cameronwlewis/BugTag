@@ -2,11 +2,11 @@ package com.cs246team01.bugtag;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Landon on 2/23/2017.
@@ -23,11 +23,14 @@ public class GridObjectHandler {
 
         gridObjects = new ArrayList<GridObject>();
 
+        Random rand = new Random();
+        boolean isChaser = rand.nextBoolean();
+
         Texture bugOne = new Texture("yellow_idle.png");
-        Bug playerOne = new Bug(bugOne);
+
+        Bug playerOne = new Bug(bugOne, isChaser);
 
         gridObjects.add(playerOne);
-
 
     }
 
