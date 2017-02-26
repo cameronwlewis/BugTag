@@ -5,8 +5,10 @@ package com.cs246team01.bugtag;
  */
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
+
 
 /**
  * Class: Grid Object
@@ -15,6 +17,10 @@ import com.badlogic.gdx.math.GridPoint2;
 
 abstract public class GridObject {
 
+    //use this for taggin' them bugs
+    private static final String TAG = "DebugTagger";
+    private static final int MAXSTEPS = 25;
+
     //data
     protected GridPoint2 currentPosition = new GridPoint2();
     protected int priority;
@@ -22,7 +28,7 @@ abstract public class GridObject {
 
     //default constructor
     public GridObject() {
-        currentPosition.set(0, 0);
+        //currentPosition(0, 0);
         priority = 0;
     }
 
@@ -44,12 +50,59 @@ abstract public class GridObject {
     public int getY() { return currentPosition.y; }
     public Texture getTexture() { return objectTexture; }
 
-    //method for moving the objects
-    public void move(int direction) {
+    //methods for moving the objects
+
+    /**********************************************************
+     * Movement comments:
+     * Using LibGDX, the screen is divided in this manner
+     *
+     *      x = 0                                   x = width
+     *   y = 0  ---------------------------------------
+     *          |                                     |
+     *          |                                     |
+     *          |                                     |
+     *          |
+     *          |
+     *          |
+     *          |------------------------------------- x = width
+     * y = height                                      y = height
+     *
+     * we can create a grid-like movement by determining how many steps the player
+     * will take before hitting the wall and dividing the height/width by that number.
+     * ex. Right movement = ( width / steps ) + current x value;
+     *
+     * When the player reaches the same coordinate as the max width/height, we will hide the bug off
+     * of the screen for a set period of time, then place them back on the edge
+     ***********************************************************************************/
+    public void moveDown() {
+
+        if (this.currentPosition.y < Gdx.graphics.getHeight()-6)
+            this.currentPosition.y += Gdx.graphics.getHeight() / MAXSTEPS;
+        else
+            this.hide();
+
+        //keep track of bug's position
+        Gdx.app.log(TAG, this.getPosition().toString());
+    }
+
+    public void moveUp(){
+        if(this.currentPosition.y > 6)
+            this.currentPosition.y -= Gdx.graphics.getHeight() / MAXSTEPS;
+        else
+            this.hide();
+
+        //keep track of bug's position
+        Gdx.app.log(TAG, this.getPosition().toString());
+    }
+
+    public void moveLeft(){
 
     }
 
-    //abstract method for drawing
-    abstract void draw();
+    public void moveRight(){
+
+    }
+
+    abstract void hide();
 
 }

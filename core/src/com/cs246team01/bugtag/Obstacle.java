@@ -7,8 +7,8 @@ package com.cs246team01.bugtag;
 public class Obstacle extends GridObject {
 
 
-    //for drawing the obstacle
-    public void draw(){
+    //for when an obstacle scrolls off the screen
+    public void hide(){
 
     }
 }

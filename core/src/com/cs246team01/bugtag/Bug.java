@@ -1,5 +1,6 @@
 package com.cs246team01.bugtag;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 
@@ -9,7 +10,10 @@ import java.util.Random;
  * Created by Landon on 2/23/2017.
  */
 
+
 public class Bug extends GridObject {
+
+    private static final String TAG = "DebugTagger";
 
     private boolean isChaser;
 
@@ -25,14 +29,17 @@ public class Bug extends GridObject {
         isChaser = rand.nextBoolean();
 
         this.setTexture(bugImage);
-        currentPosition = new GridPoint2(0,0);
+        //set bug in bottom left corner
+        currentPosition = new GridPoint2(Gdx.graphics.getWidth()- bugImage.getWidth(),
+                                         Gdx.graphics.getHeight()- bugImage.getHeight());
+        //keep track of bug's position
+        Gdx.app.log(TAG, this.getPosition().toString());
     }
 
 
 
-    //for drawing the bug on screen
-    public void draw(){
-
+    //when the bug goes off of the screen
+    public void hide(){
 
     }
 }

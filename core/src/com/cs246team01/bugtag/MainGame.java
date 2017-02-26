@@ -2,17 +2,24 @@ package com.cs246team01.bugtag;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.cs246team01.bugtag.GridObjectHandler;
 
-public class MainGame extends ApplicationAdapter {
+public class MainGame extends ApplicationAdapter implements InputProcessor{
 	SpriteBatch batch;
 	Texture img;
 	Texture playerOne;
 
     GridObjectHandler bugGame;
+	boolean move;
+
+
+	//use this for taggin' them bugs
+	private static final String TAG = "DebugTagger";
+	private String message = "";
 	
 	@Override
 	public void create () {
@@ -20,6 +27,8 @@ public class MainGame extends ApplicationAdapter {
 		img = new Texture("badlogic.jpg");
 		playerOne = new Texture("yellow_idle.png");
 		bugGame = new GridObjectHandler();
+		Gdx.input.setInputProcessor(this);
+		move = false;
 	}
 
 	@Override
@@ -28,11 +37,14 @@ public class MainGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
         //this is where we run our game
-		bugGame.run();
+		bugGame.run(move);
 
 		//batch.draw(img, 0, 0);
 		bugGame.draw(batch);
 		batch.end();
+
+		//reset movement
+		move = false;
 	}
 	
 	@Override
@@ -40,4 +52,48 @@ public class MainGame extends ApplicationAdapter {
 		batch.dispose();
 		img.dispose();
 	}
+
+
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		move = true;
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		return false;
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		return false;
+	}
+
 }
