@@ -101,6 +101,9 @@ abstract public class GridObject {
             this.currentPosition.x -= Gdx.graphics.getWidth() / MAXSTEPS;
         else
             this.hide();
+
+        //keep track of bug's position
+        Gdx.app.log(TAG, this.getPosition().toString());
     }
 
     public void moveRight(){
@@ -109,6 +112,9 @@ abstract public class GridObject {
             this.currentPosition.x += Gdx.graphics.getWidth() / MAXSTEPS;
         else
             this.hide();
+
+        //keep track of bug's position
+        Gdx.app.log(TAG, this.getPosition().toString());
     }
 
     abstract void hide();

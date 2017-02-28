@@ -24,7 +24,8 @@ public class Bug extends GridObject {
         this.setTexture(bugImage);
         //set bug in bottom left corner
 
-        currentPosition = new GridPoint2(Gdx.graphics.getWidth()- bugImage.getWidth(),
+
+        currentPosition = new GridPoint2(Gdx.graphics.getWidth()- 600,
                                              Gdx.graphics.getHeight()- bugImage.getHeight());
 
         //keep track of bug's position
