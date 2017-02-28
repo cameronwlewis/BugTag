@@ -26,11 +26,32 @@ public class GridObjectHandler {
         Random rand = new Random();
         boolean isChaser = rand.nextBoolean();
 
-        Texture bugOne = new Texture("yellow_idle.png");
+        //Player Textures
+        Texture bugOne = new Texture("yellow_idle_large.png");
+        Texture bugTwo = new Texture("red_idle.png");
 
-        Bug playerOne = new Bug(bugOne, isChaser);
+        //Obstacle Textures
+        Texture obstacleOne   = new Texture("lettuce_large.png");
+        Texture obstacleTwo   = new Texture("apple_large.png");
+        Texture obstacleThree = new Texture("bread_large.png");
+        Texture obstacleFour  = new Texture("tomato_large.png");
+        Texture obstacleFive  = new Texture("pineapple.png");
 
-        gridObjects.add(playerOne);
+
+//        Bug playerOne      = new Bug(bugOne, isChaser);
+//        Obstacle lettuce   = new Obstacle(obstacleOne, 1000, 600);
+//        Obstacle apple     = new Obstacle(obstacleTwo, 900, 300);
+//        Obstacle bread     = new Obstacle(obstacleThree, 1500, 400);
+//        Obstacle tomato    = new Obstacle(obstacleFour, 200, 500);
+//        Obstacle pineapple = new Obstacle(obstacleFive, 900, 900);
+
+        //Add objects to the array
+        gridObjects.add(new Bug(bugOne, isChaser));
+        gridObjects.add(new Obstacle(obstacleOne, 1000, 600));
+        gridObjects.add(new Obstacle(obstacleTwo, 900, 300));
+        gridObjects.add(new Obstacle(obstacleThree, 1500, 400));
+        gridObjects.add(new Obstacle(obstacleFour, 200, 500));
+        gridObjects.add(new Obstacle(obstacleFive, 900, 900));
 
     }
 
