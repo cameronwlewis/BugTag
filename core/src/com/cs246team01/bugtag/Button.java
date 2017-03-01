@@ -25,23 +25,28 @@ public class Button extends GridObject {
         buttonId = ID;
         objectTexture = image;
 
+        int button1y = Gdx.graphics.getHeight();
+        int button1x = 0;
+        int button2y = Gdx.graphics.getHeight()/4;
+        int button2x = 0;
+        int button3y = Gdx.graphics.getHeight()/2;
+        int button3x = 0;
+        int button4y = 0;
+        int button4x = 0;
+
         switch(buttonId){
             case 1:
-                currentPosition = new GridPoint2(Gdx.graphics.getWidth()-objectTexture.getWidth(), 0 );
+                currentPosition = new GridPoint2(button1x, button1y);
                 break;
             case 2:
-                currentPosition = new GridPoint2((Gdx.graphics.getWidth()-objectTexture.getWidth()),
-                        objectTexture.getHeight());
-                         break;
+                currentPosition = new GridPoint2(button2x, button2y);
+                 break;
             case 3:
-                currentPosition = new GridPoint2((Gdx.graphics.getWidth()-objectTexture.getWidth()),
-                        objectTexture.getHeight() * 2);
-                        break;
+                currentPosition = new GridPoint2(button3x, button3y);
+                 break;
             case 4:
-                currentPosition = new GridPoint2(Gdx.graphics.getWidth()-objectTexture.getWidth(),
-                        objectTexture.getHeight()* 3);
+                currentPosition = new GridPoint2(button4x, button4y);
                 break;
-
         }
 
     }
