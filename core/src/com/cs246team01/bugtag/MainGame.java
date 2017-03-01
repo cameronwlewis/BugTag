@@ -3,10 +3,14 @@ package com.cs246team01.bugtag;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.cs246team01.bugtag.GridObjectHandler;
+
+import java.util.Map;
+
 
 public class MainGame extends ApplicationAdapter implements InputProcessor{
 	SpriteBatch batch;
@@ -16,6 +20,9 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 
     GridObjectHandler bugGame;
 	int moveInt;
+
+
+
 
 	//use this for taggin' them bugs
 	private static final String TAG = "DebugTagger";
@@ -44,7 +51,6 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
         //this is where we run our game
 		bugGame.run(moveInt);
 
-		//batch.draw(img, 0, 0);
 		bugGame.draw(batch);
 		batch.end();
 
@@ -66,6 +72,8 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
+
 		return false;
 	}
 
