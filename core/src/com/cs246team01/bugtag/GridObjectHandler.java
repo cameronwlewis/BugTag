@@ -2,6 +2,7 @@ package com.cs246team01.bugtag;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.GridPoint2;
@@ -48,15 +49,6 @@ public class GridObjectHandler {
         Texture button6 = new Texture("arrow-left.png");
         Texture button7 = new Texture("arrow-up.png");
         Texture button8 = new Texture("arrow-down.png");
-
-
-
-//        Bug playerOne      = new Bug(bugOne, isChaser);
-//        Obstacle lettuce   = new Obstacle(obstacleOne, 1000, 600);
-//        Obstacle apple     = new Obstacle(obstacleTwo, 900, 300);
-//        Obstacle bread     = new Obstacle(obstacleThree, 1500, 400);
-//        Obstacle tomato    = new Obstacle(obstacleFour, 200, 500);
-//        Obstacle pineapple = new Obstacle(obstacleFive, 900, 900);
 
         //Add objects to the array
         gridObjects.add(new Bug(bugOne, isChaser));
@@ -138,4 +130,24 @@ public class GridObjectHandler {
 
 
     }
+
+//    public void resume() {
+//        Preferences texture = Gdx.app.getPreferences("TEXTURE");
+//
+//        String textureName = texture.getString("TEXTURE","DEFAULT");
+//
+//
+//    }
+//
+//    public void pause() {
+//        Preferences texture = ;
+//
+//        GridObject go = gridObjects.get(0);
+//        Texture saveTexture = go.getTexture();
+//        String textureName = saveTexture.toString();
+//
+//        texture.putString("color",textureName);
+//
+//
+//    }
 }
