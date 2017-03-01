@@ -119,6 +119,18 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 
 	@Override
 	public boolean keyDown(int keycode) {
+		switch (keycode) {
+			case 19: moveInt = 4;//up
+				break;
+			case 20: moveInt = 2;//down
+				break;
+			case 21: moveInt = 1;//left
+				break;
+			case 22: moveInt = 3;//right
+				break;
+			default:
+				break;
+		}
 		return false;
 	}
 

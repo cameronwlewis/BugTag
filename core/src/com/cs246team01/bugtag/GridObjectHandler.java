@@ -18,11 +18,11 @@ public class GridObjectHandler {
     //this holds any object used in game
     private List<GridObject> gridObjects;
 
-    int obstacleWidth = Gdx.graphics.getHeight() / 7 ;
-    int obstacleHeight = Gdx.graphics.getHeight() / 7;
+    int obstacleWidth = Gdx.graphics.getHeight() / 3 ;
+    int obstacleHeight = Gdx.graphics.getHeight() / 3;
 
-    int bugWidth = Gdx.graphics.getHeight()/10;
-    int bugHeight = Gdx.graphics.getHeight()/10;
+    int bugWidth = Gdx.graphics.getHeight()/16;
+    int bugHeight = Gdx.graphics.getHeight()/16;
 
     int buttonSide = Gdx.graphics.getHeight()/4;
 
@@ -44,7 +44,7 @@ public class GridObjectHandler {
         Texture obstacleTwo   = new Texture("apple_large.png");
         Texture obstacleThree = new Texture("bread_large.png");
         Texture obstacleFour  = new Texture("tomato_large.png");
-        Texture obstacleFive  = new Texture("pineapple.png");
+        Texture obstacleFive  = new Texture("orange.png");
 
         //Button textures
         Texture button1 = new Texture("arrow-left.png");
@@ -71,13 +71,13 @@ public class GridObjectHandler {
 
     }
 
-    //this is the only method we will call in the render method
+    //This is the only method we will call in the render method
     public void run(int move) {
         update(move);
     }
 
-    //this method checks if we should stop the game
-    //it returns a 1 if the chaser wins, 2 if the timer runs out;
+    //This method checks if we should stop the game
+    //It returns a 1 if the chaser wins, 2 if the timer runs out;
     // -1 if game is still going
     public int checkWin(boolean chaserWin, int time) {
         if(time <= 0) {
@@ -91,7 +91,8 @@ public class GridObjectHandler {
     }
 
 
-    //checks if screen has been tapped and moves the bug
+
+    //Checks if screen has been tapped and moves the bug
     /**************************************
      * Update(int move)
      * This method goes through each object in the game and determines which direction
@@ -112,7 +113,7 @@ public class GridObjectHandler {
             }
     }
 
-    //keeping it modularized
+    //Keeping it modularized
     public void draw(SpriteBatch batch) {
 
         for (GridObject g : gridObjects) {
