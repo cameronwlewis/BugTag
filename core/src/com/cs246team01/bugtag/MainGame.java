@@ -29,7 +29,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 		Preferences numMovesPrefs = Gdx.app.getPreferences("MOVES");
 		numMoves = numMovesPrefs.getInteger("moves", 0);
 
-		Gdx.app.log(TAG,"The number of moves are" + numMoves);
+		Gdx.app.log(TAG,"The number of moves are " + numMoves);
 
 		//Since this is a constant (or is it?)
 		//we can just assign a hardcoded value
