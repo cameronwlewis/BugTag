@@ -6,14 +6,19 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class MainGame extends ApplicationAdapter implements InputProcessor{
 	private SpriteBatch batch;
 
 	private GameTime timer;
 	private float totalTime;
+	private FreeTypeFontGenerator fontFT;
+	private FreeTypeFontParameter parameter;
+
 	private BitmapFont font;
 
     private GridObjectHandler bugGame;
@@ -37,9 +42,13 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 		//we can just assign a hardcoded value
 		totalTime = 60;
 		timer = new GameTime(totalTime);
-		font = new BitmapFont();
+
+		//font is comic sans and font size is 50 colored red
+		fontFT = new FreeTypeFontGenerator(Gdx.files.internal("comic-sans.ttf"));
+		parameter = new FreeTypeFontParameter();
+		parameter.size = 50;
+		font = fontFT.generateFont(parameter);
 		font.setColor(Color.RED);
-		font.getData().scale(5);
 
 		batch = new SpriteBatch();
 
@@ -63,7 +72,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 		bugGame.draw(batch);
 
 		font.draw(batch, "0:" + timer.getTimeRemaining(),
-				Gdx.graphics.getHeight() - (Gdx.graphics.getWidth()/8),
+				Gdx.graphics.getHeight() - (Gdx.graphics.getWidth()/12),
 				Gdx.graphics.getWidth()/2 );
 
 		batch.end();
