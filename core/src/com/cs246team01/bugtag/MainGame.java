@@ -4,22 +4,25 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.cs246team01.bugtag.GridObjectHandler;
 
 public class MainGame extends ApplicationAdapter implements InputProcessor{
-	SpriteBatch batch;
+	private SpriteBatch batch;
 
-	GameTime timer;
-	float totalTime;
+	private GameTime timer;
+	private float totalTime;
+	private BitmapFont font;
 
-    GridObjectHandler bugGame;
-	int moveInt;
+    private GridObjectHandler bugGame;
+	private int moveInt;
 
 	//TEST PREFERENCES
-	int numMoves = 0;
+	private int numMoves = 0;
 
 	//use this for taggin' them bugs
 	private static final String TAG = "DebugTagger";
@@ -35,6 +38,9 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 		//we can just assign a hardcoded value
 		totalTime = 60;
 		timer = new GameTime(totalTime);
+		font = new BitmapFont();
+		font.setColor(Color.RED);
+		font.getData().scale(5);
 
 		batch = new SpriteBatch();
 
@@ -43,8 +49,6 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
         Gdx.input.setInputProcessor(this);
 
         moveInt = 0;
-
-
 	}
 
 	@Override
@@ -57,12 +61,11 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 
 		//batch.draw(img, 0, 0);
 		bugGame.draw(batch);
+		font.draw(batch, ":" + timer.getTimeRemaining(), Gdx.graphics.getHeight(), Gdx.graphics.getWidth()/2);
 		batch.end();
 
 		//run timer
 		timer.run();
-
-		//Display timer pending
 
 		//reset movement
 		moveInt = 0;
@@ -71,7 +74,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 	@Override
 	public void dispose () {
 		batch.dispose();
-
+		font.dispose();
     }
 
 //	@Override
