@@ -43,7 +43,7 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 		totalTime = 60;
 		timer = new GameTime(totalTime);
 
-		//font is comic sans and font size is 50 colored red
+		//Font is comic sans and font size is 50 colored red
 		fontFT = new FreeTypeFontGenerator(Gdx.files.internal("comic-sans.ttf"));
 		parameter = new FreeTypeFontParameter();
 		parameter.size = 50;
@@ -66,14 +66,29 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 
 		batch.begin();
 
-        //this is where we run our game
+        //This is where we run our game
 		bugGame.run(moveInt);
 
 		bugGame.draw(batch);
 
-		font.draw(batch, "0:" + timer.getTimeRemaining(),
-				Gdx.graphics.getHeight() - (Gdx.graphics.getWidth()/12),
-				Gdx.graphics.getWidth()/2 );
+		//Display timer
+		if(timer.getTimeRemaining() >= 10) {
+			font.draw(batch, "0:" + timer.getTimeRemaining(),
+					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+					Gdx.graphics.getWidth() / 2);
+		} else if (timer.getTimeRemaining() < 10 && timer.getTimeRemaining() > 0) {
+			font.draw(batch, "0:0" + timer.getTimeRemaining(),
+					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+					Gdx.graphics.getWidth() / 2);
+		} else {
+			font.draw(batch, "0:00",
+					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+					Gdx.graphics.getWidth() / 2);
+			font.draw(batch, "TIME UP",
+					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 8),
+					Gdx.graphics.getWidth() / 3);
+		}
+
 
 		batch.end();
 
