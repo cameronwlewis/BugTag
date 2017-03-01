@@ -5,7 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 
 /**
- * Created by Landon on 2/23/2017.
+ * Class:Bug
+ * This class contains the implementation of a bug.
  */
 
 public class Bug extends GridObject {
@@ -24,15 +25,12 @@ public class Bug extends GridObject {
         this.setTexture(bugImage);
         //set bug in bottom left corner
 
-
         currentPosition = new GridPoint2(Gdx.graphics.getWidth()- 600,
                                              Gdx.graphics.getHeight()- bugImage.getHeight());
 
         //keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
     }
-
-
 
     //when the bug goes off of the screen
     public void hide(){

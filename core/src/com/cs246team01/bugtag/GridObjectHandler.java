@@ -1,18 +1,16 @@
 package com.cs246team01.bugtag;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.GridPoint2;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 /**
- * Created by Landon on 2/23/2017.
+ * Class:GridObjectHandler
+ * This class manages all the gridObjects
  */
 
 public class GridObjectHandler {
@@ -23,8 +21,8 @@ public class GridObjectHandler {
     int obstacleWidth = Gdx.graphics.getHeight() / 7 ;
     int obstacleHeight = Gdx.graphics.getHeight() / 7;
 
-    int bugWidth = Gdx.graphics.getHeight()/15;
-    int bugHeight = Gdx.graphics.getHeight()/15;
+    int bugWidth = Gdx.graphics.getHeight()/10;
+    int bugHeight = Gdx.graphics.getHeight()/10;
 
     int buttonSide = Gdx.graphics.getHeight()/4;
 
@@ -81,13 +79,19 @@ public class GridObjectHandler {
     //this method checks if we should stop the game
     //it returns a 1 if the chaser wins, 2 if the timer runs out;
     // -1 if game is still going
-    public int checkWin() {
-        return 0;
+    public int checkWin(boolean chaserWin, int time) {
+        if(time <= 0) {
+            return 2;
+        }
+        else if (chaserWin) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 
 
     //checks if screen has been tapped and moves the bug
-
     /**************************************
      * Update(int move)
      * This method goes through each object in the game and determines which direction
@@ -106,8 +110,6 @@ public class GridObjectHandler {
                 Bug b = (Bug) g;
                 handleMove(b, move);
             }
-
-
     }
 
     //keeping it modularized
@@ -122,8 +124,6 @@ public class GridObjectHandler {
             } else if(g instanceof Obstacle) {
                 batch.draw(g.getTexture(), g.getX(), g.getY(), obstacleWidth, obstacleHeight);
             }
-
-
         }
     }
 
@@ -144,27 +144,5 @@ public class GridObjectHandler {
                 b.moveDown();
                 break;
         }
-
-
     }
-
-//    public void resume() {
-//        Preferences texture = Gdx.app.getPreferences("TEXTURE");
-//
-//        String textureName = texture.getString("TEXTURE","DEFAULT");
-//
-//
-//    }
-//
-//    public void pause() {
-//        Preferences texture = ;
-//
-//        GridObject go = gridObjects.get(0);
-//        Texture saveTexture = go.getTexture();
-//        String textureName = saveTexture.toString();
-//
-//        texture.putString("color",textureName);
-//
-//
-//    }
 }

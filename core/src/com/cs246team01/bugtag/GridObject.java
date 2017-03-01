@@ -1,14 +1,8 @@
 package com.cs246team01.bugtag;
 
-/**
- * Created by Landon on 2/22/2017.
- */
-
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
-
 
 /**
  * Class: Grid Object
@@ -51,7 +45,6 @@ abstract public class GridObject {
     public Texture getTexture() { return objectTexture; }
 
     //methods for moving the objects
-
     /**********************************************************
      * Movement comments:
      * Using LibGDX, the screen is divided in this manner (phone is held sideways)

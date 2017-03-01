@@ -3,6 +3,7 @@ package com.cs246team01.bugtag;
 import com.badlogic.gdx.Gdx;
 
 /**
+ * Class:GameTime
  * For keeping track of time
  */
 

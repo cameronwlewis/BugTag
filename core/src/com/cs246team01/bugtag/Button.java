@@ -5,10 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 
 /**
+ * Class:Button
  * This class will be used to display and implement all 8 buttons
  * for the game. It will have a int ID (1 - 4 for player 1, 5 - 8 for player 2)
  * that we will use to keep track of what button is pushed and how to handle input.
- * Created by Landon on 2/28/2017.
  */
 
 public class Button extends GridObject {
@@ -25,11 +25,11 @@ public class Button extends GridObject {
         buttonId = ID;
         objectTexture = image;
 
-        int buttonx = Gdx.graphics.getWidth() - objectTexture.getWidth();
+        int buttonx = Gdx.graphics.getWidth() - (Gdx.graphics.getHeight()/4);
         int button1y = 0;
-        int button2y = objectTexture.getHeight();
-        int button3y = objectTexture.getHeight() * 2;
-        int button4y = objectTexture.getHeight() * 3;
+        int button2y = Gdx.graphics.getHeight()/4;
+        int button3y = Gdx.graphics.getHeight()/2;
+        int button4y = (3*Gdx.graphics.getHeight())/4;
 
         switch(buttonId){
             case 1:
@@ -47,7 +47,6 @@ public class Button extends GridObject {
         }
 
     }
-
 
     //we do not use this method
     // it is here to satisfy the abstract class
