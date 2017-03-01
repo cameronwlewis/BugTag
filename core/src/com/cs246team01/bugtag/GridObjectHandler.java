@@ -20,6 +20,14 @@ public class GridObjectHandler {
     //this holds any object used in game
     private List<GridObject> gridObjects;
 
+    int obstacleWidth = Gdx.graphics.getHeight() / 7 ;
+    int obstacleHeight = Gdx.graphics.getHeight() / 7;
+
+    int bugWidth = Gdx.graphics.getHeight()/15;
+    int bugHeight = Gdx.graphics.getHeight()/15;
+
+    int buttonSide = Gdx.graphics.getHeight()/4;
+
     //this will be initialized during the create method
     //of the main game
     public GridObjectHandler() {
@@ -105,9 +113,18 @@ public class GridObjectHandler {
     //keeping it modularized
     public void draw(SpriteBatch batch) {
 
-        for (GridObject g : gridObjects)
-            batch.draw(g.getTexture(), g.getX(), g.getY());
+        for (GridObject g : gridObjects) {
+            if(g instanceof Button) {
+                batch.draw(g.getTexture(), g.getX(), g.getY(), buttonSide, buttonSide);
+            } else if (g instanceof Bug)
+            {
+                batch.draw(g.getTexture(), g.getX(), g.getY(), bugWidth, bugHeight);
+            } else if(g instanceof Obstacle) {
+                batch.draw(g.getTexture(), g.getX(), g.getY(), obstacleWidth, obstacleHeight);
+            }
 
+
+        }
     }
 
 
