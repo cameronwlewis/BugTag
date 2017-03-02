@@ -6,19 +6,14 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MainGame extends ApplicationAdapter implements InputProcessor{
 	private SpriteBatch batch;
 
 	private GameTime timer;
 	private float totalTime;
-	private FreeTypeFontGenerator fontFT;
-	private FreeTypeFontParameter parameter;
-
 	private BitmapFont font;
 
     private GridObjectHandler bugGame;
@@ -42,13 +37,9 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 		//we can just assign a hardcoded value
 		totalTime = 60;
 		timer = new GameTime(totalTime);
-
-		//Font is comic sans and font size is 50 colored red
-		fontFT = new FreeTypeFontGenerator(Gdx.files.internal("comic-sans.ttf"));
-		parameter = new FreeTypeFontParameter();
-		parameter.size = 50;
-		font = fontFT.generateFont(parameter);
+		font = new BitmapFont();
 		font.setColor(Color.RED);
+		font.getData().scale(5);
 
 		batch = new SpriteBatch();
 
@@ -66,29 +57,14 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 
 		batch.begin();
 
-        //This is where we run our game
+        //this is where we run our game
 		bugGame.run(moveInt);
 
 		bugGame.draw(batch);
 
-		//Display timer
-		if(timer.getTimeRemaining() >= 10) {
-			font.draw(batch, "0:" + timer.getTimeRemaining(),
-					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
-					Gdx.graphics.getWidth() / 2);
-		} else if (timer.getTimeRemaining() < 10 && timer.getTimeRemaining() > 0) {
-			font.draw(batch, "0:0" + timer.getTimeRemaining(),
-					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
-					Gdx.graphics.getWidth() / 2);
-		} else {
-			font.draw(batch, "0:00",
-					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
-					Gdx.graphics.getWidth() / 2);
-			font.draw(batch, "TIME UP",
-					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 8),
-					Gdx.graphics.getWidth() / 3);
-		}
-
+		font.draw(batch, "" + timer.getTimeRemaining(),
+				Gdx.graphics.getWidth()/2,
+				Gdx.graphics.getHeight()/8);
 
 		batch.end();
 
