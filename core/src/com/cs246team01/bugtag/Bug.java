@@ -18,15 +18,20 @@ public class Bug extends GridObject {
     public Bug(){
     }
 
-    public Bug(Texture bugImage, boolean chaser){
+    public Bug(Texture bugImage, boolean chaser, int playerID){
         //This sets whether the bug will be the chaser randomly
         isChaser = chaser;
 
         this.setTexture(bugImage);
         //set bug in bottom left corner
 
-        currentPosition = new GridPoint2(Gdx.graphics.getWidth()- 600,
-                                             Gdx.graphics.getHeight()- bugImage.getHeight());
+        if (playerID == 1) {
+            currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 6) / 10,
+                    Gdx.graphics.getHeight()/2);
+        }
+        else
+            currentPosition = new GridPoint2((Gdx.graphics.getWidth()* 4) / 10,
+                    Gdx.graphics.getHeight()/2);
 
         //keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
