@@ -57,7 +57,8 @@ public class GridObjectHandler {
         Texture button8 = new Texture("arrow-down.png");
 
         //Add objects to the array
-        gridObjects.add(new Bug(bugOne, isChaser));
+        gridObjects.add(new Bug(bugOne, isChaser, 1));
+        gridObjects.add(new Bug(bugTwo, false, 2));
         gridObjects.add(new Obstacle(obstacleOne, 1000, 600));
         gridObjects.add(new Obstacle(obstacleTwo, 900, 300));
         gridObjects.add(new Obstacle(obstacleThree, 1500, 400));
@@ -67,13 +68,17 @@ public class GridObjectHandler {
         gridObjects.add(new Button(2, button2));
         gridObjects.add(new Button(3, button3));
         gridObjects.add(new Button(4, button4));
+        gridObjects.add(new Button(5,button5));
+        gridObjects.add(new Button(6,button6));
+        gridObjects.add(new Button(7,button7));
+        gridObjects.add(new Button(8,button8));
 
 
     }
 
     //This is the only method we will call in the render method
-    public void run(int move) {
-        update(move);
+    public void run() {
+        update();
     }
 
     //This method checks if we should stop the game
@@ -94,14 +99,13 @@ public class GridObjectHandler {
 
     //Checks if screen has been tapped and moves the bug
     /**************************************
-     * Update(int move)
+     * Update()
      * This method goes through each object in the game and determines which direction
-     * they need to move. It passes in a movement direction which will be determined by a
-     * control pad on the screen
+     * they need to move. Bug movement is determined by the ButtonProcessor class.
      *
-     * @param move
+     *
      */
-    private void update(int move) {
+    private void update() {
         //movement code here...
 
         for (GridObject g : gridObjects)
@@ -109,7 +113,10 @@ public class GridObjectHandler {
             if (g instanceof Bug) {
 
                 Bug b = (Bug) g;
-                handleMove(b, move);
+                if(b.getPlayerID() == 1)
+                    handleMove1(b);
+                else
+                    handleMove2(b);
             }
     }
 
@@ -129,21 +136,60 @@ public class GridObjectHandler {
     }
 
 
-    public void handleMove(Bug b, int moveInt) {
+    public void handleMove1(Bug b) {
 
-        switch (moveInt) {
-            case 1:
-                b.moveLeft();
-                break;
-            case 2:
-                b.moveUp();
-                break;
-            case 3:
-                b.moveRight();
-                break;
-            case 4:
-                b.moveDown();
-                break;
+       if(ButtonProcessor.moveUp1 == true){
+           b.moveUp();
+           ButtonProcessor.moveUp1 = false;
+
+       }
+
+        if(ButtonProcessor.moveDown1 == true){
+            b.moveDown();
+            ButtonProcessor.moveDown1 = false;
         }
+        if(ButtonProcessor.moveLeft1 == true){
+            b.moveLeft();
+            ButtonProcessor.moveLeft1 = false;
+        }
+        if(ButtonProcessor.moveRight1 == true){
+            b.moveRight();
+            ButtonProcessor.moveRight1 = false;
+        }
+
+    }
+
+    //Important Note, Movement is inverted for player two buttons (upButton = moveDown())
+    public void handleMove2(Bug b){
+
+        if(ButtonProcessor.moveUp2 == true){
+            b.moveDown();
+            ButtonProcessor.moveUp2 = false;
+
+        }
+
+        if(ButtonProcessor.moveDown2 == true){
+            b.moveUp();
+            ButtonProcessor.moveDown2 = false;
+        }
+        if(ButtonProcessor.moveLeft2 == true){
+            b.moveRight();
+            ButtonProcessor.moveLeft2 = false;
+        }
+        if(ButtonProcessor.moveRight2 == true){
+            b.moveLeft();
+            ButtonProcessor.moveRight2 = false;
+        }
+    }
+
+    //this takes all of the buttons and places them in a list for the input processor
+    public ArrayList<Button> getButtons(){
+        ArrayList<Button> buttons = new ArrayList<Button>();
+        for (int i = 7; i < gridObjects.size(); i++){
+            Button b = (Button) gridObjects.get(i);
+            buttons.add(b);
+        }
+
+        return buttons;
     }
 }

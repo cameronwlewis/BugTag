@@ -1,23 +1,28 @@
 package com.cs246team01.bugtag;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
-public class MainGame extends ApplicationAdapter implements InputProcessor{
+public class MainGame extends Game{
 	private SpriteBatch batch;
 
 	private GameTime timer;
 	private float totalTime;
+	private FreeTypeFontGenerator fontFT;
+	private FreeTypeFontParameter parameter;
+
 	private BitmapFont font;
 
     private GridObjectHandler bugGame;
-	private int moveInt;
 
 	//TEST PREFERENCES
 	private int numMoves = 0;
@@ -37,42 +42,45 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 		//we can just assign a hardcoded value
 		totalTime = 60;
 		timer = new GameTime(totalTime);
-		font = new BitmapFont();
+
+		//Font is comic sans and font size is 50 colored red
+		fontFT = new FreeTypeFontGenerator(Gdx.files.internal("comic-sans.ttf"));
+		parameter = new FreeTypeFontParameter();
+		parameter.size = 50;
+		font = fontFT.generateFont(parameter);
 		font.setColor(Color.RED);
-		font.getData().scale(5);
 
 		batch = new SpriteBatch();
 
 		bugGame = new GridObjectHandler();
 
-        Gdx.input.setInputProcessor(this);
-
-        moveInt = 0;
+		ButtonProcessor buttonProcessor = new ButtonProcessor(bugGame.getButtons());
+        Gdx.input.setInputProcessor(buttonProcessor);
 	}
 
 	@Override
 	public void render () {
+		super.render();
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.begin();
 
-        //this is where we run our game
-		bugGame.run(moveInt);
+        //This is where we run our game
+		bugGame.run();
 
 		bugGame.draw(batch);
 
-		font.draw(batch, "" + timer.getTimeRemaining(),
-				Gdx.graphics.getWidth()/2,
-				Gdx.graphics.getHeight()/8);
+		//moved timer code into this method
+		displayTime();
+
+
 
 		batch.end();
 
 		//update timer value
 		timer.run();
 
-		//reset movement
-		moveInt = 0;
 	}
 	
 	@Override
@@ -81,7 +89,28 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 		font.dispose();
     }
 
-	@Override
+
+	public void displayTime(){
+		//Display timer
+		if(timer.getTimeRemaining() >= 10) {
+			font.draw(batch, "0:" + timer.getTimeRemaining(),
+					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+					Gdx.graphics.getWidth() / 2);
+		} else if (timer.getTimeRemaining() < 10 && timer.getTimeRemaining() > 0) {
+			font.draw(batch, "0:0" + timer.getTimeRemaining(),
+					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+					Gdx.graphics.getWidth() / 2);
+		} else {
+			font.draw(batch, "0:00",
+					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+					Gdx.graphics.getWidth() / 2);
+			font.draw(batch, "TIME UP",
+					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 8),
+					Gdx.graphics.getWidth() / 3);
+		}
+
+	}
+	/*@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		return false;
 	}
@@ -142,6 +171,6 @@ public class MainGame extends ApplicationAdapter implements InputProcessor{
 	@Override
 	public boolean keyTyped(char character) {
 		return false;
-	}
+	}*/
 
 }
