@@ -21,7 +21,11 @@ public class MainGame extends Game{
     * When various screens are used. This is important to keep track of
     * how to handle touch inputs
     */
-    private int gameState = 0;
+    private static int GAME_NOT_STARTED = 0;
+    private static int GAME_STARTED = 1;
+    private static int GAME_PAUSED = 2;
+    private static int GAME_OVER = 3;
+    private int gameState = GAME_NOT_STARTED;
 
     //Game
     private SpriteBatch batch;
@@ -80,7 +84,7 @@ public class MainGame extends Game{
 
         gameState = buttonProcessor.getGameState();
 
-        if(gameState == 0)
+        if(gameState == GAME_NOT_STARTED)
         {
             //TODO Start button? And background graphics
             welcome.begin();
@@ -89,7 +93,7 @@ public class MainGame extends Game{
 
             welcome.end();
         }
-        else if(gameState == 1)
+        else if(gameState == GAME_STARTED)
         {
             batch.begin();
             //This is where we run our game
@@ -106,11 +110,11 @@ public class MainGame extends Game{
             timer.run();
 
             if(!(timer.getTimeRemaining() > 0)){
-                buttonProcessor.setGameState(3);
+                buttonProcessor.setGameState(GAME_OVER);
             }
 
         }
-        else if (gameState == 2)
+        else if (gameState == GAME_PAUSED)
         {
             batch.begin();
 
@@ -122,7 +126,7 @@ public class MainGame extends Game{
 
             batch.end();
         }
-        else if (gameState == 3)
+        else if (gameState == GAME_OVER)
         {
             batch.begin();
 
@@ -170,7 +174,7 @@ public class MainGame extends Game{
 	}
 
 	public void displayMessage(){
-        if(gameState == 0) {
+        if(gameState == GAME_NOT_STARTED) {
             font.draw(welcome, "BUGTAG!",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5) ,
                     Gdx.graphics.getWidth() / 2 );
@@ -178,14 +182,14 @@ public class MainGame extends Game{
                     Gdx.graphics.getHeight() / 2 ,
                     Gdx.graphics.getWidth() / 4 );
 
-        } else if (gameState == 2) {
+        } else if (gameState == GAME_PAUSED) {
             font.draw(batch, "GAME PAUSED!",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5) ,
                     Gdx.graphics.getWidth() / 3 );
             font.draw(batch, "Press anywhere to resume!",
                     Gdx.graphics.getHeight() / 2 ,
                     Gdx.graphics.getWidth() / 4 );
-        } else if (gameState == 3) {
+        } else if (gameState == GAME_OVER) {
             font.draw(batch, "GAME OVER!",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5) ,
                     Gdx.graphics.getWidth() / 4 );
