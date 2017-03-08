@@ -17,7 +17,7 @@ public class MainGame extends Game{
 
     /*
     * gameState tracks the state of the game.
-    * 0 is start screen, 1 is in gameplay, and 2 could possibly be pause, etc
+    * 0 is start screen, 1 is in gameplay, and 2 is pause, 3 is game over.
     * When various screens are used. This is important to keep track of
     * how to handle touch inputs
     */
@@ -27,7 +27,7 @@ public class MainGame extends Game{
     private SpriteBatch batch;
     private GridObjectHandler bugGame;
     private ButtonProcessor buttonProcessor;
-
+    private int winner = 0;
     //Timer
 	private GameTime timer;
 	private float totalTime;
@@ -104,6 +104,11 @@ public class MainGame extends Game{
 
             //update timer value
             timer.run();
+
+            if(!(timer.getTimeRemaining() > 0)){
+                buttonProcessor.setGameState(3);
+            }
+
         }
         else if (gameState == 2)
         {
@@ -114,6 +119,21 @@ public class MainGame extends Game{
             displayTime();
 
             displayMessage();
+
+            batch.end();
+        }
+        else if (gameState == 3)
+        {
+            batch.begin();
+
+            bugGame.draw(batch);
+
+            displayTime();
+
+            displayMessage();
+
+            //Do something with SharedPrefs,
+            //like setting the high score, etc.
 
             batch.end();
         }
@@ -142,9 +162,10 @@ public class MainGame extends Game{
 					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
 					Gdx.graphics.getWidth() / 2);
 			font.draw(batch, "TIME UP",
-					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 8),
+					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 10),
 					Gdx.graphics.getWidth() / 3);
-		}
+
+        }
 
 	}
 
@@ -164,6 +185,20 @@ public class MainGame extends Game{
             font.draw(batch, "Press anywhere to resume!",
                     Gdx.graphics.getHeight() / 2 ,
                     Gdx.graphics.getWidth() / 4 );
+        } else if (gameState == 3) {
+            font.draw(batch, "GAME OVER!",
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5) ,
+                    Gdx.graphics.getWidth() / 4 );
+            if(winner == 1) {
+                font.draw(batch, "Player 1 won the game!",
+                        Gdx.graphics.getHeight() / 2 ,
+                        Gdx.graphics.getWidth() / 5 );
+            } else if (winner == 2)
+            {
+                font.draw(batch, "Player 2 won the game!",
+                        Gdx.graphics.getHeight() / 2 ,
+                        Gdx.graphics.getWidth() / 5 );
+            }
         }
     }
 

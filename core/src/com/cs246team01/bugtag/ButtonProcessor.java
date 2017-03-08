@@ -22,7 +22,7 @@ public class ButtonProcessor implements InputProcessor{
     public static boolean moveRight2;
     public static boolean moveDown2;
     public static boolean moveUp2;
-    private int gameState;
+    private int gameState = 0;
 
     //this holds all of our button objects
     ArrayList<Button> buttons;
@@ -48,6 +48,7 @@ public class ButtonProcessor implements InputProcessor{
         if(gameState == 0)
         {
             gameState = 1;
+            Gdx.app.log(TAG, "Game started");
         }
         else if (gameState == 1){
 
@@ -72,7 +73,7 @@ public class ButtonProcessor implements InputProcessor{
             {
                 //If touched anywhere except buttons, the game is paused
                 gameState = 2;
-                Gdx.app.log(TAG, "Game started");
+                Gdx.app.log(TAG, "Game paused");
             }
 
             //buttons are backwards from gridObjectHandler, don't know why yet... but it works
@@ -118,7 +119,7 @@ public class ButtonProcessor implements InputProcessor{
         {
             //Once game is paused, touching anywhere resumes the game
             gameState = 1;
-            Gdx.app.log(TAG, "Game paused");
+            Gdx.app.log(TAG, "Game resumed");
         }
 
         return true;
@@ -129,6 +130,10 @@ public class ButtonProcessor implements InputProcessor{
         return gameState;
     }
 
+    public void setGameState(int state)
+    {
+        gameState = state;
+    }
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         return false;
