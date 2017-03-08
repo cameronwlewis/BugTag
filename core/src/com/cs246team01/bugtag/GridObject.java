@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.GridPoint2;
 abstract public class GridObject {
 
     //use this for taggin' them bugs
-    private static final String TAG = "DebugTagger";
+    public static final String TAG = "DebugTagger";
     private static final int MAXSTEPS = 25;
 
     //data
@@ -49,16 +49,16 @@ abstract public class GridObject {
      * Movement comments:
      * Using LibGDX, the screen is divided in this manner (phone is held sideways)
      *
-     *      x = 0                                   x = width
-     *   y = 0  ---------------------------------------
+     *      x = 0                                 x = width,y = height
+     * y = height--------------------------------------
      *          |                                     |
      *          |                                     |
      *          |                                     |
-     *          |
-     *          |
+     *          |                                   O
+     *          |                              home button
      *          |
      *          |------------------------------------- x = width
-     * y = height                                      y = height
+     *     y = 0                                       y = 0
      *
      * we can create a grid-like movement by determining how many steps the player
      * will take before hitting the wall and dividing the height/width by that number.
@@ -67,7 +67,7 @@ abstract public class GridObject {
      * When the player reaches the same coordinate as the max width/height, we will hide the bug off
      * of the screen for a set period of time, then place them back on the edge
      ***********************************************************************************/
-    public void moveDown() {
+    public void moveRight() {
 
         if (this.currentPosition.y < Gdx.graphics.getHeight()-6)
             this.currentPosition.y += Gdx.graphics.getHeight() / MAXSTEPS;
@@ -78,7 +78,7 @@ abstract public class GridObject {
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
-    public void moveUp(){
+    public void moveLeft(){
         if(this.currentPosition.y > 6)
             this.currentPosition.y -= Gdx.graphics.getHeight() / MAXSTEPS;
         else
@@ -88,7 +88,7 @@ abstract public class GridObject {
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
-    public void moveLeft(){
+    public void moveUp(){
 
         if(this.currentPosition.x > 6)
             this.currentPosition.x -= Gdx.graphics.getWidth() / MAXSTEPS;
@@ -99,7 +99,7 @@ abstract public class GridObject {
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
-    public void moveRight(){
+    public void moveDown(){
 
         if(this.currentPosition.x < Gdx.graphics.getWidth() - 6 )
             this.currentPosition.x += Gdx.graphics.getWidth() / MAXSTEPS;

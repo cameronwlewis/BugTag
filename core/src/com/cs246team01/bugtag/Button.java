@@ -1,8 +1,12 @@
 package com.cs246team01.bugtag;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Rectangle;
+
+import org.w3c.dom.css.Rect;
 
 /**
  * Class:Button
@@ -14,6 +18,7 @@ import com.badlogic.gdx.math.GridPoint2;
 public class Button extends GridObject {
 
     private int buttonId;
+    private Rectangle clickArea;
 
 
     public Button(){
@@ -24,6 +29,7 @@ public class Button extends GridObject {
 
         buttonId = ID;
         objectTexture = image;
+
 
         //player 1 buttons
         int buttonx = Gdx.graphics.getWidth() - (Gdx.graphics.getHeight()/4);
@@ -65,6 +71,10 @@ public class Button extends GridObject {
                 break;
         }
 
+
+        //now set the area to be clicked. first two parameters are position, then size
+        clickArea = new Rectangle(currentPosition.x,currentPosition.y,
+                objectTexture.getWidth(),objectTexture.getHeight());
     }
 
     //we do not use this method
@@ -72,4 +82,10 @@ public class Button extends GridObject {
     public void hide(){
 
     }
+
+
+    public Rectangle getClickArea(){
+        return clickArea;
+    }
+
 }
