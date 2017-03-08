@@ -45,7 +45,6 @@ public class Bug extends GridObject {
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
-
     public int getPlayerID() {
         return playerID;
     }

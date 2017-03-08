@@ -95,8 +95,6 @@ public class GridObjectHandler {
         }
     }
 
-
-
     //Checks if screen has been tapped and moves the bug
     /**************************************
      * Update()
@@ -134,7 +132,6 @@ public class GridObjectHandler {
             }
         }
     }
-
 
     public void handleMove1(Bug b) {
 
