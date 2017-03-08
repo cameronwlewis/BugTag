@@ -61,7 +61,7 @@ public class MainGame extends Game{
 		timer = new GameTime(totalTime);
 
 		//Font is comic sans and font size is 50 colored red
-		fontFT = new FreeTypeFontGenerator(Gdx.files.internal("comic-sans.ttf"));
+		fontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/comic-sans.ttf"));
 		parameter = new FreeTypeFontParameter();
 		parameter.size = 50;
 		font = fontFT.generateFont(parameter);
@@ -96,6 +96,7 @@ public class MainGame extends Game{
         else if(gameState == GAME_STARTED)
         {
             batch.begin();
+
             //This is where we run our game
             bugGame.run();
 
@@ -136,6 +137,10 @@ public class MainGame extends Game{
 
             displayMessage();
 
+            //Set winner variable too. The first frame
+            // won't have the result but that should be fine
+
+
             //Do something with SharedPrefs,
             //like setting the high score, etc.
 
@@ -168,7 +173,6 @@ public class MainGame extends Game{
 			font.draw(batch, "TIME UP",
 					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 10),
 					Gdx.graphics.getWidth() / 3);
-
         }
 
 	}
@@ -187,7 +191,7 @@ public class MainGame extends Game{
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5) ,
                     Gdx.graphics.getWidth() / 3 );
             font.draw(batch, "Press anywhere to resume!",
-                    Gdx.graphics.getHeight() / 2 ,
+                    Gdx.graphics.getHeight() / 3 ,
                     Gdx.graphics.getWidth() / 4 );
         } else if (gameState == GAME_OVER) {
             font.draw(batch, "GAME OVER!",
