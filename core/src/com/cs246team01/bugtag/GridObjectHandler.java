@@ -36,25 +36,25 @@ public class GridObjectHandler {
         boolean isChaser = rand.nextBoolean();
 
         //Player Textures
-        Texture bugOne = new Texture("yellow_idle_large.png");
-        Texture bugTwo = new Texture("red_idle.png");
+        Texture bugOne = new Texture("bugs/yellow_idle_large.png");
+        Texture bugTwo = new Texture("bugs/red_idle.png");
 
         //Obstacle Textures
-        Texture obstacleOne   = new Texture("lettuce_large.png");
-        Texture obstacleTwo   = new Texture("apple_large.png");
-        Texture obstacleThree = new Texture("bread_large.png");
-        Texture obstacleFour  = new Texture("tomato_large.png");
-        Texture obstacleFive  = new Texture("orange.png");
+        Texture obstacleOne   = new Texture("obstacles/lettuce_large.png");
+        Texture obstacleTwo   = new Texture("obstacles/apple_large.png");
+        Texture obstacleThree = new Texture("obstacles/bread_large.png");
+        Texture obstacleFour  = new Texture("obstacles/tomato_large.png");
+        Texture obstacleFive  = new Texture("obstacles/orange.png");
 
         //Button textures
-        Texture button1 = new Texture("arrow-left.png");
-        Texture button2 = new Texture("arrow-right.png");
-        Texture button3 = new Texture("arrow-down.png");
-        Texture button4 = new Texture("arrow-up.png");
-        Texture button5 = new Texture("arrow-right.png");
-        Texture button6 = new Texture("arrow-left.png");
-        Texture button7 = new Texture("arrow-up.png");
-        Texture button8 = new Texture("arrow-down.png");
+        Texture button1 = new Texture("buttons/arrow-left.png");
+        Texture button2 = new Texture("buttons/arrow-right.png");
+        Texture button3 = new Texture("buttons/arrow-down.png");
+        Texture button4 = new Texture("buttons/arrow-up.png");
+        Texture button5 = new Texture("buttons/arrow-right.png");
+        Texture button6 = new Texture("buttons/arrow-left.png");
+        Texture button7 = new Texture("buttons/arrow-up.png");
+        Texture button8 = new Texture("buttons/arrow-down.png");
 
         //Add objects to the array
         gridObjects.add(new Bug(bugOne, isChaser, 1));
@@ -95,8 +95,6 @@ public class GridObjectHandler {
         }
     }
 
-
-
     //Checks if screen has been tapped and moves the bug
     /**************************************
      * Update()
@@ -134,7 +132,6 @@ public class GridObjectHandler {
             }
         }
     }
-
 
     public void handleMove1(Bug b) {
 
