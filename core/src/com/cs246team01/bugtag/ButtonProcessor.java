@@ -7,10 +7,6 @@ import java.util.ArrayList;
 
 import static com.cs246team01.bugtag.GridObject.TAG;
 
-/**
- * Created by Landon on 3/7/2017.
- */
-
 public class ButtonProcessor implements InputProcessor{
 
     //these variables will be used for handling user input
@@ -47,11 +43,10 @@ public class ButtonProcessor implements InputProcessor{
 
         if(gameState == 0)
         {
-            gameState = 1;
-            Gdx.app.log(TAG, "Game started");
+            gameState = 4;
+            Gdx.app.log(TAG, "Game in warm up");
         }
         else if (gameState == 1){
-
             int buttonPressed1 = 0;
             int buttonPressed2 = 0;
 

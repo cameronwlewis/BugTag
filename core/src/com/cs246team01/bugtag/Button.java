@@ -1,12 +1,9 @@
 package com.cs246team01.bugtag;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
-
-import org.w3c.dom.css.Rect;
 
 /**
  * Class:Button

@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
+import static com.cs246team01.bugtag.GridObject.TAG;
+
 public class MainGame extends Game{
 
     //Start screen - can possibly remove this. But buttons show up
@@ -25,6 +27,7 @@ public class MainGame extends Game{
     private static int GAME_STARTED = 1;
     private static int GAME_PAUSED = 2;
     private static int GAME_OVER = 3;
+    private static int GAME_WARM_UP = 4;
     private int gameState = GAME_NOT_STARTED;
 
     //Game
@@ -57,7 +60,7 @@ public class MainGame extends Game{
 
 		//Since this is a constant (or is it?)
 		//we can just assign a hardcoded value
-		totalTime = 60;
+		totalTime = 63;
 		timer = new GameTime(totalTime);
 
 		//Font is comic sans and font size is 50 colored red
@@ -92,6 +95,22 @@ public class MainGame extends Game{
             displayMessage();
 
             welcome.end();
+        }else if(gameState == GAME_WARM_UP)
+        {
+            batch.begin();
+
+            bugGame.draw(batch);
+
+            displayTime();
+
+            displayMessage();
+
+            timer.run();
+            if(timer.getTimeRemaining() < 60){
+                buttonProcessor.setGameState(GAME_STARTED);
+            }
+
+            batch.end();
         }
         else if(gameState == GAME_STARTED)
         {
@@ -113,7 +132,7 @@ public class MainGame extends Game{
             if(!(timer.getTimeRemaining() > 0)){
                 buttonProcessor.setGameState(GAME_OVER);
             }
-
+            //Gdx.app.log(TAG, "Time Remaining is " + timer.getTimeRemaining());
         }
         else if (gameState == GAME_PAUSED)
         {
@@ -186,7 +205,16 @@ public class MainGame extends Game{
                     Gdx.graphics.getHeight() / 2 ,
                     Gdx.graphics.getWidth() / 4 );
 
-        } else if (gameState == GAME_PAUSED) {
+        } else if(gameState == GAME_WARM_UP)
+        {
+            font.draw(batch, "Game starts in",
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5) ,
+                    Gdx.graphics.getWidth() / 3 );
+            font.draw(batch, (timer.getTimeRemaining() - 60) + "...",
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12) ,
+                    Gdx.graphics.getWidth() / 4 );
+        }
+        else if (gameState == GAME_PAUSED) {
             font.draw(batch, "GAME PAUSED!",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5) ,
                     Gdx.graphics.getWidth() / 3 );
