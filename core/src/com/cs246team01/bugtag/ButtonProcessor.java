@@ -115,20 +115,19 @@ public class ButtonProcessor implements InputProcessor{
             //Once game is paused, touching anywhere resumes the game
             gameState = 1;
             Gdx.app.log(TAG, "Game resumed");
+        } else if(gameState == 3)
+        {
+            gameState = 4;
+            Gdx.app.log(TAG, "Game restarted");
         }
 
         return true;
     }
 
-    public int getGameState()
-    {
-        return gameState;
-    }
+    public int getGameState() { return gameState; }
 
-    public void setGameState(int state)
-    {
-        gameState = state;
-    }
+    public void setGameState(int state) { gameState = state; }
+
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         return false;

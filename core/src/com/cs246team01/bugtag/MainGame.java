@@ -97,6 +97,12 @@ public class MainGame extends Game{
             welcome.end();
         }else if(gameState == GAME_WARM_UP)
         {
+            //If game is restarted, the timer will be less
+            // than 0 and must be set to 63 again.
+            if(timer.getTimeRemaining() <= 0){
+                timer.setTimeRemaining(63);
+            }
+
             batch.begin();
 
             bugGame.draw(batch);
@@ -158,7 +164,6 @@ public class MainGame extends Game{
 
             //Set winner variable too. The first frame
             // won't have the result but that should be fine
-
 
             //Do something with SharedPrefs,
             //like setting the high score, etc.
@@ -239,6 +244,9 @@ public class MainGame extends Game{
                         Gdx.graphics.getHeight() / 2 ,
                         Gdx.graphics.getWidth() / 5 );
             }
+            font.draw(batch, "Press anywhere to restart!",
+                    Gdx.graphics.getHeight() / 3 ,
+                    Gdx.graphics.getWidth() / 6 );
         }
     }
 

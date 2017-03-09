@@ -20,6 +20,10 @@ public class GameTime {
         return remainingSeconds;
     }
 
+    public void setTimeRemaining(float totalTime){
+        time = totalTime;
+    }
+
     public void run(){
         float deltaTime = Gdx.graphics.getDeltaTime();
 
