@@ -177,11 +177,15 @@ public class MainGame extends Game{
 
 	public void displayTime(){
 		//Display timer
-		if(timer.getTimeRemaining() >= 10) {
-			font.draw(batch, "0:" + timer.getTimeRemaining(),
+		if(timer.getTimeRemaining() >= 60) {
+			font.draw(batch, "0:60",
 					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
 					Gdx.graphics.getWidth() / 2);
-		} else if (timer.getTimeRemaining() < 10 && timer.getTimeRemaining() > 0) {
+		} else if(timer.getTimeRemaining() >= 10) {
+            font.draw(batch, "0:" + timer.getTimeRemaining(),
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+                    Gdx.graphics.getWidth() / 2);
+        } else if (timer.getTimeRemaining() < 10 && timer.getTimeRemaining() > 0) {
 			font.draw(batch, "0:0" + timer.getTimeRemaining(),
 					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
 					Gdx.graphics.getWidth() / 2);
