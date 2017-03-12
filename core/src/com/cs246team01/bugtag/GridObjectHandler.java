@@ -135,21 +135,21 @@ public class GridObjectHandler {
 
     public void handleMove1(Bug b) {
 
-       if(ButtonProcessor.moveUp1 == true){
+       if(ButtonProcessor.moveUp1){
            b.moveUp();
            ButtonProcessor.moveUp1 = false;
 
        }
 
-        if(ButtonProcessor.moveDown1 == true){
+        if(ButtonProcessor.moveDown1){
             b.moveDown();
             ButtonProcessor.moveDown1 = false;
         }
-        if(ButtonProcessor.moveLeft1 == true){
+        if(ButtonProcessor.moveLeft1){
             b.moveLeft();
             ButtonProcessor.moveLeft1 = false;
         }
-        if(ButtonProcessor.moveRight1 == true){
+        if(ButtonProcessor.moveRight1){
             b.moveRight();
             ButtonProcessor.moveRight1 = false;
         }
