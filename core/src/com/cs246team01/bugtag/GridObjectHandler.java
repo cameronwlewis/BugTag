@@ -59,11 +59,11 @@ public class GridObjectHandler {
         //Add objects to the array
         gridObjects.add(new Bug(bugOne, isChaser, 1));
         gridObjects.add(new Bug(bugTwo, false, 2));
-        gridObjects.add(new Obstacle(obstacleOne, 1000, 600));
-        gridObjects.add(new Obstacle(obstacleTwo, 900, 300));
-        gridObjects.add(new Obstacle(obstacleThree, 1500, 400));
-        gridObjects.add(new Obstacle(obstacleFour, 200, 500));
-        gridObjects.add(new Obstacle(obstacleFive, 900, 900));
+        gridObjects.add(new Obstacle(obstacleOne));
+        gridObjects.add(new Obstacle(obstacleTwo));
+        gridObjects.add(new Obstacle(obstacleThree));
+        gridObjects.add(new Obstacle(obstacleFour));
+        gridObjects.add(new Obstacle(obstacleFive));
         gridObjects.add(new Button(1, button1));
         gridObjects.add(new Button(2, button2));
         gridObjects.add(new Button(3, button3));
@@ -90,7 +90,8 @@ public class GridObjectHandler {
         }
         else if (chaserWin) {
             return -1;
-        } else {
+        }
+        else {
             return 0;
         }
     }
@@ -124,10 +125,12 @@ public class GridObjectHandler {
         for (GridObject g : gridObjects) {
             if(g instanceof Button) {
                 batch.draw(g.getTexture(), g.getX(), g.getY(), buttonSide, buttonSide);
-            } else if (g instanceof Bug)
+            }
+            else if (g instanceof Bug)
             {
                 batch.draw(g.getTexture(), g.getX(), g.getY(), bugWidth, bugHeight);
-            } else if(g instanceof Obstacle) {
+            }
+            else if(g instanceof Obstacle) {
                 batch.draw(g.getTexture(), g.getX(), g.getY(), obstacleWidth, obstacleHeight);
             }
         }
@@ -162,7 +165,6 @@ public class GridObjectHandler {
         if(ButtonProcessor.moveUp2 == true){
             b.moveDown();
             ButtonProcessor.moveUp2 = false;
-
         }
 
         if(ButtonProcessor.moveDown2 == true){

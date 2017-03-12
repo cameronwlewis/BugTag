@@ -35,6 +35,7 @@ public class MainGame extends Game{
     private GridObjectHandler bugGame;
     private ButtonProcessor buttonProcessor;
     private int winner = 0;
+
     //Timer
 	private GameTime timer;
 	private float totalTime;
