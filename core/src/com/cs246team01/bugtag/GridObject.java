@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.GridPoint2;
 abstract public class GridObject {
 
     //use this for taggin' them bugs
-    public static final String TAG = "DebugTagger";
+    static final String TAG = "DebugTagger";
     private static final int MAXSTEPS = 25;
 
     //data
