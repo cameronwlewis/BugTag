@@ -70,7 +70,7 @@ abstract public class GridObject {
     public void moveRight() {
 
         if (this.currentPosition.y < Gdx.graphics.getHeight()-6)
-            this.currentPosition.y += Gdx.graphics.getHeight() / MAXSTEPS;
+            this.currentPosition.y += Gdx.graphics.getWidth() / MAXSTEPS;
         else
             this.hide();
 
@@ -80,7 +80,7 @@ abstract public class GridObject {
 
     public void moveLeft(){
         if(this.currentPosition.y > 6)
-            this.currentPosition.y -= Gdx.graphics.getHeight() / MAXSTEPS;
+            this.currentPosition.y -= Gdx.graphics.getWidth() / MAXSTEPS;
         else
             this.hide();
 
