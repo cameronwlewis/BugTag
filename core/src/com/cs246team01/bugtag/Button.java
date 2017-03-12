@@ -68,7 +68,7 @@ public class Button extends GridObject {
 
         //now set the area to be clicked. first two parameters are position, then size
         clickArea = new Rectangle(currentPosition.x,currentPosition.y,
-                objectTexture.getWidth(),objectTexture.getHeight());
+                Gdx.graphics.getHeight()/4 , Gdx.graphics.getHeight()/4);
     }
 
     //we do not use this method
