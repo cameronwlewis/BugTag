@@ -72,6 +72,9 @@ public class MainGame extends Game{
 		fontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/chewy.ttf"));
 		parameter = new FreeTypeFontParameter();
 		parameter.size = 50;
+        parameter.borderColor = Color.BLACK;
+        parameter.borderStraight = true;
+        parameter.borderWidth = 2f;
 		font = fontFT.generateFont(parameter);
 		font.setColor(Color.RED);
 
