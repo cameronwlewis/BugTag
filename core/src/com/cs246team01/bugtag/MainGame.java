@@ -82,6 +82,9 @@ public class MainGame extends Game{
         digitalFontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/digital-dream-skew-narrow.ttf"));
         digitalParameter = new FreeTypeFontParameter();
         digitalParameter.size = 40;
+        digitalParameter.borderColor = Color.BLACK;
+        digitalParameter.borderStraight = true;
+        digitalParameter.borderWidth = 1f;
         digitalFont = digitalFontFT.generateFont(digitalParameter);
         digitalFont.setColor(Color.RED);
 
