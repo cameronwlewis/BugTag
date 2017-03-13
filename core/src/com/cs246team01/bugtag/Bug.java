@@ -16,7 +16,7 @@ public class Bug extends GridObject {
     private boolean isChaser;
 
 
-    //to keep track of player1 and player2 bugs
+    //To keep track of player1 and player2 bugs
     private int playerID;
 
     public Bug(){
@@ -27,7 +27,7 @@ public class Bug extends GridObject {
         isChaser = chaser;
 
         this.setTexture(bugImage);
-        //set bug in bottom left corner
+        //Set bug in bottom left corner
 
         if (playerID == 1) {
             currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 6) / 10,
@@ -40,8 +40,7 @@ public class Bug extends GridObject {
             this.playerID = 2;
         }
 
-
-        //keep track of bug's position
+        //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
@@ -49,7 +48,7 @@ public class Bug extends GridObject {
         return playerID;
     }
 
-    //when the bug goes off of the screen
+    //When the bug goes off of the screen
     public void hide(){
 
     }

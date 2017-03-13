@@ -8,8 +8,14 @@ import java.util.ArrayList;
 import static com.cs246team01.bugtag.GridObject.TAG;
 
 public class ButtonProcessor implements InputProcessor{
+    //Variables for game state tracking
+    private static int GAME_NOT_STARTED = 0;
+    private static int GAME_STARTED = 1;
+    private static int GAME_PAUSED = 2;
+    private static int GAME_OVER = 3;
+    private static int GAME_WARM_UP = 4;
 
-    //these variables will be used for handling user input
+    //These variables will be used for handling user input
     public static boolean moveLeft1;
     public static boolean moveRight1;
     public static boolean moveDown1;
@@ -20,7 +26,7 @@ public class ButtonProcessor implements InputProcessor{
     public static boolean moveUp2;
     private int gameState = 0;
 
-    //this holds all of our button objects
+    //This holds all of our button objects
     ArrayList<Button> buttons;
 
     public ButtonProcessor(ArrayList<Button> buttons, int state){
@@ -41,33 +47,30 @@ public class ButtonProcessor implements InputProcessor{
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-        if(gameState == 0)
-        {
-            gameState = 4;
+        if(gameState == GAME_NOT_STARTED) {
+            //Start game warm up stage
+            gameState = GAME_WARM_UP;
             Gdx.app.log(TAG, "Game in warm up");
         }
-        else if (gameState == 1){
+        else if (gameState == GAME_STARTED){
             int buttonPressed1 = 0;
             int buttonPressed2 = 0;
 
             //check for player 1 pushed buttons
             for (int i = 0; i < 4; i++) {
-
                 if (buttons.get(i).getClickArea().contains(screenX, screenY))
                     buttonPressed1 = i + 1;
             }
 
             //check for player 2 pushed buttons
             for (int i = 4; i < buttons.size(); i++) {
-
                 if (buttons.get(i).getClickArea().contains(screenX, screenY))
                     buttonPressed2 = i + 1;
             }
 
-            if(buttonPressed1 == 0 && buttonPressed2 == 0)
-            {
-                //If touched anywhere except buttons, the game is paused
-                gameState = 2;
+            //If touched anywhere except buttons, the game is paused
+            if(buttonPressed1 == 0 && buttonPressed2 == 0) {
+                gameState = GAME_PAUSED;
                 Gdx.app.log(TAG, "Game paused");
             }
 
@@ -89,7 +92,6 @@ public class ButtonProcessor implements InputProcessor{
                     moveUp1 = true;
                     Gdx.app.log(TAG, "Pressed button 4");
                     break;
-
             }
 
             switch (buttonPressed2) {
@@ -110,14 +112,13 @@ public class ButtonProcessor implements InputProcessor{
                     Gdx.app.log(TAG, "Pressed button 8");
                     break;
             }
-        } else if(gameState == 2)
-        {
+        } else if(gameState == GAME_PAUSED) {
             //Once game is paused, touching anywhere resumes the game
-            gameState = 1;
+            gameState = GAME_STARTED;
             Gdx.app.log(TAG, "Game resumed");
-        } else if(gameState == 3)
-        {
-            gameState = 4;
+        } else if(gameState == GAME_OVER) {
+            //If game is over, touching the screen would restart the game
+            gameState = GAME_WARM_UP;
             Gdx.app.log(TAG, "Game restarted");
         }
 

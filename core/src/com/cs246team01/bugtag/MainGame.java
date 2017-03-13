@@ -49,10 +49,10 @@ public class MainGame extends Game{
     private FreeTypeFontParameter digitalParameter;
     private BitmapFont digitalFont;
 
-	//TEST PREFERENCES
+	//Test Preferences
 	private int numMoves = 0;
 
-	//use this for taggin' them bugs
+	//Use this for tagging bugs
 	private static final String TAG = "DebugTagger";
 
 	@Override

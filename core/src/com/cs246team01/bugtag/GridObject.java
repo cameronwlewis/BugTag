@@ -10,41 +10,40 @@ import com.badlogic.gdx.math.GridPoint2;
  */
 
 abstract public class GridObject {
-
-    //use this for taggin' them bugs
+    //Use this for tagging bugs
     static final String TAG = "DebugTagger";
     private static final int MAXSTEPS = 25;
 
-    //data
+    //Data
     GridPoint2 currentPosition = new GridPoint2();
     private int priority;
     Texture objectTexture;
 
-    //default constructor
+    //Default constructor
     GridObject() {
         //currentPosition(0, 0);
         priority = 0;
     }
 
-    //constructor for setting x & y positions
+    //Constructor for setting x & y positions
     public GridObject(int x, int y, int myPriority) {
         currentPosition.set(x, y);
         priority = myPriority;
     }
 
-    //setters
+    //Setters
     public void setPosition(GridPoint2 pos)        { currentPosition = pos; }
     public void setPriority(int myPriority)   { priority = myPriority; }
     void setTexture(Texture myTexture) { this.objectTexture = myTexture; }
 
-    //getters
+    //Getters
     public GridPoint2 getPosition() { return currentPosition; }
     public int getPriority()   { return priority;        }
     int getX() { return currentPosition.x; }
     int getY() { return currentPosition.y; }
     Texture getTexture() { return objectTexture; }
 
-    //methods for moving the objects
+    //Methods for moving the objects
     /**********************************************************
      * Movement comments:
      * Using LibGDX, the screen is divided in this manner (phone is held sideways)
@@ -74,7 +73,7 @@ abstract public class GridObject {
         else
             this.hide();
 
-        //keep track of bug's position
+        //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
@@ -84,7 +83,7 @@ abstract public class GridObject {
         else
             this.hide();
 
-        //keep track of bug's position
+        //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
@@ -95,7 +94,7 @@ abstract public class GridObject {
         else
             this.hide();
 
-        //keep track of bug's position
+        //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
@@ -106,7 +105,7 @@ abstract public class GridObject {
         else
             this.hide();
 
-        //keep track of bug's position
+        //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 

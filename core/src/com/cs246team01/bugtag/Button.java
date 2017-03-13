@@ -18,7 +18,7 @@ public class Button extends GridObject {
     private Rectangle clickArea;
 
     public Button(){
-        //do not use this constructor
+        //Do not use this constructor
     }
 
     public Button (int ID, Texture image){
@@ -26,13 +26,13 @@ public class Button extends GridObject {
         buttonId = ID;
         objectTexture = image;
 
-        //player 1 buttons
+        //Player 1 buttons
         int buttonx = Gdx.graphics.getWidth() - (Gdx.graphics.getHeight()/4);
         int button1y = 0;
         int button2y = Gdx.graphics.getHeight()/4;
         int button3y = Gdx.graphics.getHeight()/2;
         int button4y = (3*Gdx.graphics.getHeight())/4;
-        //player 2 buttons
+        //Player 2 buttons
         int buttonx2 = 0;
         int button5y = (3*Gdx.graphics.getHeight())/4;
         int button6y = Gdx.graphics.getHeight()/2;
@@ -66,15 +66,14 @@ public class Button extends GridObject {
                 break;
         }
 
-        //now set the area to be clicked. first two parameters are position, then size
+        //Now set the area to be clicked. first two parameters are position, then size
         clickArea = new Rectangle(currentPosition.x,currentPosition.y,
                 Gdx.graphics.getHeight()/4 , Gdx.graphics.getHeight()/4);
     }
 
-    //we do not use this method
-    // it is here to satisfy the abstract class
+    // We do not use this method
+    // It is here to satisfy the abstract class
     public void hide(){
-
     }
 
     public Rectangle getClickArea(){
