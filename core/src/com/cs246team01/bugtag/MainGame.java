@@ -69,7 +69,7 @@ public class MainGame extends Game{
 		timer = new GameTime(totalTime);
 
 		//Font is comic sans and font size is 50 colored red
-		fontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/comic-sans.ttf"));
+		fontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/chewy.ttf"));
 		parameter = new FreeTypeFontParameter();
 		parameter.size = 50;
 		font = fontFT.generateFont(parameter);
