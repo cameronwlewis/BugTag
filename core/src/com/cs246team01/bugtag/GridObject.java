@@ -3,6 +3,7 @@ package com.cs246team01.bugtag;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Class: Grid Object
@@ -12,12 +13,23 @@ import com.badlogic.gdx.math.GridPoint2;
 abstract public class GridObject {
     //Use this for tagging bugs
     static final String TAG = "DebugTagger";
-    private static final int MAXSTEPS = 25;
+    private static final int MAXSTEPS = 40;
 
     //Data
     GridPoint2 currentPosition = new GridPoint2();
     private int priority;
     Texture objectTexture;
+
+    /*This rectangle determines the area that objects can move around in.
+    * if the objects are contained within the rectangle then they can continue moving until
+    * they reach the edge
+    */
+    protected static Rectangle playArea = new Rectangle(Gdx.graphics.getHeight()/4,0,
+            //width
+            Gdx.graphics.getWidth() - 2 * (Gdx.graphics.getHeight()/4) - (Gdx.graphics.getHeight()/24)
+            //height
+            ,Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/16);
+
 
     //Default constructor
     GridObject() {
@@ -66,19 +78,29 @@ abstract public class GridObject {
      * When the player reaches the same coordinate as the max width/height, we will hide the bug off
      * of the screen for a set period of time, then place them back on the edge
      ***********************************************************************************/
+
+    //note: the following method names are from the perspective of bug 1's buttons
+    // ex. moveRight is used for player 1's right button, and player 2's left button
+
+    //this moves objects towards the top of the screen as shown in the diagram
     void moveRight() {
 
-        if (this.currentPosition.y < Gdx.graphics.getHeight()-6)
+        if(playArea.contains(this.currentPosition.x,
+                this.currentPosition.y + Gdx.graphics.getWidth() / MAXSTEPS))
             this.currentPosition.y += Gdx.graphics.getWidth() / MAXSTEPS;
         else
             this.hide();
 
         //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
+        Gdx.app.log(TAG, "Rectangle: " + playArea.toString());
+        Gdx.app.log(TAG, "Rectangle contains bug: " + playArea.contains(this.currentPosition.x ,this.currentPosition.y));
     }
 
+    //moves towards bottom
     void moveLeft(){
-        if(this.currentPosition.y > 6)
+        if(playArea.contains(this.currentPosition.x,
+                this.currentPosition.y - Gdx.graphics.getWidth() / MAXSTEPS))
             this.currentPosition.y -= Gdx.graphics.getWidth() / MAXSTEPS;
         else
             this.hide();
@@ -87,9 +109,11 @@ abstract public class GridObject {
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
+    //move towards player 2's buttons
     void moveUp(){
 
-        if(this.currentPosition.x > 6)
+        if(playArea.contains(this.currentPosition.x - Gdx.graphics.getWidth() / MAXSTEPS,
+                this.currentPosition.y))
             this.currentPosition.x -= Gdx.graphics.getWidth() / MAXSTEPS;
         else
             this.hide();
@@ -98,15 +122,25 @@ abstract public class GridObject {
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
+    //move towards player 1
     void moveDown(){
 
-        if(this.currentPosition.x < Gdx.graphics.getWidth() - 6 )
+        //if the bug will not be moving out of bounds allow it to move
+        if(playArea.contains(this.currentPosition.x + Gdx.graphics.getWidth() / MAXSTEPS,
+                this.currentPosition.y)) {
+
             this.currentPosition.x += Gdx.graphics.getWidth() / MAXSTEPS;
-        else
+
+        }
+        else{
             this.hide();
 
+        }
+
         //Keep track of bug's position
-        Gdx.app.log(TAG, this.getPosition().toString());
+        Gdx.app.log(TAG, "Rectangle: " + playArea.toString());
+        Gdx.app.log(TAG, "Rectangle contains bug: " + playArea.contains(this.currentPosition.x ,this.currentPosition.y));
+        Gdx.app.log(TAG, "Position: " +this.getPosition().toString());
     }
 
     abstract void hide();
