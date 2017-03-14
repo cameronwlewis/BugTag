@@ -12,19 +12,15 @@ public class GameTime {
     private float time;
     private int remainingSeconds;
 
-    public GameTime(float totaltime){
-        time = totaltime;
-    }
+    public GameTime(float totaltime) { time = totaltime; }
 
-    public int getTimeRemaining() {
-        return remainingSeconds;
-    }
+    public int getTimeRemaining() { return remainingSeconds; }
 
-    public void setTimeRemaining(float totalTime){
+    public void setTimeRemaining(float totalTime) {
         time = totalTime;
     }
 
-    public void run(){
+    public void run() {
         float deltaTime = Gdx.graphics.getDeltaTime();
 
         time -= deltaTime;

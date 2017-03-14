@@ -45,10 +45,15 @@ public class MainGame extends Game{
 	private FreeTypeFontParameter parameter;
     private BitmapFont font;
 
-	//TEST PREFERENCES
+    //Digital Font
+    private FreeTypeFontGenerator digitalFontFT;
+    private FreeTypeFontParameter digitalParameter;
+    private BitmapFont digitalFont;
+
+	//Test Preferences
 	private int numMoves = 0;
 
-	//use this for taggin' them bugs
+	//Use this for tagging bugs
 	private static final String TAG = "DebugTagger";
 
 	@Override
@@ -65,11 +70,24 @@ public class MainGame extends Game{
 		timer = new GameTime(totalTime);
 
 		//Font is comic sans and font size is 50 colored red
-		fontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/comic-sans.ttf"));
+		fontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/chewy.ttf"));
 		parameter = new FreeTypeFontParameter();
 		parameter.size = 50;
+        parameter.borderColor = Color.BLACK;
+        parameter.borderStraight = true;
+        parameter.borderWidth = 2f;
 		font = fontFT.generateFont(parameter);
 		font.setColor(Color.RED);
+
+        //Digital font is digital dream
+        digitalFontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/digital-dream-skew-narrow.ttf"));
+        digitalParameter = new FreeTypeFontParameter();
+        digitalParameter.size = 40;
+        digitalParameter.borderColor = Color.BLACK;
+        digitalParameter.borderStraight = true;
+        digitalParameter.borderWidth = 1f;
+        digitalFont = digitalFontFT.generateFont(digitalParameter);
+        digitalFont.setColor(Color.RED);
 
 		batch = new SpriteBatch();
         welcome = new SpriteBatch();
@@ -179,24 +197,25 @@ public class MainGame extends Game{
         welcome.dispose();
 		batch.dispose();
 		font.dispose();
+        digitalFont.dispose();
     }
 
 	public void displayTime(){
 		//Display timer
 		if(timer.getTimeRemaining() >= 60) {
-			font.draw(batch, "0:60",
+			digitalFont.draw(batch, "0:60",
 					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
 					Gdx.graphics.getWidth() / 2);
 		} else if(timer.getTimeRemaining() >= 10) {
-            font.draw(batch, "0:" + timer.getTimeRemaining(),
+            digitalFont.draw(batch, "0:" + timer.getTimeRemaining(),
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
                     Gdx.graphics.getWidth() / 2);
         } else if (timer.getTimeRemaining() < 10 && timer.getTimeRemaining() > 0) {
-			font.draw(batch, "0:0" + timer.getTimeRemaining(),
+            digitalFont.draw(batch, "0:0" + timer.getTimeRemaining(),
 					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
 					Gdx.graphics.getWidth() / 2);
 		} else {
-			font.draw(batch, "0:00",
+            digitalFont.draw(batch, "0:00",
 					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
 					Gdx.graphics.getWidth() / 2);
 			font.draw(batch, "TIME UP",

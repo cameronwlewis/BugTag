@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class GridObjectHandler {
 
-    //this holds any object used in game
+    //This holds any object used in game
     private List<GridObject> gridObjects;
 
     int obstacleWidth = Gdx.graphics.getHeight() / 3 ;
@@ -26,7 +26,7 @@ public class GridObjectHandler {
 
     int buttonSide = Gdx.graphics.getHeight()/4;
 
-    //this will be initialized during the create method
+    //This will be initialized during the create method
     //of the main game
     public GridObjectHandler() {
 
@@ -181,7 +181,7 @@ public class GridObjectHandler {
         }
     }
 
-    //this takes all of the buttons and places them in a list for the input processor
+    //This takes all of the buttons and places them in a list for the input processor
     public ArrayList<Button> getButtons(){
         ArrayList<Button> buttons = new ArrayList<Button>();
         for (int i = 7; i < gridObjects.size(); i++){
