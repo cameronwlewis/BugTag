@@ -25,6 +25,8 @@ public class GridObjectHandler {
     int bugHeight = Gdx.graphics.getHeight()/16;
 
     int buttonSide = Gdx.graphics.getHeight()/4;
+    Bug chaser;
+    Bug evader;
 
     //This will be initialized during the create method
     //of the main game
@@ -36,8 +38,11 @@ public class GridObjectHandler {
         boolean isChaser = rand.nextBoolean();
 
         //Player Textures
-        Texture bugOne = new Texture("bugs/yellow_idle_large.png");
-        Texture bugTwo = new Texture("bugs/red_idle.png");
+        Texture bug1_texture = new Texture("bugs/yellow_idle_large.png");
+        Texture bug2_texture = new Texture("bugs/red_idle.png");
+
+        chaser = new Bug(bug1_texture, isChaser, 1);
+        evader = new Bug(bug2_texture, false, 2);
 
         //Obstacle Textures
         Texture obstacleOne   = new Texture("obstacles/Real_Pear.png");
@@ -57,8 +62,8 @@ public class GridObjectHandler {
         Texture button8 = new Texture("buttons/arrow-down.png");
 
         //Add objects to the array
-        gridObjects.add(new Bug(bugOne, isChaser, 1));
-        gridObjects.add(new Bug(bugTwo, false, 2));
+        gridObjects.add(chaser);
+        gridObjects.add(evader);
         gridObjects.add(new Obstacle(obstacleOne));
         gridObjects.add(new Obstacle(obstacleTwo));
         gridObjects.add(new Obstacle(obstacleThree));
@@ -79,6 +84,14 @@ public class GridObjectHandler {
     //This is the only method we will call in the render method
     public void run() {
         update();
+
+    }
+
+    public Bug getChaser(){
+        return chaser;
+    }
+    public Bug getEvader(){
+        return evader;
     }
 
     //This method checks if we should stop the game
@@ -107,7 +120,7 @@ public class GridObjectHandler {
     private void update() {
         //movement code here...
 
-        for (GridObject g : gridObjects)
+        for (GridObject g : gridObjects) //todo changes to the bug's position are made here
 
             if (g instanceof Bug) {
 
@@ -138,11 +151,10 @@ public class GridObjectHandler {
 
     public void handleMove1(Bug b) {
 
-       if(ButtonProcessor.moveUp1){
-           b.moveUp();
-           ButtonProcessor.moveUp1 = false;
-
-       }
+        if(ButtonProcessor.moveUp1){
+            b.moveUp();
+            ButtonProcessor.moveUp1 = false;
+        }
 
         if(ButtonProcessor.moveDown1){
             b.moveDown();
@@ -162,20 +174,20 @@ public class GridObjectHandler {
     //Important Note, Movement is inverted for player two buttons (upButton = moveDown())
     public void handleMove2(Bug b){
 
-        if(ButtonProcessor.moveUp2 == true){
+        if(ButtonProcessor.moveUp2){
             b.moveDown();
             ButtonProcessor.moveUp2 = false;
         }
 
-        if(ButtonProcessor.moveDown2 == true){
+        if(ButtonProcessor.moveDown2){
             b.moveUp();
             ButtonProcessor.moveDown2 = false;
         }
-        if(ButtonProcessor.moveLeft2 == true){
+        if(ButtonProcessor.moveLeft2){
             b.moveRight();
             ButtonProcessor.moveLeft2 = false;
         }
-        if(ButtonProcessor.moveRight2 == true){
+        if(ButtonProcessor.moveRight2){
             b.moveLeft();
             ButtonProcessor.moveRight2 = false;
         }
