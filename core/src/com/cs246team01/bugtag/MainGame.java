@@ -174,7 +174,7 @@ public class MainGame extends Game{
             timer.run();
 
             if(!(timer.getTimeRemaining() > 0)){
-                buttonProcessor.setGameState(GAME_OVER); //todo: what's the difference between this and the 'gameState' variable?
+                buttonProcessor.setGameState(GAME_OVER); //todo: what's the difference between this and the 'gameState' variable? -Cameron
             }
             //Gdx.app.log(TAG, "Time Remaining is " + timer.getTimeRemaining());
         }

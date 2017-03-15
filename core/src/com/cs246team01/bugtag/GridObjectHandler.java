@@ -120,7 +120,7 @@ public class GridObjectHandler {
     private void update() {
         //movement code here...
 
-        for (GridObject g : gridObjects) //todo changes to the bug's position are made here
+        for (GridObject g : gridObjects)
 
             if (g instanceof Bug) {
 
