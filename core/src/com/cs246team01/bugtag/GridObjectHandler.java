@@ -18,7 +18,7 @@ public class GridObjectHandler {
     //This holds any object used in game
     private List<GridObject> gridObjects;
 
-    int obstacleWidth = Gdx.graphics.getHeight() / 3 ;
+    int obstacleWidth = Gdx.graphics.getHeight() / 3;
     int obstacleHeight = Gdx.graphics.getHeight() / 3;
 
     int bugWidth = Gdx.graphics.getHeight()/16;
@@ -40,11 +40,11 @@ public class GridObjectHandler {
         Texture bugTwo = new Texture("bugs/red_idle.png");
 
         //Obstacle Textures
-        Texture obstacleOne   = new Texture("obstacles/lettuce_large.png");
-        Texture obstacleTwo   = new Texture("obstacles/apple_large.png");
-        Texture obstacleThree = new Texture("obstacles/bread_large.png");
-        Texture obstacleFour  = new Texture("obstacles/tomato_large.png");
-        Texture obstacleFive  = new Texture("obstacles/orange.png");
+        Texture obstacleOne   = new Texture("obstacles/Real_Pear.png");
+        Texture obstacleTwo   = new Texture("obstacles/Real_Apple.png");
+        Texture obstacleThree = new Texture("obstacles/Real_Bread.png");
+        Texture obstacleFour  = new Texture("obstacles/Real_Watermelon.png");
+        Texture obstacleFive  = new Texture("obstacles/Real_Orange.png");
 
         //Button textures
         Texture button1 = new Texture("buttons/arrow-left.png");
