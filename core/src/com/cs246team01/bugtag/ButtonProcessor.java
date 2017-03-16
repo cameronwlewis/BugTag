@@ -125,6 +125,10 @@ class ButtonProcessor implements InputProcessor{
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     int getGameState() { return gameState; }
 
     void setGameState(int state) { gameState = state; }

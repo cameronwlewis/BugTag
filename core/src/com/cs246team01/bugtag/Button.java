@@ -6,24 +6,26 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
- * Class:Button
  * This class will be used to display and implement all 8 buttons
  * for the game. It will have a int ID (1 - 4 for player 1, 5 - 8 for player 2)
  * that we will use to keep track of what button is pushed and how to handle input.
  */
 
-public class Button extends GridObject {
+class Button extends GridObject {
 
-    private int buttonId;
     private Rectangle clickArea;
 
     public Button(){
-        //Do not use this constructor
+        //Do not use this constructor //todo then why do we have it? I'm confused -Cameron
     }
 
-    public Button (int ID, Texture image){
+    /**
+     * This constructor takes the Textures and assigns
+     * @param ID Integers to number each button
+     * @param image Texture to use for buttons
+     */
+    Button(int ID, Texture image){
 
-        buttonId = ID;
         objectTexture = image;
 
         //Player 1 buttons
@@ -39,7 +41,7 @@ public class Button extends GridObject {
         int button7y = Gdx.graphics.getHeight()/4;
         int button8y = 0;
 
-        switch(buttonId){
+        switch(ID){
             case 1:
                 currentPosition = new GridPoint2(buttonx, button1y);
                 break;
@@ -76,7 +78,11 @@ public class Button extends GridObject {
     public void hide(){
     }
 
-    public Rectangle getClickArea(){
+    /**
+     * Getter to obtain the area which can be touched by the user
+     * @return the area able to be touched.
+     */
+    Rectangle getClickArea(){
         return clickArea;
     }
 
