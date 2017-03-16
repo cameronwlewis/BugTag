@@ -31,8 +31,8 @@ class GridObjectHandler {
 
     private int buttonSide = Gdx.graphics.getHeight()/4;
     private boolean randBoolean;
-    private Bug one;
-    private Bug two;
+    private Bug bug1;
+    private Bug bug2;
 
     //bug starting positions
     private GridPoint2 bug1_pos_start;
@@ -47,13 +47,13 @@ class GridObjectHandler {
         Random rand = new Random();
         randBoolean = rand.nextBoolean();
 
-        //Player Textures
+        // Player Textures
         Texture bug1_texture = new Texture("bugs/yellow_idle_large.png");
         Texture bug2_texture = new Texture("bugs/red_idle.png");
 
         //initialize bugs
-        one = new Bug(bug1_texture, randBoolean, 1);
-        two = new Bug(bug2_texture, !randBoolean, 2);
+        bug1 = new Bug(bug1_texture, randBoolean, 1);
+        bug2 = new Bug(bug2_texture, !randBoolean, 2);
 
         //initialize starting positions for use in resetting game
         bug1_pos_start = new GridPoint2((Gdx.graphics.getWidth() * 6) / 10,
@@ -79,8 +79,8 @@ class GridObjectHandler {
         Texture button8 = new Texture("buttons/arrow-down.png");
 
         //Add objects to the array
-        gridObjects.add(one);
-        gridObjects.add(two);
+        gridObjects.add(bug1);
+        gridObjects.add(bug2);
         gridObjects.add(new Obstacle(obstacleOne));
         gridObjects.add(new Obstacle(obstacleTwo));
         gridObjects.add(new Obstacle(obstacleThree));
@@ -97,8 +97,8 @@ class GridObjectHandler {
     }
 
     void resetBugPositions() {
-        one.setPosition(bug1_pos_start);
-        two.setPosition(bug2_pos_start);
+        bug1.setPosition(bug1_pos_start);
+        bug2.setPosition(bug2_pos_start);
     }
 
     //This is the only method we will call in the render method
@@ -108,11 +108,9 @@ class GridObjectHandler {
     }
 
     Bug getBugOne(){
-        return one;
+        return bug1;
     }
-    Bug getBugTwo(){
-        return two;
-    }
+    Bug getBugTwo(){return bug2;}
 
     //This method checks if we should stop the game
     //It returns a 1 if the chaser wins, 2 if the timer runs out;
@@ -191,7 +189,7 @@ class GridObjectHandler {
 
     }
 
-    //Important Note, Movement is inverted for player two buttons (upButton = moveDown())
+    //Important Note, Movement is inverted for player bug2 buttons (upButton = moveDown())
     private void handleMove2(Bug b){
 
         if(ButtonProcessor.moveUp2){

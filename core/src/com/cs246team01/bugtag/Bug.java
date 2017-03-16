@@ -3,6 +3,9 @@ package com.cs246team01.bugtag;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Rectangle;
+
+import org.w3c.dom.css.Rect;
 
 /**
  * Class:Bug
@@ -22,6 +25,9 @@ public class Bug extends GridObject {
     //To keep track of player1 and player2 bugs
     private int playerID;
 
+    // bug/player hit box
+    private static Rectangle bug_hitbox;
+
     public Bug(){
     }
 
@@ -31,6 +37,9 @@ public class Bug extends GridObject {
 
         this.setTexture(bugImage);
         //Set bug in bottom left corner
+
+        makeHitBox(bugImage);
+        // make hit box for bug/player
 
         if (playerID == 1) {
             currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 8) / 10,
@@ -45,6 +54,17 @@ public class Bug extends GridObject {
 
         //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
+    }
+
+    private void makeHitBox(Texture bugImage){
+        float bug_height = bugImage.getHeight();
+        float bug_width  = bugImage.getWidth();
+
+        bug_hitbox = new Rectangle(currentPosition.x, currentPosition.y, bug_width, bug_height);
+    }
+
+    Rectangle getHitBox(){
+        return bug_hitbox;
     }
 
     int getPlayerID() {
