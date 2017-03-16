@@ -9,10 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.GridPoint2;
 
 import static com.cs246team01.bugtag.GridObject.TAG;
 
-public class MainGame extends Game{
+class MainGame extends Game{
 
     //Start screen - can possibly remove this. But buttons show up
     private SpriteBatch welcome;
@@ -35,50 +36,53 @@ public class MainGame extends Game{
     private GridObjectHandler bugGame;
     private ButtonProcessor buttonProcessor;
     private int winner = 0;
+
     //Timer
-	private GameTime timer;
-	private float totalTime;
+    private GameTime timer;
+    private float totalTime;
 
     //Font
-	private FreeTypeFontGenerator fontFT;
-	private FreeTypeFontParameter parameter;
+    private FreeTypeFontGenerator fontFT;
+    private FreeTypeFontParameter parameter;
     private BitmapFont font;
 
-    //Digital Font
+    // Font for timer
     private FreeTypeFontGenerator digitalFontFT;
     private FreeTypeFontParameter digitalParameter;
     private BitmapFont digitalFont;
 
-	//Test Preferences
-	private int numMoves = 0;
+    //Test Preferences
+    private int numMoves = 0;
 
-	//Use this for tagging bugs
-	private static final String TAG = "DebugTagger";
+    //Use this for tagging bugs
+    private static final String TAG = "DebugTagger";
 
-	@Override
-	public void create () {
-		Preferences numMovesPrefs = Gdx.app.getPreferences("MOVES");
-		numMoves = numMovesPrefs.getInteger("moves", 0);
+    @Override
+    public void create () {
+        Preferences numMovesPrefs = Gdx.app.getPreferences("MOVES");
+        numMoves = numMovesPrefs.getInteger("moves", 0);
 
-		//Debugging only - remove
-		Gdx.app.log(TAG,"The number of moves are " + numMoves);
+        //
 
-		//Since this is a constant (or is it?)
-		//we can just assign a hardcoded value
-		totalTime = 63;
-		timer = new GameTime(totalTime);
+        //Debugging only - remove
+        Gdx.app.log(TAG,"The number of moves are " + numMoves);
 
-		//Font is comic sans and font size is 50 colored red
-		fontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/chewy.ttf"));
-		parameter = new FreeTypeFontParameter();
-		parameter.size = 50;
+        //Since this is a constant (or is it?)
+        //we can just assign a hardcoded value
+        totalTime = 63;
+        timer = new GameTime(totalTime);
+
+        //Font is comic sans and font size is 50 colored red
+        fontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/chewy.ttf"));
+        parameter = new FreeTypeFontParameter();
+        parameter.size = 50;
         parameter.borderColor = Color.BLACK;
         parameter.borderStraight = true;
         parameter.borderWidth = 2f;
-		font = fontFT.generateFont(parameter);
-		font.setColor(Color.RED);
+        font = fontFT.generateFont(parameter);
+        font.setColor(Color.RED);
 
-        //Digital font is digital dream
+        //Timer font is called digital dream
         digitalFontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/digital-dream-skew-narrow.ttf"));
         digitalParameter = new FreeTypeFontParameter();
         digitalParameter.size = 40;
@@ -88,21 +92,23 @@ public class MainGame extends Game{
         digitalFont = digitalFontFT.generateFont(digitalParameter);
         digitalFont.setColor(Color.RED);
 
-		batch = new SpriteBatch();
+        batch = new SpriteBatch();
         welcome = new SpriteBatch();
 
-		bugGame = new GridObjectHandler();
+        bugGame = new GridObjectHandler();
 
-		buttonProcessor = new ButtonProcessor(bugGame.getButtons(), gameState);
+        // gameState is initially set right here
+        buttonProcessor = new ButtonProcessor(bugGame.getButtons(), gameState);
         Gdx.input.setInputProcessor(buttonProcessor);
-	}
+    }
 
-	@Override
-	public void render () {
-		super.render();
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    @Override
+    public void render () {
+        super.render();
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        // gameState is retrieved here
         gameState = buttonProcessor.getGameState();
 
         if(gameState == GAME_NOT_STARTED)
@@ -143,6 +149,21 @@ public class MainGame extends Game{
             //This is where we run our game
             bugGame.run();
 
+            //stuff to check for winner
+            int chaser_pos_x = bugGame.getChaser().currentPosition.x;
+            int chaser_pos_y = bugGame.getChaser().currentPosition.y;
+            int evader_pos_x = bugGame.getEvader().currentPosition.x;
+            int evader_pos_y = bugGame.getEvader().currentPosition.y;
+            boolean isInRange_X = Math.abs(chaser_pos_x - evader_pos_x) <= 7;
+            boolean isInRange_Y = Math.abs(chaser_pos_y - evader_pos_y) <= 44;
+
+            if (isInRange_X && isInRange_Y){
+                Gdx.app.log(TAG, "Chaser touched evader! Game over!");
+                isInRange_X = false;
+                isInRange_Y = false;
+                buttonProcessor.setGameState(GAME_OVER);
+            }
+
             bugGame.draw(batch);
 
             //moved timer code into this method
@@ -174,6 +195,8 @@ public class MainGame extends Game{
         {
             batch.begin();
 
+            bugGame.resetBugPositions();
+
             bugGame.draw(batch);
 
             displayTime();
@@ -189,42 +212,41 @@ public class MainGame extends Game{
             batch.end();
         }
 
-	}
-	
-	@Override
-	public void dispose () {
+    }
+
+    @Override
+    public void dispose () {
         welcome.dispose();
-		batch.dispose();
-		font.dispose();
+        batch.dispose();
+        font.dispose();
         digitalFont.dispose();
     }
 
-	public void displayTime(){
-		//Display timer
-		if(timer.getTimeRemaining() >= 60) {
-			digitalFont.draw(batch, "0:60",
-					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
-					Gdx.graphics.getWidth() / 2);
-		} else if(timer.getTimeRemaining() >= 10) {
+    private void displayTime(){
+        //Display timer
+        if(timer.getTimeRemaining() >= 60) {
+            digitalFont.draw(batch, "0:60",
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+                    Gdx.graphics.getWidth() / 2);
+        } else if(timer.getTimeRemaining() >= 10) {
             digitalFont.draw(batch, "0:" + timer.getTimeRemaining(),
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
                     Gdx.graphics.getWidth() / 2);
         } else if (timer.getTimeRemaining() < 10 && timer.getTimeRemaining() > 0) {
             digitalFont.draw(batch, "0:0" + timer.getTimeRemaining(),
-					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
-					Gdx.graphics.getWidth() / 2);
-		} else {
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+                    Gdx.graphics.getWidth() / 2);
+        } else {
             digitalFont.draw(batch, "0:00",
-					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
-					Gdx.graphics.getWidth() / 2);
-			font.draw(batch, "TIME UP",
-					Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 10),
-					Gdx.graphics.getWidth() / 3);
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+                    Gdx.graphics.getWidth() / 2);
+            font.draw(batch, "TIME UP",
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 10),
+                    Gdx.graphics.getWidth() / 3);
         }
+    }
 
-	}
-
-	public void displayMessage(){
+    private void displayMessage(){
         if(gameState == GAME_NOT_STARTED) {
             font.draw(welcome, "BUGTAG!",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5) ,
@@ -254,12 +276,12 @@ public class MainGame extends Game{
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5) ,
                     Gdx.graphics.getWidth() / 4 );
             if(winner == 1) {
-                font.draw(batch, "Player 1 won the game!",
+                font.draw(batch, "Player 1 won the game!", //todo maybe make this say chaser?
                         Gdx.graphics.getHeight() / 2 ,
                         Gdx.graphics.getWidth() / 5 );
             } else if (winner == 2)
             {
-                font.draw(batch, "Player 2 won the game!",
+                font.draw(batch, "Player 2 won the game!", //todo and make this say evader?
                         Gdx.graphics.getHeight() / 2 ,
                         Gdx.graphics.getWidth() / 5 );
             }
@@ -270,3 +292,4 @@ public class MainGame extends Game{
     }
 
 }
+

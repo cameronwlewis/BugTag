@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import static com.cs246team01.bugtag.GridObject.TAG;
 
-public class ButtonProcessor implements InputProcessor{
+class ButtonProcessor implements InputProcessor{
     //Variables for game state tracking
     private static int GAME_NOT_STARTED = 0;
     private static int GAME_STARTED = 1;
@@ -16,20 +16,20 @@ public class ButtonProcessor implements InputProcessor{
     private static int GAME_WARM_UP = 4;
 
     //These variables will be used for handling user input
-    public static boolean moveLeft1;
-    public static boolean moveRight1;
-    public static boolean moveDown1;
-    public static boolean moveUp1;
-    public static boolean moveLeft2;
-    public static boolean moveRight2;
-    public static boolean moveDown2;
-    public static boolean moveUp2;
+    static boolean moveLeft1;
+    static boolean moveRight1;
+    static boolean moveDown1;
+    static boolean moveUp1;
+    static boolean moveLeft2;
+    static boolean moveRight2;
+    static boolean moveDown2;
+    static boolean moveUp2;
     private int gameState = 0;
 
     //This holds all of our button objects
     ArrayList<Button> buttons;
 
-    public ButtonProcessor(ArrayList<Button> buttons, int state){
+    ButtonProcessor(ArrayList<Button> buttons, int state){
         moveLeft1 = false;
         moveRight1 = false;
         moveDown1 = false;
@@ -125,9 +125,9 @@ public class ButtonProcessor implements InputProcessor{
         return true;
     }
 
-    public int getGameState() { return gameState; }
+    int getGameState() { return gameState; }
 
-    public void setGameState(int state) { gameState = state; }
+    void setGameState(int state) { gameState = state; }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {

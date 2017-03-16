@@ -16,7 +16,7 @@ abstract public class GridObject {
     private static final int MAXSTEPS = 40;
 
     //Data
-    GridPoint2 currentPosition = new GridPoint2();
+    GridPoint2 currentPosition = new GridPoint2(); //todo: this should seriously be private. But a lot of methods depend on this so it might take some work. -Cameron
     private int priority;
     Texture objectTexture;
 
@@ -24,7 +24,7 @@ abstract public class GridObject {
     * if the objects are contained within the rectangle then they can continue moving until
     * they reach the edge
     */
-    protected static Rectangle playArea = new Rectangle(Gdx.graphics.getHeight()/4,0,
+    private static Rectangle playArea = new Rectangle(Gdx.graphics.getHeight()/4,0,
             //width
             Gdx.graphics.getWidth() - 2 * (Gdx.graphics.getHeight()/4) - (Gdx.graphics.getHeight()/24)
             //height
@@ -140,7 +140,7 @@ abstract public class GridObject {
         //Keep track of bug's position
         Gdx.app.log(TAG, "Rectangle: " + playArea.toString());
         Gdx.app.log(TAG, "Rectangle contains bug: " + playArea.contains(this.currentPosition.x ,this.currentPosition.y));
-        Gdx.app.log(TAG, "Position: " +this.getPosition().toString());
+        //Gdx.app.log(TAG, "Position: " +this.getPosition().toString()); todo remove comment
     }
 
     abstract void hide();
