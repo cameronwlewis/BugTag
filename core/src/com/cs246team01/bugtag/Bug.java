@@ -6,7 +6,11 @@ import com.badlogic.gdx.math.GridPoint2;
 
 /**
  * Class:Bug
- * This class contains the implementation of a bug.
+ * This class contains the implementation of a bug, which extends GridObject
+ * A bug will have a specific texture and a player ID. This object will
+ * be controlled by the player. When the bug goes offscreen, it's "hide"
+ * function will keep track of how long it has been there.
+ * getPlayerID Returns which player controls this bug
  */
 
 public class Bug extends GridObject {
@@ -30,12 +34,12 @@ public class Bug extends GridObject {
         //Set bug in bottom left corner
 
         if (playerID == 1) {
-            currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 6) / 10,
+            currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 8) / 10,
                     Gdx.graphics.getHeight()/2);
             this.playerID = 1;
         }
         else {
-            currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 4) / 10,
+            currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 2) / 10,
                     Gdx.graphics.getHeight() / 2);
             this.playerID = 2;
         }
