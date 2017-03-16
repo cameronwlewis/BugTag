@@ -52,8 +52,10 @@ public class GridObjectHandler {
         two = new Bug(bug2_texture, !randBoolean, 2);
 
         //initialize starting positions for use in resetting game
-        bug1_pos_start = new GridPoint2(1076, 540);
-        bug2_pos_start = new GridPoint2(717,540);
+        bug1_pos_start = new GridPoint2((Gdx.graphics.getWidth() * 6) / 10,
+                                        Gdx.graphics.getHeight()/2);
+        bug2_pos_start = new GridPoint2((Gdx.graphics.getWidth() * 4) / 10,
+                                        Gdx.graphics.getHeight()/2);
 
         //Obstacle Textures
         Texture obstacleOne   = new Texture("obstacles/Real_Pear.png");
