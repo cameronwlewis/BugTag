@@ -107,10 +107,9 @@ class GridObjectHandler {
 
     }
 
-    Bug getBugOne(){
-        return bug1;
+    public Bug getBugOne(){return bug1;
     }
-    Bug getBugTwo(){return bug2;}
+    public Bug getBugTwo(){return bug2;}
 
     //This method checks if we should stop the game
     //It returns a 1 if the chaser wins, 2 if the timer runs out;

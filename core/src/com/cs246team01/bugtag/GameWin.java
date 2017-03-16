@@ -1,38 +1,33 @@
 package com.cs246team01.bugtag;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Created by cameronlewis on 3/16/17.
  */
 
-public class GameWin {
-    //stuff to check for winner
-    private int bugOne_pos_x;
-    private int bugOne_pos_y;
-    private int bugTwo_pos_x;
-    private int bugTwo_pos_y;
-    private boolean isInRange_X;
-    private boolean isInRange_Y;
+class GameWin {
     private int win_status;
 
     GameWin(){
         win_status = 0;
     }
 
-    /*GameWin(GridObjectHandler bugGame){
+    int checkWin(Bug bugGame){
+        /*int bugOne_pos_x = bugGame.getBugOne().currentPosition.x;
+        int bugOne_pos_y = bugGame.getBugOne().currentPosition.y;
+        int bugTwo_pos_x = bugGame.getBugTwo().currentPosition.x;
+        int bugTwo_pos_y = bugGame.getBugTwo().currentPosition.y;
 
-    }*/
+        boolean isInRange_X = Math.abs(bugOne_pos_x - bugTwo_pos_x) <= 7;
+        boolean isInRange_Y = Math.abs(bugOne_pos_y - bugTwo_pos_y) <= 44;*/
 
-    int checkWin(GridObjectHandler bugGame){
-        bugOne_pos_x = bugGame.getBugOne().currentPosition.x;
-        bugOne_pos_y = bugGame.getBugOne().currentPosition.y;
-        bugTwo_pos_x = bugGame.getBugTwo().currentPosition.x;
-        bugTwo_pos_y = bugGame.getBugTwo().currentPosition.y;
-        isInRange_X = Math.abs(bugOne_pos_x - bugTwo_pos_x) <= 7;
-        isInRange_Y = Math.abs(bugOne_pos_y - bugTwo_pos_y) <= 44;
+        Rectangle hi = new Rectangle();
+        hi = bugGame.getBugOne().getHitBox();
 
-         if (isInRange_X && isInRange_Y){
+
+         /*if (isInRange_X && isInRange_Y){
              Gdx.app.log("WinTag", "Chaser touched evader! Game over!");
              isInRange_X = false;
              isInRange_Y = false;
@@ -41,12 +36,12 @@ public class GameWin {
             // reset = false;
              return win_status = 3;
          }
-         else
+         else*/
              return win_status = 1;
 
      }
 
-     void resetWinStatus(){
+     private void resetWinStatus(){
          win_status = 0;
      }
 
