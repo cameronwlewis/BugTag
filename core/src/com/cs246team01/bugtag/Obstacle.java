@@ -36,7 +36,7 @@ public class Obstacle extends GridObject {
     }
 
     //Constructor to set Texture and Location
-    public Obstacle(Texture type) {
+    Obstacle(Texture type) {
         this.setTexture(type);
 
         int width = Gdx.graphics.getWidth();

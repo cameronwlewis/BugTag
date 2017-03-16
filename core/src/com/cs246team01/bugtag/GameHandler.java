@@ -14,7 +14,7 @@ import static com.cs246team01.bugtag.GridObject.TAG;
  * Tracks all variables that are not grid objects but still essential to game play.
  */
 
-public class GameHandler {
+class GameHandler {
 
     //game state variables
     private static final int GAME_NOT_STARTED = 0;
@@ -45,10 +45,10 @@ public class GameHandler {
     private boolean timerReset;
 
     //game-state tag
-    public static final String STATE = "GameState";
+    private static final String STATE = "GameState";
 
 
-    public GameHandler(){
+    GameHandler(){
 
         welcome = new SpriteBatch();
 
@@ -84,7 +84,7 @@ public class GameHandler {
 
 
 
-    public void run(){
+    void run(){
 
         // gameState is retrieved here
         gameState = MainGame.gameState;
@@ -133,7 +133,7 @@ public class GameHandler {
     }
 
 
-    public void displayTime(SpriteBatch batch){
+    void displayTime(SpriteBatch batch){
         //Display timer
         if(timer.getTimeRemaining() >= 60) {
             digitalFont.draw(batch, "0:60",
@@ -157,7 +157,7 @@ public class GameHandler {
         }
     }
 
-    public void displayMessage(SpriteBatch batch){
+    void displayMessage(SpriteBatch batch){
         if(gameState == GAME_NOT_STARTED) {
             welcome.begin();
             font.draw(welcome, "BUGTAG!",
@@ -206,7 +206,7 @@ public class GameHandler {
 
 
 
-    public void dispose(){
+    void dispose(){
         font.dispose();
         digitalFont.dispose();
         welcome.dispose();

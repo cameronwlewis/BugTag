@@ -25,8 +25,7 @@ public class Bug extends GridObject {
     public Bug(){
     }
 
-
-    public Bug(Texture bugImage, boolean chaser, int playerID){
+    Bug(Texture bugImage, boolean chaser, int playerID){
         //This sets whether the bug will be the chaser randomly
         isChaser = chaser;
 
@@ -48,7 +47,7 @@ public class Bug extends GridObject {
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
-    public int getPlayerID() {
+    int getPlayerID() {
         return playerID;
     }
 

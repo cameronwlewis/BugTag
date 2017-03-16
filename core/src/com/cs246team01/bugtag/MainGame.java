@@ -3,16 +3,8 @@ package com.cs246team01.bugtag;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.math.GridPoint2;
-
-import static com.cs246team01.bugtag.GridObject.TAG;
-
 
 class MainGame extends Game{
 
@@ -26,12 +18,12 @@ class MainGame extends Game{
     */
 
     //stuff to check for winner
-    int bugOne_pos_x;
-    int bugOne_pos_y;
-    int bugTwo_pos_x;
-    int bugTwo_pos_y;
-    boolean isInRange_X;
-    boolean isInRange_Y;
+    private int bugOne_pos_x;
+    private int bugOne_pos_y;
+    private int bugTwo_pos_x;
+    private int bugTwo_pos_y;
+    private boolean isInRange_X;
+    private boolean isInRange_Y;
 
     //Game
     private SpriteBatch batch;
@@ -42,7 +34,7 @@ class MainGame extends Game{
 
     //keeps track of current gameState
     //it starts off as GAME_NOT_STARTED
-    public static int gameState = 0;
+    static int gameState = 0;
 
     private boolean reset;
 
@@ -131,9 +123,6 @@ class MainGame extends Game{
 
             buttonProcessor.setGameState(gameState);
         }
-
-
-
 
     @Override
     public void dispose () {

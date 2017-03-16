@@ -18,7 +18,7 @@ import java.util.Random;
  *  @author everyone
  */
 
-public class GridObjectHandler {
+class GridObjectHandler {
 
     //This holds any object used in game
     private List<GridObject> gridObjects;
