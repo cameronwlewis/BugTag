@@ -6,10 +6,10 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
- * Class: Grid Object
- * The base class for all objects to appear on the grid
+ * Class: GridObject
+ * The base class for all objects to appear on the grid. This class will contain the
+ * texture, priority and the position of each GridObject
  */
-
 abstract public class GridObject {
     //Use this for tagging bugs
     static final String TAG = "DebugTagger";
@@ -20,7 +20,8 @@ abstract public class GridObject {
     private int priority;
     Texture objectTexture;
 
-    /*This rectangle determines the area that objects can move around in.
+    /**
+    * This rectangle determines the area that objects can move around in.
     * if the objects are contained within the rectangle then they can continue moving until
     * they reach the edge
     */
@@ -31,28 +32,68 @@ abstract public class GridObject {
             ,Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/16);
 
 
-    //Default constructor
+    /**
+     * Default constructor which creates a new GridObject. It will set the
+     * priority to zero
+     */
     GridObject() {
         //currentPosition(0, 0);
         priority = 0;
     }
 
-    //Constructor for setting x & y positions
+    /**
+     * Non-default constructor which creates a new GridObject. It will set the
+     * position and the priority
+     * @param x          x position of the GridObject
+     * @param y          y position of the GridObject
+     * @param myPriority the priority of the GridObject
+     */
     public GridObject(int x, int y, int myPriority) {
         currentPosition.set(x, y);
         priority = myPriority;
     }
 
-    //Setters
+    /**
+     * Public setter which sets the position of the GridObject
+     * @param pos          position of the GridObject
+     */
     public void setPosition(GridPoint2 pos)        { currentPosition = pos; }
+
+    /**
+     * Public setter which sets the priority of the GridObject
+     * @param myPriority          priority of the GridObject
+     */
     public void setPriority(int myPriority)   { priority = myPriority; }
+
+    /**
+     * Public setter which sets the texure of the GridObject
+     * @param myTexture          texture of the GridObject
+     */
     void setTexture(Texture myTexture) { this.objectTexture = myTexture; }
 
-    //Getters
+    /**
+    * Public getter which gets the position of the GridObject
+    */
     public GridPoint2 getPosition() { return currentPosition; }
+
+    /**
+     * Public getter which gets the priority of the GridObject
+     */
     public int getPriority()   { return priority;        }
+
+    /**
+     * Public getter which gets the x position of the GridObject
+     */
     int getX() { return currentPosition.x; }
+
+    /**
+     * Public getter which gets the y position of the GridObject
+     */
     int getY() { return currentPosition.y; }
+
+    /**
+     * Public getter which gets the texture of the GridObject
+     */
     Texture getTexture() { return objectTexture; }
 
     //Methods for moving the objects
@@ -81,8 +122,9 @@ abstract public class GridObject {
 
     //note: the following method names are from the perspective of bug 1's buttons
     // ex. moveRight is used for player 1's right button, and player 2's left button
-
-    //this moves objects towards the top of the screen as shown in the diagram
+    /**
+     * This function when called, moves the GridObject to the right
+     */
     void moveRight() {
 
         if(playArea.contains(this.currentPosition.x,
@@ -97,7 +139,9 @@ abstract public class GridObject {
         Gdx.app.log(TAG, "Rectangle contains bug: " + playArea.contains(this.currentPosition.x ,this.currentPosition.y));
     }
 
-    //moves towards bottom
+    /**
+     * This function when called, moves the GridObject to the left
+     */
     void moveLeft(){
         if(playArea.contains(this.currentPosition.x,
                 this.currentPosition.y - Gdx.graphics.getWidth() / MAXSTEPS))
@@ -109,7 +153,9 @@ abstract public class GridObject {
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
-    //move towards player 2's buttons
+    /**
+     * This function when called, moves the GridObject up
+     */
     void moveUp(){
 
         if(playArea.contains(this.currentPosition.x - Gdx.graphics.getWidth() / MAXSTEPS,
@@ -122,7 +168,9 @@ abstract public class GridObject {
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
-    //move towards player 1
+    /**
+     * This function when called, moves the GridObject down
+     */
     void moveDown(){
 
         //if the bug will not be moving out of bounds allow it to move
@@ -131,10 +179,8 @@ abstract public class GridObject {
 
             this.currentPosition.x += Gdx.graphics.getWidth() / MAXSTEPS;
 
-        }
-        else{
+        } else{
             this.hide();
-
         }
 
         //Keep track of bug's position
@@ -143,6 +189,9 @@ abstract public class GridObject {
         //Gdx.app.log(TAG, "Position: " +this.getPosition().toString()); todo remove comment
     }
 
+    /**
+     * This function when called, hides the GridObject
+     */
     abstract void hide();
 
 }
