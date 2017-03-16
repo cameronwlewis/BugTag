@@ -26,9 +26,9 @@ public class GridObjectHandler {
     private int bugHeight = Gdx.graphics.getHeight()/16;
 
     private int buttonSide = Gdx.graphics.getHeight()/4;
-    private boolean isChaser;
-    private Bug chaser;
-    private Bug evader;
+    private boolean randBoolean;
+    private Bug one;
+    private Bug two;
 
     //bug starting positions
     private GridPoint2 bug1_pos_start;
@@ -41,15 +41,15 @@ public class GridObjectHandler {
         gridObjects = new ArrayList<GridObject>();
 
         Random rand = new Random();
-        isChaser = rand.nextBoolean();
+        randBoolean = rand.nextBoolean();
 
         //Player Textures
         Texture bug1_texture = new Texture("bugs/yellow_idle_large.png");
         Texture bug2_texture = new Texture("bugs/red_idle.png");
 
         //initialize bugs
-        chaser = new Bug(bug1_texture, isChaser, 1);
-        evader = new Bug(bug2_texture, false, 2);
+        one = new Bug(bug1_texture, randBoolean, 1);
+        two = new Bug(bug2_texture, !randBoolean, 2);
 
         //initialize starting positions for use in resetting game
         bug1_pos_start = new GridPoint2(1076, 540);
@@ -73,8 +73,8 @@ public class GridObjectHandler {
         Texture button8 = new Texture("buttons/arrow-down.png");
 
         //Add objects to the array
-        gridObjects.add(chaser);
-        gridObjects.add(evader);
+        gridObjects.add(one);
+        gridObjects.add(two);
         gridObjects.add(new Obstacle(obstacleOne));
         gridObjects.add(new Obstacle(obstacleTwo));
         gridObjects.add(new Obstacle(obstacleThree));
@@ -91,8 +91,8 @@ public class GridObjectHandler {
     }
 
     void resetBugPositions() {
-        chaser.setPosition(bug1_pos_start);
-        evader.setPosition(bug2_pos_start);
+        one.setPosition(bug1_pos_start);
+        two.setPosition(bug2_pos_start);
     }
 
     //This is the only method we will call in the render method
@@ -101,11 +101,11 @@ public class GridObjectHandler {
 
     }
 
-    Bug getChaser(){
-        return chaser;
+    Bug getBugOne(){
+        return one;
     }
-    Bug getEvader(){
-        return evader;
+    Bug getBugTwo(){
+        return two;
     }
 
     //This method checks if we should stop the game

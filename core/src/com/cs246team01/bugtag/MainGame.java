@@ -150,19 +150,12 @@ class MainGame extends Game{
             bugGame.run();
 
             //stuff to check for winner
-            int chaser_pos_x = bugGame.getChaser().currentPosition.x;
-            int chaser_pos_y = bugGame.getChaser().currentPosition.y;
-            int evader_pos_x = bugGame.getEvader().currentPosition.x;
-            int evader_pos_y = bugGame.getEvader().currentPosition.y;
-            boolean isInRange_X = Math.abs(chaser_pos_x - evader_pos_x) <= 7;
-            boolean isInRange_Y = Math.abs(chaser_pos_y - evader_pos_y) <= 44;
-
-            if (isInRange_X && isInRange_Y){
-                Gdx.app.log(TAG, "Chaser touched evader! Game over!");
-                isInRange_X = false;
-                isInRange_Y = false;
-                buttonProcessor.setGameState(GAME_OVER);
-            }
+            int bugOne_pos_x = bugGame.getBugOne().currentPosition.x;
+            int bugOne_pos_y = bugGame.getBugOne().currentPosition.y;
+            int bugTwo_pos_x = bugGame.getBugTwo().currentPosition.x;
+            int bugTwo_pos_y = bugGame.getBugTwo().currentPosition.y;
+            boolean isInRange_X = Math.abs(bugOne_pos_x - bugTwo_pos_x) <= 7;
+            boolean isInRange_Y = Math.abs(bugOne_pos_y - bugTwo_pos_y) <= 44;
 
             bugGame.draw(batch);
 
@@ -177,6 +170,15 @@ class MainGame extends Game{
             if(!(timer.getTimeRemaining() > 0)){
                 buttonProcessor.setGameState(GAME_OVER);
             }
+
+            if (isInRange_X && isInRange_Y){
+                Gdx.app.log(TAG, "Chaser touched evader! Game over!");
+                isInRange_X = false;
+                isInRange_Y = false;
+                bugGame.resetBugPositions();
+                buttonProcessor.setGameState(GAME_OVER);
+            }
+
             //Gdx.app.log(TAG, "Time Remaining is " + timer.getTimeRemaining());
         }
         else if (gameState == GAME_PAUSED)
