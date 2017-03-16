@@ -39,7 +39,7 @@ class MainGame extends Game{
     private static final String TAG = "DebugTagger";
     private static final String WIN = "WinTag";
 
-    private Win winStatus;
+    private Win WinStatus;
 
     @Override
     public void create () {
@@ -53,7 +53,9 @@ class MainGame extends Game{
 
         bugGame = new GridObjectHandler();
         game = new GameHandler();
-        reset = false;
+        reset = true;
+
+        WinStatus = new Win();
 
         // gameState is initially set right here
         _buttonProcessor = new ButtonProcessor(bugGame.getButtons(), gameState);
@@ -69,10 +71,10 @@ class MainGame extends Game{
             gameState = _buttonProcessor.getGameState();
 
         //reset the grid objects if it is game over
-        if(gameState == 4 && reset){
+        if(gameState == 4 && !reset){
             bugGame = null;
             bugGame = new GridObjectHandler();
-            reset = false;
+            reset = true;
         }
 
             batch.begin();
@@ -83,7 +85,12 @@ class MainGame extends Game{
 
                //stuff to check for winner
                //todo: win position variables set here
-              //winStatus = new Win(bugGame);
+               gameState = WinStatus.checkWin(bugGame);
+               reset = WinStatus.isResetNeeded();
+
+               if (gameState == 3){
+                   Gdx.app.log("Game Over", "1) Should be game over.");
+               }
            }
 
            if(gameState != 0) {
@@ -94,17 +101,28 @@ class MainGame extends Game{
            }
 
             game.run();
+        if (gameState == 3){
+            Gdx.app.log("Game Over", "2) Should be game over.");
+        }
 
-            game.displayMessage(batch);
+
+        game.displayMessage(batch);
 
             batch.end();
 
             //todo: checkWin here
-            gameState = winStatus.checkWin(bugGame);
-            reset = winStatus.isResetNeeded();
-
-            _buttonProcessor.setGameState(gameState);
+        if (gameState == 3){
+            Gdx.app.log("Game Over", "2) Should be game over.");
         }
+
+
+
+        _buttonProcessor.setGameState(gameState);
+        if (gameState == 3){
+            Gdx.app.log("Game Over", "2) Should be game over.");
+        }
+
+    }
 
     @Override
     public void dispose () {
