@@ -17,18 +17,12 @@ class MainGame extends Game{
     * how to handle touch inputs
     */
 
-    //stuff to check for winner
-    private int bugOne_pos_x;
-    private int bugOne_pos_y;
-    private int bugTwo_pos_x;
-    private int bugTwo_pos_y;
-    private boolean isInRange_X;
-    private boolean isInRange_Y;
+
 
     //Game
     private SpriteBatch batch;
     private GridObjectHandler bugGame;
-    private ButtonProcessor buttonProcessor;
+    private ButtonProcessor _buttonProcessor;
     private int winner = 0;
     private GameHandler game;
 
@@ -38,13 +32,14 @@ class MainGame extends Game{
 
     private boolean reset;
 
-
     //Test Preferences
     private int numMoves = 0;
 
     //Use this for tagging bugs
     private static final String TAG = "DebugTagger";
     private static final String WIN = "WinTag";
+
+    private Win winStatus;
 
     @Override
     public void create () {
@@ -58,13 +53,11 @@ class MainGame extends Game{
 
         bugGame = new GridObjectHandler();
         game = new GameHandler();
-        reset = true;
+        reset = false;
 
         // gameState is initially set right here
-        buttonProcessor = new ButtonProcessor(bugGame.getButtons(), gameState);
-        Gdx.input.setInputProcessor(buttonProcessor);
-
-
+        _buttonProcessor = new ButtonProcessor(bugGame.getButtons(), gameState);
+        Gdx.input.setInputProcessor(_buttonProcessor);
     }
 
     @Override
@@ -73,13 +66,13 @@ class MainGame extends Game{
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-            gameState = buttonProcessor.getGameState();
+            gameState = _buttonProcessor.getGameState();
 
         //reset the grid objects if it is game over
-        if(gameState == 4 && !reset){
+        if(gameState == 4 && reset){
             bugGame = null;
             bugGame = new GridObjectHandler();
-            reset = true;
+            reset = false;
         }
 
             batch.begin();
@@ -89,12 +82,8 @@ class MainGame extends Game{
                bugGame.run();
 
                //stuff to check for winner
-               bugOne_pos_x = bugGame.getBugOne().currentPosition.x;
-               bugOne_pos_y = bugGame.getBugOne().currentPosition.y;
-               bugTwo_pos_x = bugGame.getBugTwo().currentPosition.x;
-               bugTwo_pos_y = bugGame.getBugTwo().currentPosition.y;
-               isInRange_X = Math.abs(bugOne_pos_x - bugTwo_pos_x) <= 7;
-               isInRange_Y = Math.abs(bugOne_pos_y - bugTwo_pos_y) <= 44;
+               //todo: win position variables set here
+              //winStatus = new Win(bugGame);
            }
 
            if(gameState != 0) {
@@ -110,18 +99,11 @@ class MainGame extends Game{
 
             batch.end();
 
+            //todo: checkWin here
+            gameState = winStatus.checkWin(bugGame);
+            reset = winStatus.isResetNeeded();
 
-            if (isInRange_X && isInRange_Y){
-                Gdx.app.log(WIN, "Chaser touched evader! Game over!");
-                isInRange_X = false;
-                isInRange_Y = false;
-                //bugGame.resetBugPositions();
-                gameState = 3;
-                //this allows us to reset one time
-                reset = false;
-            }
-
-            buttonProcessor.setGameState(gameState);
+            _buttonProcessor.setGameState(gameState);
         }
 
     @Override
