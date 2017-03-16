@@ -30,12 +30,12 @@ public class Bug extends GridObject {
         //Set bug in bottom left corner
 
         if (playerID == 1) {
-            currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 6) / 10,
+            currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 8) / 10,
                     Gdx.graphics.getHeight()/2);
             this.playerID = 1;
         }
         else {
-            currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 4) / 10,
+            currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 2) / 10,
                     Gdx.graphics.getHeight() / 2);
             this.playerID = 2;
         }

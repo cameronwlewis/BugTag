@@ -3,6 +3,7 @@ package com.cs246team01.bugtag;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +16,10 @@ import java.util.Random;
 
 public class GridObjectHandler {
 
-    //This holds any object used in game
+    //this holds any object used in game
     private List<GridObject> gridObjects;
 
+    //these variable hold the size values for our objects
     int obstacleWidth = Gdx.graphics.getHeight() / 3 ;
     int obstacleHeight = Gdx.graphics.getHeight() / 3;
 
@@ -26,7 +28,10 @@ public class GridObjectHandler {
 
     int buttonSide = Gdx.graphics.getHeight()/4;
 
-    //This will be initialized during the create method
+
+
+
+    //this will be initialized during the create method
     //of the main game
     public GridObjectHandler() {
 
@@ -135,21 +140,21 @@ public class GridObjectHandler {
 
     public void handleMove1(Bug b) {
 
-       if(ButtonProcessor.moveUp1){
+       if(ButtonProcessor.moveUp1 == true){
            b.moveUp();
            ButtonProcessor.moveUp1 = false;
 
        }
 
-        if(ButtonProcessor.moveDown1){
+        if(ButtonProcessor.moveDown1 == true){
             b.moveDown();
             ButtonProcessor.moveDown1 = false;
         }
-        if(ButtonProcessor.moveLeft1){
+        if(ButtonProcessor.moveLeft1 == true){
             b.moveLeft();
             ButtonProcessor.moveLeft1 = false;
         }
-        if(ButtonProcessor.moveRight1){
+        if(ButtonProcessor.moveRight1 == true){
             b.moveRight();
             ButtonProcessor.moveRight1 = false;
         }
@@ -179,7 +184,7 @@ public class GridObjectHandler {
         }
     }
 
-    //This takes all of the buttons and places them in a list for the input processor
+    //this takes all of the buttons and places them in a list for the input processor
     public ArrayList<Button> getButtons(){
         ArrayList<Button> buttons = new ArrayList<Button>();
         for (int i = 7; i < gridObjects.size(); i++){
