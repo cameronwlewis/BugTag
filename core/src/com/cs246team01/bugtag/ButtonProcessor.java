@@ -8,7 +8,15 @@ import java.util.ArrayList;
 import static com.cs246team01.bugtag.GridObject.TAG;
 
 /**
+ * Class ButtonProcessor: defines the areas for the user to click on and sends movement commands to
+ * grid object handler.
  *
+ *  The ButtonProcessor has a list of static booleans and integers that determine what state the
+ *  game is currently in and where on the screen the user has clicked. These variables are used
+ *  extensively within the {@link GridObjectHandler} class.
+ *
+ * @author Landon Likhith
+ * @since 2017-03-08
  */
 class ButtonProcessor implements InputProcessor{
     //Variables for game state tracking
