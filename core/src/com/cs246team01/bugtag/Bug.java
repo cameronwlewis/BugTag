@@ -6,7 +6,11 @@ import com.badlogic.gdx.math.GridPoint2;
 
 /**
  * Class:Bug
- * This class contains the implementation of a bug.
+ * This class contains the implementation of a bug, which extends GridObject
+ * A bug will have a specific texture and a player ID. This object will
+ * be controlled by the player. When the bug goes offscreen, it's "hide"
+ * function will keep track of how long it has been there.
+ * getPlayerID Returns which player controls this bug
  */
 
 public class Bug extends GridObject {

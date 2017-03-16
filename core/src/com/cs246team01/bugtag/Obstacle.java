@@ -9,7 +9,12 @@ import com.badlogic.gdx.math.RandomXS128;
 import java.util.Random;
 
 /**
- * Created by Landon on 2/23/2017.
+ * Class:Obstacle
+ * A grid-object obstacle that will obstruct view of the player onscreen
+ * Obstacles onscreen will appear in a random location at the start of the
+ * game, and move in a direction continuously throughout. When a player
+ * moves underneath an obstacle, their exact location will be hidden from
+ * view.
  */
 
 public class Obstacle extends GridObject {

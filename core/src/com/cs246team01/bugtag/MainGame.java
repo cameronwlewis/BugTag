@@ -13,12 +13,13 @@ import com.badlogic.gdx.math.GridPoint2;
 
 import static com.cs246team01.bugtag.GridObject.TAG;
 
+
 class MainGame extends Game{
 
     //Start screen - can possibly remove this. But buttons show up
     private SpriteBatch welcome;
 
-    /*
+    /**
     * gameState tracks the state of the game.
     * 0 is start screen, 1 is in gameplay, and 2 is pause, 3 is game over.
     * When various screens are used. This is important to keep track of
