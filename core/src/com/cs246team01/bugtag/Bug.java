@@ -15,12 +15,12 @@ public class Bug extends GridObject {
 
     private boolean isChaser;
 
-
     //To keep track of player1 and player2 bugs
     private int playerID;
 
     public Bug(){
     }
+
 
     public Bug(Texture bugImage, boolean chaser, int playerID){
         //This sets whether the bug will be the chaser randomly

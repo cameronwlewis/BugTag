@@ -9,10 +9,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.GridPoint2;
 
 import static com.cs246team01.bugtag.GridObject.TAG;
 
-public class MainGame extends Game{
+class MainGame extends Game{
 
     //Start screen - can possibly remove this. But buttons show up
     private SpriteBatch welcome;
@@ -34,7 +35,6 @@ public class MainGame extends Game{
     private SpriteBatch batch;
     private GridObjectHandler bugGame;
     private ButtonProcessor buttonProcessor;
-    //private Win hasWinner; todo remove this
     private int winner = 0;
 
     //Timer
@@ -61,6 +61,8 @@ public class MainGame extends Game{
     public void create () {
         Preferences numMovesPrefs = Gdx.app.getPreferences("MOVES");
         numMoves = numMovesPrefs.getInteger("moves", 0);
+
+        //
 
         //Debugging only - remove
         Gdx.app.log(TAG,"The number of moves are " + numMoves);
@@ -95,6 +97,7 @@ public class MainGame extends Game{
 
         bugGame = new GridObjectHandler();
 
+        // gameState is initially set right here
         buttonProcessor = new ButtonProcessor(bugGame.getButtons(), gameState);
         Gdx.input.setInputProcessor(buttonProcessor);
     }
@@ -105,6 +108,7 @@ public class MainGame extends Game{
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        // gameState is retrieved here
         gameState = buttonProcessor.getGameState();
 
         if(gameState == GAME_NOT_STARTED)
@@ -144,7 +148,8 @@ public class MainGame extends Game{
 
             //This is where we run our game
             bugGame.run();
-            //hasWinner.checkWin(bugGame.getChaser(),bugGame.getEvader());
+
+            //stuff to check for winner
             int chaser_pos_x = bugGame.getChaser().currentPosition.x;
             int chaser_pos_y = bugGame.getChaser().currentPosition.y;
             int evader_pos_x = bugGame.getEvader().currentPosition.x;
@@ -153,14 +158,10 @@ public class MainGame extends Game{
             boolean isInRange_Y = Math.abs(chaser_pos_y - evader_pos_y) <= 44;
 
             if (isInRange_X && isInRange_Y){
-                //Gdx.app.log(TAG, "Chaser Position: " +bugGame.getChaser().getPosition().toString());
-                //Gdx.app.log(TAG, "Evader Position: " +bugGame.getEvader().getPosition().toString());
                 Gdx.app.log(TAG, "Chaser touched evader! Game over!");
                 isInRange_X = false;
                 isInRange_Y = false;
-                //gameState = GAME_OVER;
                 buttonProcessor.setGameState(GAME_OVER);
-
             }
 
             bugGame.draw(batch);
@@ -174,7 +175,7 @@ public class MainGame extends Game{
             timer.run();
 
             if(!(timer.getTimeRemaining() > 0)){
-                buttonProcessor.setGameState(GAME_OVER); //todo: what's the difference between this and the 'gameState' variable? -Cameron
+                buttonProcessor.setGameState(GAME_OVER);
             }
             //Gdx.app.log(TAG, "Time Remaining is " + timer.getTimeRemaining());
         }
@@ -193,6 +194,8 @@ public class MainGame extends Game{
         else if (gameState == GAME_OVER)
         {
             batch.begin();
+
+            bugGame.resetBugPositions();
 
             bugGame.draw(batch);
 
@@ -219,7 +222,7 @@ public class MainGame extends Game{
         digitalFont.dispose();
     }
 
-    public void displayTime(){
+    private void displayTime(){
         //Display timer
         if(timer.getTimeRemaining() >= 60) {
             digitalFont.draw(batch, "0:60",
@@ -243,7 +246,7 @@ public class MainGame extends Game{
         }
     }
 
-    public void displayMessage(){
+    private void displayMessage(){
         if(gameState == GAME_NOT_STARTED) {
             font.draw(welcome, "BUGTAG!",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5) ,

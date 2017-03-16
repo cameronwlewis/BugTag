@@ -3,6 +3,7 @@ package com.cs246team01.bugtag;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.GridPoint2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,31 +19,41 @@ public class GridObjectHandler {
     //This holds any object used in game
     private List<GridObject> gridObjects;
 
-    int obstacleWidth = Gdx.graphics.getHeight() / 3;
-    int obstacleHeight = Gdx.graphics.getHeight() / 3;
+    private int obstacleWidth = Gdx.graphics.getHeight() / 3;
+    private int obstacleHeight = Gdx.graphics.getHeight() / 3;
 
-    int bugWidth = Gdx.graphics.getHeight()/16;
-    int bugHeight = Gdx.graphics.getHeight()/16;
+    private int bugWidth = Gdx.graphics.getHeight()/16;
+    private int bugHeight = Gdx.graphics.getHeight()/16;
 
-    int buttonSide = Gdx.graphics.getHeight()/4;
-    Bug chaser;
-    Bug evader;
+    private int buttonSide = Gdx.graphics.getHeight()/4;
+    private boolean isChaser;
+    private Bug chaser;
+    private Bug evader;
+
+    //bug starting positions
+    private GridPoint2 bug1_pos_start;
+    private GridPoint2 bug2_pos_start;
 
     //This will be initialized during the create method
     //of the main game
-    public GridObjectHandler() {
+    GridObjectHandler() {
 
         gridObjects = new ArrayList<GridObject>();
 
         Random rand = new Random();
-        boolean isChaser = rand.nextBoolean();
+        isChaser = rand.nextBoolean();
 
         //Player Textures
         Texture bug1_texture = new Texture("bugs/yellow_idle_large.png");
         Texture bug2_texture = new Texture("bugs/red_idle.png");
 
+        //initialize bugs
         chaser = new Bug(bug1_texture, isChaser, 1);
         evader = new Bug(bug2_texture, false, 2);
+
+        //initialize starting positions for use in resetting game
+        bug1_pos_start = new GridPoint2(1076, 540);
+        bug2_pos_start = new GridPoint2(717,540);
 
         //Obstacle Textures
         Texture obstacleOne   = new Texture("obstacles/Real_Pear.png");
@@ -77,20 +88,23 @@ public class GridObjectHandler {
         gridObjects.add(new Button(6,button6));
         gridObjects.add(new Button(7,button7));
         gridObjects.add(new Button(8,button8));
+    }
 
-
+    void resetBugPositions() {
+        chaser.setPosition(bug1_pos_start);
+        evader.setPosition(bug2_pos_start);
     }
 
     //This is the only method we will call in the render method
-    public void run() {
+    void run() {
         update();
 
     }
 
-    public Bug getChaser(){
+    Bug getChaser(){
         return chaser;
     }
-    public Bug getEvader(){
+    Bug getEvader(){
         return evader;
     }
 
@@ -133,7 +147,7 @@ public class GridObjectHandler {
     }
 
     //Keeping it modularized
-    public void draw(SpriteBatch batch) {
+    void draw(SpriteBatch batch) {
 
         for (GridObject g : gridObjects) {
             if(g instanceof Button) {
@@ -149,7 +163,7 @@ public class GridObjectHandler {
         }
     }
 
-    public void handleMove1(Bug b) {
+    private void handleMove1(Bug b) {
 
         if(ButtonProcessor.moveUp1){
             b.moveUp();
@@ -172,7 +186,7 @@ public class GridObjectHandler {
     }
 
     //Important Note, Movement is inverted for player two buttons (upButton = moveDown())
-    public void handleMove2(Bug b){
+    private void handleMove2(Bug b){
 
         if(ButtonProcessor.moveUp2){
             b.moveDown();
@@ -194,7 +208,7 @@ public class GridObjectHandler {
     }
 
     //This takes all of the buttons and places them in a list for the input processor
-    public ArrayList<Button> getButtons(){
+    ArrayList<Button> getButtons(){
         ArrayList<Button> buttons = new ArrayList<Button>();
         for (int i = 7; i < gridObjects.size(); i++){
             Button b = (Button) gridObjects.get(i);
@@ -203,4 +217,5 @@ public class GridObjectHandler {
 
         return buttons;
     }
+
 }
