@@ -205,6 +205,8 @@ class MainGame extends Game{
 
             displayMessage();
 
+            bugGame.resetBugPositions();
+
             //Set winner variable too. The first frame
             // won't have the result but that should be fine
 
