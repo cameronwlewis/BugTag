@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
  * that we will use to keep track of what button is pushed and how to handle input.
  */
 
-class Button extends GridObject {
+public class Button extends GridObject {
 
     private Rectangle clickArea;
 

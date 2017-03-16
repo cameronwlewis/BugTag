@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Class: GridObjectHandler handles movement and visualization for all {@link GridObject} instances
+ * Handles movement and visualization for all {@link GridObject} instances
  *
  *  All of the GridObjects are stored in an array list. The list is iterated through and each object
  *  is checked. Its position is updated if it has moved and the object is drawn accordingly.

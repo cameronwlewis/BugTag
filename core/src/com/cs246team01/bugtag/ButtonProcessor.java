@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import static com.cs246team01.bugtag.GridObject.TAG;
 
 /**
- * Class ButtonProcessor: defines the areas for the user to click on and sends movement commands to
+ * Defines the areas for the user to click on and sends movement commands to
  * grid object handler.
  *
  *  The ButtonProcessor has a list of static booleans and integers that determine what state the
@@ -18,7 +18,7 @@ import static com.cs246team01.bugtag.GridObject.TAG;
  * @author Landon Likhith
  * @since 2017-03-08
  */
-class ButtonProcessor implements InputProcessor{
+public class ButtonProcessor implements InputProcessor{
     //Variables for game state tracking
     private static int GAME_NOT_STARTED = 0;
     private static int GAME_STARTED = 1;
@@ -35,7 +35,7 @@ class ButtonProcessor implements InputProcessor{
     static boolean moveRight2;
     static boolean moveDown2;
     static boolean moveUp2;
-    private int gameState = 0;
+    private static int gameState = 0;
 
     //This holds all of our button objects
     ArrayList<Button> buttons;
@@ -140,7 +140,7 @@ class ButtonProcessor implements InputProcessor{
      *
      * @return
      */
-    int getGameState() { return gameState; }
+    public static int getGameState() { return gameState; }
 
     void setGameState(int state) { gameState = state; }
 
