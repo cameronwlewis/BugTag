@@ -46,7 +46,7 @@ class MainGame extends Game{
     private FreeTypeFontParameter parameter;
     private BitmapFont font;
 
-    //Digital Font
+    // Font for timer
     private FreeTypeFontGenerator digitalFontFT;
     private FreeTypeFontParameter digitalParameter;
     private BitmapFont digitalFont;
@@ -82,7 +82,7 @@ class MainGame extends Game{
         font = fontFT.generateFont(parameter);
         font.setColor(Color.RED);
 
-        //Digital font is digital dream
+        //Timer font is called digital dream
         digitalFontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/digital-dream-skew-narrow.ttf"));
         digitalParameter = new FreeTypeFontParameter();
         digitalParameter.size = 40;
