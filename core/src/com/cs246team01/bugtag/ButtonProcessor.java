@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 import static com.cs246team01.bugtag.GridObject.TAG;
 
+/**
+ *
+ */
 class ButtonProcessor implements InputProcessor{
     //Variables for game state tracking
     private static int GAME_NOT_STARTED = 0;

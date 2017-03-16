@@ -195,8 +195,6 @@ class MainGame extends Game{
         }
         else if (gameState == GAME_OVER)
         {
-            bugGame = null;
-            bugGame = new GridObjectHandler();
             batch.begin();
 
             bugGame.resetBugPositions();
