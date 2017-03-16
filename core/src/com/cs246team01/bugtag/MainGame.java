@@ -39,7 +39,7 @@ class MainGame extends Game{
     private static final String TAG = "DebugTagger";
     private static final String WIN = "WinTag";
 
-    private Win WinStatus;
+    private GameWin WinStatus;
 
     @Override
     public void create () {
@@ -55,7 +55,7 @@ class MainGame extends Game{
         game = new GameHandler();
         reset = true;
 
-        WinStatus = new Win();
+        WinStatus = new GameWin();
 
         // gameState is initially set right here
         _buttonProcessor = new ButtonProcessor(bugGame.getButtons(), gameState);
@@ -82,15 +82,6 @@ class MainGame extends Game{
             //This is where we move our objects and set win variables
            if(gameState == 1) {
                bugGame.run();
-
-               //stuff to check for winner
-               //todo: win position variables set here
-               gameState = WinStatus.checkWin(bugGame);
-               reset = WinStatus.isResetNeeded();
-
-               if (gameState == 3){
-                   Gdx.app.log("Game Over", "1) Should be game over.");
-               }
            }
 
            if(gameState != 0) {
@@ -105,23 +96,14 @@ class MainGame extends Game{
             Gdx.app.log("Game Over", "2) Should be game over.");
         }
 
-
         game.displayMessage(batch);
 
-            batch.end();
+        batch.end();
 
-            //todo: checkWin here
-        if (gameState == 3){
-            Gdx.app.log("Game Over", "2) Should be game over.");
-        }
-
-
+        gameState = WinStatus.checkWin(bugGame);
+        reset = WinStatus.isResetNeeded();
 
         _buttonProcessor.setGameState(gameState);
-        if (gameState == 3){
-            Gdx.app.log("Game Over", "2) Should be game over.");
-        }
-
     }
 
     @Override

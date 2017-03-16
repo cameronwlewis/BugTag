@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
  * Created by cameronlewis on 3/16/17.
  */
 
-public class Win {
+public class GameWin {
     //stuff to check for winner
     private int bugOne_pos_x;
     private int bugOne_pos_y;
@@ -16,11 +16,11 @@ public class Win {
     private boolean isInRange_Y;
     private int win_status;
 
-    Win(){
+    GameWin(){
         win_status = 0;
     }
 
-    /*Win(GridObjectHandler bugGame){
+    /*GameWin(GridObjectHandler bugGame){
 
     }*/
 
