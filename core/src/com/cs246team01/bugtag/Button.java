@@ -16,7 +16,7 @@ class Button extends GridObject {
     private Rectangle clickArea;
 
     public Button() {
-        //Do not use this constructor //todo then why do we have it? I'm confused -Cameron
+        //Do not use this constructor
     }
 
     /**

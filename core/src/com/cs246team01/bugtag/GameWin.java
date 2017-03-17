@@ -29,11 +29,9 @@ class GameWin {
         Rectangle bug1_hitbox = bugGame.getBugOne().getHitBox();
         Rectangle bug2_hitbox = bugGame.getBugTwo().getHitBox();
 
-        if (bug1_hitbox.contains(bug2_hitbox.getX(), bug2_hitbox.getY())) {
-            Bug bug1_testing = bugGame.getBugOne();
-            Bug bug2_testing = bugGame.getBugTwo();
+        if (bug1_hitbox.contains(bug2_hitbox.getX(), bug2_hitbox.getY()))
             return win_status = 3;
-        } else
+        else
             return win_status = 1;
     }
 

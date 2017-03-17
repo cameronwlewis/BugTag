@@ -208,7 +208,7 @@ abstract public class GridObject {
         //Keep track of bug's position
         Gdx.app.log(TAG, "Rectangle: " + playArea.toString());
         Gdx.app.log(TAG, "Rectangle contains bug: " + playArea.contains(this.currentPosition.x, this.currentPosition.y));
-        //Gdx.app.log(TAG, "Position: " +this.getPosition().toString()); todo remove comment
+        Gdx.app.log(TAG, "Position: " +this.getPosition().toString());
     }
 
     /**

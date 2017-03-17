@@ -62,7 +62,7 @@ class MainGame extends Game {
         gameState = _buttonProcessor.getGameState();
 
         //reset the grid objects if it is game over
-        if (gameState == 4 && reset) {
+        if (gameState == 3 && reset) {
             bugGame = null;
             bugGame = new GridObjectHandler();
             reset = false;
