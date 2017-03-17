@@ -39,17 +39,28 @@ public class Obstacle extends GridObject {
     Obstacle(Texture type) {
         this.setTexture(type);
 
-        int width = Gdx.graphics.getWidth();
+        int width = Gdx.graphics.getWidth() - (Gdx.graphics.getHeight() / 2);
         int height = Gdx.graphics.getHeight();
 
         Random r = new Random();
 
-        int x = r.nextInt(width);
+        int x = r.nextInt(width) + (Gdx.graphics.getHeight() / 8);
         int y = r.nextInt(height);
 
         GridPoint2 loc = new GridPoint2(x, y);
 
         currentPosition = loc;
+    }
+
+    /**
+     * This function when called, moves the GridObject to the left
+     */
+    void moveLeft() {
+
+        this.currentPosition.y -= 1;
+
+        //Keep track of object's position
+        Gdx.app.log(TAG, this.getPosition().toString());
     }
 
     //for when an obstacle scrolls off the screen

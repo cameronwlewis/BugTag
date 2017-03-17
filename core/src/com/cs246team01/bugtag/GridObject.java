@@ -104,10 +104,28 @@ abstract public class GridObject {
     }
 
     /**
+     * Public setter
+     * @param newX
+     * @return
+     */
+    void setX(int newX) {
+        currentPosition.set(newX, this.getY());
+    }
+
+    /**
      * Public getter which gets the y position of the GridObject
      */
     int getY() {
         return currentPosition.y;
+    }
+
+    /**
+     * Public setter
+     * @param newY
+     * @return
+     */
+    void setY(int newY) {
+        currentPosition.set(this.getX(), newY);
     }
 
     /**
@@ -118,22 +136,22 @@ abstract public class GridObject {
     }
 
     //Methods for moving the objects
-    /**********************************************************
+    /**********************************************************************************
      * Movement comments:
      * Using LibGDX, the screen is divided in this manner (phone is held sideways)
      *
-     *      x = 0                                 x = width,y = height
+     *      x = 0              Right Side         x = width,y = height
      * y = height--------------------------------------
      *          |                                     |
      *          |                                     |
-     *          |                                     |
-     *          |                                   O
+     *      Top |                                     | Bottom
+     *          |                                   O |
      *          |                              home button
-     *          |
+     *          |                                     |
      *          |------------------------------------- x = width
-     *     y = 0                                       y = 0
+     *     y = 0               Left Side               y = 0
      *
-     * we can create a grid-like movement by determining how many steps the player
+     * We can create a grid-like movement by determining how many steps the player
      * will take before hitting the wall and dividing the height/width by that number.
      * ex. Right movement = ( width / steps ) + current x value;
      *

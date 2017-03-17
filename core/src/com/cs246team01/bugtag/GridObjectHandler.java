@@ -26,8 +26,8 @@ class GridObjectHandler {
     private int obstacleWidth = Gdx.graphics.getHeight() / 3;
     private int obstacleHeight = Gdx.graphics.getHeight() / 3;
 
-    private int bugWidth = Gdx.graphics.getHeight() / 16;
-    private int bugHeight = Gdx.graphics.getHeight() / 16;
+    private int bugWidth = Gdx.graphics.getHeight() / 14;
+    private int bugHeight = Gdx.graphics.getHeight() / 14;
 
     private int buttonSide = Gdx.graphics.getHeight() / 4;
     private Bug bug1;
@@ -56,16 +56,16 @@ class GridObjectHandler {
         GridPoint2 bug2_pos_start = new GridPoint2((Gdx.graphics.getWidth() * 4) / 10,
                 Gdx.graphics.getHeight() / 2);
 
-        //initialize bugs
+        //Initialize bugs
         bug1 = new Bug(bug1_texture, randBoolean, 1);
         bug2 = new Bug(bug2_texture, !randBoolean, 2);
 
-        //Obstacle Textures
-        Texture obstacleOne = new Texture("obstacles/Real_Pear.png");
-        Texture obstacleTwo = new Texture("obstacles/Real_Apple.png");
-        Texture obstacleThree = new Texture("obstacles/Real_Bread.png");
-        Texture obstacleFour = new Texture("obstacles/Real_Watermelon.png");
-        Texture obstacleFive = new Texture("obstacles/Real_Orange.png");
+        //Initialize Obstacles
+        Obstacle obstacleOne = new Obstacle(new Texture("obstacles/Real_Pear.png"));
+        Obstacle obstacleTwo = new Obstacle(new Texture("obstacles/Real_Apple.png"));
+        Obstacle obstacleThree = new Obstacle(new Texture("obstacles/Real_Bread.png"));
+        Obstacle obstacleFour = new Obstacle(new Texture("obstacles/Real_Watermelon.png"));
+        Obstacle obstacleFive = new Obstacle(new Texture("obstacles/Real_Orange.png"));
 
         //Button textures
         Texture button1 = new Texture("buttons/arrow-left.png");
@@ -80,11 +80,11 @@ class GridObjectHandler {
         //Add objects to the array
         gridObjects.add(bug1);
         gridObjects.add(bug2);
-        gridObjects.add(new Obstacle(obstacleOne));
-        gridObjects.add(new Obstacle(obstacleTwo));
-        gridObjects.add(new Obstacle(obstacleThree));
-        gridObjects.add(new Obstacle(obstacleFour));
-        gridObjects.add(new Obstacle(obstacleFive));
+        gridObjects.add(obstacleOne);
+        gridObjects.add(obstacleTwo);
+        gridObjects.add(obstacleThree);
+        gridObjects.add(obstacleFour);
+        gridObjects.add(obstacleFive);
         gridObjects.add(new Button(1, button1));
         gridObjects.add(new Button(2, button2));
         gridObjects.add(new Button(3, button3));
@@ -153,8 +153,9 @@ class GridObjectHandler {
     private void update() {
         //movement code here...
 
-        for (GridObject g : gridObjects)
+        for (GridObject g : gridObjects) {
 
+            //bug handling
             if (g instanceof Bug) {
 
                 Bug b = (Bug) g;
@@ -163,6 +164,19 @@ class GridObjectHandler {
                 else
                     handleMove2(b);
             }
+
+            //obstacle handling
+            if (g instanceof Obstacle) {
+
+                Obstacle o = (Obstacle) g;
+                handlemoveObs(o);
+
+                if (o.getY() == 0 - o.getTexture().getHeight()) {
+                    o.setY(Gdx.graphics.getHeight());
+                }
+            }
+        }
+
     }
 
     //Keeping it modularized
@@ -225,6 +239,11 @@ class GridObjectHandler {
             b.moveLeft();
             ButtonProcessor.moveRight2 = false;
         }
+    }
+
+    private void handlemoveObs(Obstacle o) {
+
+        o.moveLeft();
     }
 
     //This takes all of the buttons and places them in a list for the input processor
