@@ -17,7 +17,7 @@ class GameWin {
     }
 
     /**
-     *
+     * Checks to see if the bugs are touching and whether the game should end as a result.
      * @param bugGame Needed parameter to obtain the hit boxes of each bug and their current positions.
      * @return Returns '3' to represent GAME_OVER if bugs are touching, or '1' to represent
      * GAME_STARTED (meaning the current game should still continue) if they're not touching.
