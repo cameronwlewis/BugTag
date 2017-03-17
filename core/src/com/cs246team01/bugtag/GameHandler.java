@@ -88,7 +88,7 @@ class GameHandler {
 
         // gameState is retrieved here
         gameState = MainGame.gameState;
-        Gdx.app.log(STATE, "Game state: " + this.gameState);
+        //Gdx.app.log(STATE, "Game state: " + this.gameState); todo remove comment
 
         switch (gameState){
             case GAME_WARM_UP:

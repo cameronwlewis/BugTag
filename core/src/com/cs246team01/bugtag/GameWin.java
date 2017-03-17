@@ -1,6 +1,5 @@
 package com.cs246team01.bugtag;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
@@ -14,31 +13,17 @@ class GameWin {
         win_status = 0;
     }
 
-    int checkWin(Bug bugGame){
-        /*int bugOne_pos_x = bugGame.getBugOne().currentPosition.x;
-        int bugOne_pos_y = bugGame.getBugOne().currentPosition.y;
-        int bugTwo_pos_x = bugGame.getBugTwo().currentPosition.x;
-        int bugTwo_pos_y = bugGame.getBugTwo().currentPosition.y;
+    int checkWin(GridObjectHandler bugGame){
+        Rectangle bug1_hitbox = bugGame.getBugOne().getHitBox();
+        Rectangle bug2_hitbox = bugGame.getBugTwo().getHitBox();
 
-        boolean isInRange_X = Math.abs(bugOne_pos_x - bugTwo_pos_x) <= 7;
-        boolean isInRange_Y = Math.abs(bugOne_pos_y - bugTwo_pos_y) <= 44;*/
-
-        Rectangle hi = new Rectangle();
-        hi = bugGame.getBugOne().getHitBox();
-
-
-         /*if (isInRange_X && isInRange_Y){
-             Gdx.app.log("WinTag", "Chaser touched evader! Game over!");
-             isInRange_X = false;
-             isInRange_Y = false;
-             //bugGame.resetBugPositions();
-             //this allows us to reset one time
-            // reset = false;
-             return win_status = 3;
-         }
-         else*/
+        if (bug1_hitbox.contains(bug2_hitbox.getX(), bug2_hitbox.getY())){
+            Bug bug1_testing = bugGame.getBugOne();
+            Bug bug2_testing = bugGame.getBugTwo();
+            return win_status = 3;
+        }
+         else
              return win_status = 1;
-
      }
 
      private void resetWinStatus(){

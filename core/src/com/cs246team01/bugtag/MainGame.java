@@ -6,6 +6,7 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+
 class MainGame extends Game{
 
 
@@ -17,7 +18,13 @@ class MainGame extends Game{
     * how to handle touch inputs
     */
 
-
+    //stuff to check for winner
+    int bugOne_pos_x;
+    int bugOne_pos_y;
+    int bugTwo_pos_x;
+    int bugTwo_pos_y;
+    boolean isInRange_X;
+    boolean isInRange_Y;
 
     //Game
     private SpriteBatch batch;
@@ -25,12 +32,14 @@ class MainGame extends Game{
     private ButtonProcessor _buttonProcessor;
     private int winner = 0;
     private GameHandler game;
+    private GameWin winStatus;
 
     //keeps track of current gameState
     //it starts off as GAME_NOT_STARTED
-    static int gameState = 0;
+    public static int gameState = 0;
 
     private boolean reset;
+
 
     //Test Preferences
     private int numMoves = 0;
@@ -38,8 +47,6 @@ class MainGame extends Game{
     //Use this for tagging bugs
     private static final String TAG = "DebugTagger";
     private static final String WIN = "WinTag";
-
-    private GameWin WinStatus;
 
     @Override
     public void create () {
@@ -51,15 +58,17 @@ class MainGame extends Game{
 
         batch = new SpriteBatch();
 
+        winStatus = new GameWin();
+
         bugGame = new GridObjectHandler();
         game = new GameHandler();
-        reset = true;
-
-        WinStatus = new GameWin();
+        reset = false;
 
         // gameState is initially set right here
         _buttonProcessor = new ButtonProcessor(bugGame.getButtons(), gameState);
         Gdx.input.setInputProcessor(_buttonProcessor);
+
+
     }
 
     @Override
@@ -71,10 +80,10 @@ class MainGame extends Game{
             gameState = _buttonProcessor.getGameState();
 
         //reset the grid objects if it is game over
-        if(gameState == 4 && !reset){
+        if(gameState == 4 && reset){
             bugGame = null;
             bugGame = new GridObjectHandler();
-            reset = true;
+            reset = false;
         }
 
             batch.begin();
@@ -82,6 +91,13 @@ class MainGame extends Game{
             //This is where we move our objects and set win variables
            if(gameState == 1) {
                bugGame.run();
+
+               //update hit boxes after movement. todo: no worries, these can be moved elsewhere -Cameron
+               bugGame.getBugOne().updateHitBox();
+               bugGame.getBugTwo().updateHitBox();
+
+               //stuff to check for winner
+               gameState = winStatus.checkWin(bugGame);
            }
 
            if(gameState != 0) {
@@ -92,19 +108,16 @@ class MainGame extends Game{
            }
 
             game.run();
-        if (gameState == 3){
-            Gdx.app.log("Game Over", "2) Should be game over.");
+
+            game.displayMessage(batch);
+
+            batch.end();
+
+            // check to see if we need to reset
+            reset = winStatus.isResetNeeded();
+
+            _buttonProcessor.setGameState(gameState);
         }
-
-        game.displayMessage(batch);
-
-        batch.end();
-
-        gameState = WinStatus.checkWin(bugGame);
-        reset = WinStatus.isResetNeeded();
-
-        _buttonProcessor.setGameState(gameState);
-    }
 
     @Override
     public void dispose () {

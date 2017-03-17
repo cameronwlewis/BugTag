@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
-
+//todo hit boxes MUST update over and over as the game is running
 /**
  * Class: GridObject
  * The base class for all objects to appear on the grid. This class will contain the

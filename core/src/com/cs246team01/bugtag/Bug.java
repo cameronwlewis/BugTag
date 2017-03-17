@@ -21,12 +21,14 @@ public class Bug extends GridObject {
     private static final String TAG = "DebugTagger";
 
     private boolean isChaser;
+    float bug_height;
+    float bug_width;
 
     //To keep track of player1 and player2 bugs
     private int playerID;
 
     // bug/player hit box
-    private static Rectangle bug_hitbox;
+    private Rectangle bug_hitbox;
 
     public Bug(){
     }
@@ -37,9 +39,6 @@ public class Bug extends GridObject {
 
         this.setTexture(bugImage);
         //Set bug in bottom left corner
-
-        makeHitBox(bugImage);
-        // make hit box for bug/player
 
         if (playerID == 1) {
             currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 8) / 10,
@@ -52,18 +51,24 @@ public class Bug extends GridObject {
             this.playerID = 2;
         }
 
+        // make hit box for bug/player
+        bug_height = bugImage.getHeight();
+        bug_width  = bugImage.getWidth();
+        bug_hitbox = new Rectangle(getX(), getY(), bug_width, bug_height);
+
+
         //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
-    private void makeHitBox(Texture bugImage){
-        float bug_height = bugImage.getHeight();
-        float bug_width  = bugImage.getWidth();
-
-        bug_hitbox = new Rectangle(currentPosition.x, currentPosition.y, bug_width, bug_height);
+     void updateHitBox(){
+        bug_hitbox.setPosition(getX(), getY());
     }
 
+    // todo make a 'touchingOverBug' function here using bug_hitbox.contains()
+
     Rectangle getHitBox(){
+
         return bug_hitbox;
     }
 
