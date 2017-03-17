@@ -8,12 +8,11 @@ import com.badlogic.gdx.math.Rectangle;
 import org.w3c.dom.css.Rect;
 
 /**
- * Class:Bug
  * This class contains the implementation of a bug, which extends GridObject
  * A bug will have a specific texture and a player ID. This object will
- * be controlled by the player. When the bug goes offscreen, it's "hide"
+ * be controlled by the player. When the bug goes offscreen, its "hide"
  * function will keep track of how long it has been there.
- * getPlayerID Returns which player controls this bug
+ * getPlayerID Returns which player controls this bug.
  */
 
 public class Bug extends GridObject {
@@ -21,8 +20,8 @@ public class Bug extends GridObject {
     private static final String TAG = "DebugTagger";
 
     private boolean isChaser;
-    float bug_height;
-    float bug_width;
+    private float bug_height;
+    private float bug_width;
 
     //To keep track of player1 and player2 bugs
     private int playerID;
