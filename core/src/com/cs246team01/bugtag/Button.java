@@ -15,42 +15,43 @@ class Button extends GridObject {
 
     private Rectangle clickArea;
 
-    public Button(){
+    public Button() {
         //Do not use this constructor //todo then why do we have it? I'm confused -Cameron
     }
 
     /**
      * This constructor takes the Textures and assigns
-     * @param ID Integers to number each button
+     *
+     * @param ID    Integers to number each button
      * @param image Texture to use for buttons
      */
-    Button(int ID, Texture image){
+    Button(int ID, Texture image) {
 
         objectTexture = image;
 
         //Player 1 buttons
-        int buttonx = Gdx.graphics.getWidth() - (Gdx.graphics.getHeight()/4);
+        int buttonx = Gdx.graphics.getWidth() - (Gdx.graphics.getHeight() / 4);
         int button1y = 0;
-        int button2y = Gdx.graphics.getHeight()/4;
-        int button3y = Gdx.graphics.getHeight()/2;
-        int button4y = (3*Gdx.graphics.getHeight())/4;
+        int button2y = Gdx.graphics.getHeight() / 4;
+        int button3y = Gdx.graphics.getHeight() / 2;
+        int button4y = (3 * Gdx.graphics.getHeight()) / 4;
         //Player 2 buttons
         int buttonx2 = 0;
-        int button5y = (3*Gdx.graphics.getHeight())/4;
-        int button6y = Gdx.graphics.getHeight()/2;
-        int button7y = Gdx.graphics.getHeight()/4;
+        int button5y = (3 * Gdx.graphics.getHeight()) / 4;
+        int button6y = Gdx.graphics.getHeight() / 2;
+        int button7y = Gdx.graphics.getHeight() / 4;
         int button8y = 0;
 
-        switch(ID){
+        switch (ID) {
             case 1:
                 currentPosition = new GridPoint2(buttonx, button1y);
                 break;
             case 2:
                 currentPosition = new GridPoint2(buttonx, button2y);
-                 break;
+                break;
             case 3:
                 currentPosition = new GridPoint2(buttonx, button3y);
-                 break;
+                break;
             case 4:
                 currentPosition = new GridPoint2(buttonx, button4y);
                 break;
@@ -69,20 +70,21 @@ class Button extends GridObject {
         }
 
         //Now set the area to be clicked. first two parameters are position, then size
-        clickArea = new Rectangle(currentPosition.x,currentPosition.y,
-                Gdx.graphics.getHeight()/4 , Gdx.graphics.getHeight()/4);
+        clickArea = new Rectangle(currentPosition.x, currentPosition.y,
+                Gdx.graphics.getHeight() / 4, Gdx.graphics.getHeight() / 4);
     }
 
     // We do not use this method
     // It is here to satisfy the abstract class
-    public void hide(){
+    public void hide() {
     }
 
     /**
      * Getter to obtain the area which can be touched by the user
+     *
      * @return the area able to be touched.
      */
-    Rectangle getClickArea(){
+    Rectangle getClickArea() {
         return clickArea;
     }
 

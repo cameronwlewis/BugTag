@@ -20,7 +20,7 @@ import java.util.Random;
 public class Obstacle extends GridObject {
 
     //Default Constructor
-    public Obstacle() {
+    public Obstacle() { //todo: weird...it says this constructor is never used -Cameron
 
         int width = Gdx.graphics.getWidth();
         int height = Gdx.graphics.getHeight();
@@ -53,7 +53,7 @@ public class Obstacle extends GridObject {
     }
 
     //for when an obstacle scrolls off the screen
-    public void hide(){
+    public void hide() {
 
     }
 }

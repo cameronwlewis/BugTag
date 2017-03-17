@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 //todo hit boxes MUST update over and over as the game is running
+
 /**
  * Class: GridObject
  * The base class for all objects to appear on the grid. This class will contain the
@@ -21,15 +22,15 @@ abstract public class GridObject {
     Texture objectTexture;
 
     /**
-    * This rectangle determines the area that objects can move around in.
-    * if the objects are contained within the rectangle then they can continue moving until
-    * they reach the edge
-    */
-    private static Rectangle playArea = new Rectangle(Gdx.graphics.getHeight()/4,0,
+     * This rectangle determines the area that objects can move around in.
+     * if the objects are contained within the rectangle then they can continue moving until
+     * they reach the edge
+     */
+    private static Rectangle playArea = new Rectangle(Gdx.graphics.getHeight() / 4, 0,
             //width
-            Gdx.graphics.getWidth() - 2 * (Gdx.graphics.getHeight()/4) - (Gdx.graphics.getHeight()/24)
+            Gdx.graphics.getWidth() - 2 * (Gdx.graphics.getHeight() / 4) - (Gdx.graphics.getHeight() / 24)
             //height
-            ,Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/16);
+            , Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 16);
 
 
     /**
@@ -44,6 +45,7 @@ abstract public class GridObject {
     /**
      * Non-default constructor which creates a new GridObject. It will set the
      * position and the priority
+     *
      * @param x          x position of the GridObject
      * @param y          y position of the GridObject
      * @param myPriority the priority of the GridObject
@@ -55,46 +57,65 @@ abstract public class GridObject {
 
     /**
      * Public setter which sets the position of the GridObject
-     * @param pos          position of the GridObject
+     *
+     * @param pos position of the GridObject
      */
-    public void setPosition(GridPoint2 pos)        { currentPosition = pos; }
+    public void setPosition(GridPoint2 pos) {
+        currentPosition = pos;
+    }
 
     /**
      * Public setter which sets the priority of the GridObject
-     * @param myPriority          priority of the GridObject
+     *
+     * @param myPriority priority of the GridObject
      */
-    public void setPriority(int myPriority)   { priority = myPriority; }
+    public void setPriority(int myPriority) {
+        priority = myPriority;
+    }
 
     /**
      * Public setter which sets the texure of the GridObject
-     * @param myTexture          texture of the GridObject
+     *
+     * @param myTexture texture of the GridObject
      */
-    void setTexture(Texture myTexture) { this.objectTexture = myTexture; }
+    void setTexture(Texture myTexture) {
+        this.objectTexture = myTexture;
+    }
 
     /**
-    * Public getter which gets the position of the GridObject
-    */
-    public GridPoint2 getPosition() { return currentPosition; }
+     * Public getter which gets the position of the GridObject
+     */
+    public GridPoint2 getPosition() {
+        return currentPosition;
+    }
 
     /**
      * Public getter which gets the priority of the GridObject
      */
-    public int getPriority()   { return priority;        }
+    public int getPriority() {
+        return priority;
+    }
 
     /**
      * Public getter which gets the x position of the GridObject
      */
-    int getX() { return currentPosition.x; }
+    int getX() {
+        return currentPosition.x;
+    }
 
     /**
      * Public getter which gets the y position of the GridObject
      */
-    int getY() { return currentPosition.y; }
+    int getY() {
+        return currentPosition.y;
+    }
 
     /**
      * Public getter which gets the texture of the GridObject
      */
-    Texture getTexture() { return objectTexture; }
+    Texture getTexture() {
+        return objectTexture;
+    }
 
     //Methods for moving the objects
     /**********************************************************
@@ -122,12 +143,13 @@ abstract public class GridObject {
 
     //note: the following method names are from the perspective of bug 1's buttons
     // ex. moveRight is used for player 1's right button, and player 2's left button
+
     /**
      * This function when called, moves the GridObject to the right
      */
     void moveRight() {
 
-        if(playArea.contains(this.currentPosition.x,
+        if (playArea.contains(this.currentPosition.x,
                 this.currentPosition.y + Gdx.graphics.getWidth() / MAXSTEPS))
             this.currentPosition.y += Gdx.graphics.getWidth() / MAXSTEPS;
         else
@@ -136,14 +158,14 @@ abstract public class GridObject {
         //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
         Gdx.app.log(TAG, "Rectangle: " + playArea.toString());
-        Gdx.app.log(TAG, "Rectangle contains bug: " + playArea.contains(this.currentPosition.x ,this.currentPosition.y));
+        Gdx.app.log(TAG, "Rectangle contains bug: " + playArea.contains(this.currentPosition.x, this.currentPosition.y));
     }
 
     /**
      * This function when called, moves the GridObject to the left
      */
-    void moveLeft(){
-        if(playArea.contains(this.currentPosition.x,
+    void moveLeft() {
+        if (playArea.contains(this.currentPosition.x,
                 this.currentPosition.y - Gdx.graphics.getWidth() / MAXSTEPS))
             this.currentPosition.y -= Gdx.graphics.getWidth() / MAXSTEPS;
         else
@@ -156,9 +178,9 @@ abstract public class GridObject {
     /**
      * This function when called, moves the GridObject up
      */
-    void moveUp(){
+    void moveUp() {
 
-        if(playArea.contains(this.currentPosition.x - Gdx.graphics.getWidth() / MAXSTEPS,
+        if (playArea.contains(this.currentPosition.x - Gdx.graphics.getWidth() / MAXSTEPS,
                 this.currentPosition.y))
             this.currentPosition.x -= Gdx.graphics.getWidth() / MAXSTEPS;
         else
@@ -171,21 +193,21 @@ abstract public class GridObject {
     /**
      * This function when called, moves the GridObject down
      */
-    void moveDown(){
+    void moveDown() {
 
         //if the bug will not be moving out of bounds allow it to move
-        if(playArea.contains(this.currentPosition.x + Gdx.graphics.getWidth() / MAXSTEPS,
+        if (playArea.contains(this.currentPosition.x + Gdx.graphics.getWidth() / MAXSTEPS,
                 this.currentPosition.y)) {
 
             this.currentPosition.x += Gdx.graphics.getWidth() / MAXSTEPS;
 
-        } else{
+        } else {
             this.hide();
         }
 
         //Keep track of bug's position
         Gdx.app.log(TAG, "Rectangle: " + playArea.toString());
-        Gdx.app.log(TAG, "Rectangle contains bug: " + playArea.contains(this.currentPosition.x ,this.currentPosition.y));
+        Gdx.app.log(TAG, "Rectangle contains bug: " + playArea.contains(this.currentPosition.x, this.currentPosition.y));
         //Gdx.app.log(TAG, "Position: " +this.getPosition().toString()); todo remove comment
     }
 

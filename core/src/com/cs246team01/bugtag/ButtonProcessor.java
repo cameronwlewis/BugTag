@@ -10,21 +10,15 @@ import static com.cs246team01.bugtag.GridObject.TAG;
 /**
  * Defines the areas for the user to click on and sends movement commands to
  * grid object handler.
+ * <p>
+ * The ButtonProcessor has a list of static booleans and integers that determine what state the
+ * game is currently in and where on the screen the user has clicked. These variables are used
+ * extensively within the {@link GridObjectHandler} class.
  *
- *  The ButtonProcessor has a list of static booleans and integers that determine what state the
- *  game is currently in and where on the screen the user has clicked. These variables are used
- *  extensively within the {@link GridObjectHandler} class.
- *
- * @author Landon Likhith
+ * @author Landon, Likhith
  * @since 2017-03-08
  */
-public class ButtonProcessor implements InputProcessor{
-    //Variables for game state tracking
-    private static int GAME_NOT_STARTED = 0;
-    private static int GAME_STARTED = 1;
-    private static int GAME_PAUSED = 2;
-    private static int GAME_OVER = 3;
-    private static int GAME_WARM_UP = 4;
+class ButtonProcessor implements InputProcessor {
 
     //These variables will be used for handling user input
     static boolean moveLeft1;
@@ -38,9 +32,9 @@ public class ButtonProcessor implements InputProcessor{
     private static int gameState = 0;
 
     //This holds all of our button objects
-    ArrayList<Button> buttons;
+    private ArrayList<Button> buttons;
 
-    ButtonProcessor(ArrayList<Button> buttons, int state){
+    ButtonProcessor(ArrayList<Button> buttons, int state) {
         moveLeft1 = false;
         moveRight1 = false;
         moveDown1 = false;
@@ -51,19 +45,23 @@ public class ButtonProcessor implements InputProcessor{
         moveUp2 = false;
 
         this.buttons = buttons;
-        this.gameState = state;
+        gameState = state;
     }
 
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
-        if(gameState == GAME_NOT_STARTED) {
+        //Variables for game state tracking
+        int GAME_NOT_STARTED = 0;
+        int GAME_STARTED = 1;
+        int GAME_PAUSED = 2;
+        int GAME_OVER = 3;
+        int GAME_WARM_UP = 4;
+        if (gameState == GAME_NOT_STARTED) {
             //Start game warm up stage
             gameState = GAME_WARM_UP;
             Gdx.app.log(TAG, "Game in warm up");
-        }
-        else if (gameState == GAME_STARTED){
+        } else if (gameState == GAME_STARTED) {
             int buttonPressed1 = 0;
             int buttonPressed2 = 0;
 
@@ -80,7 +78,7 @@ public class ButtonProcessor implements InputProcessor{
             }
 
             //If touched anywhere except buttons, the game is paused
-            if(buttonPressed1 == 0 && buttonPressed2 == 0) {
+            if (buttonPressed1 == 0 && buttonPressed2 == 0) {
                 gameState = GAME_PAUSED;
                 Gdx.app.log(TAG, "Game paused");
             }
@@ -123,11 +121,11 @@ public class ButtonProcessor implements InputProcessor{
                     Gdx.app.log(TAG, "Pressed button 8");
                     break;
             }
-        } else if(gameState == GAME_PAUSED) {
+        } else if (gameState == GAME_PAUSED) {
             //Once game is paused, touching anywhere resumes the game
             gameState = GAME_STARTED;
             Gdx.app.log(TAG, "Game resumed");
-        } else if(gameState == GAME_OVER) {
+        } else if (gameState == GAME_OVER) {
             //If game is over, touching the screen would restart the game
             gameState = GAME_WARM_UP;
             Gdx.app.log(TAG, "Game restarted");
@@ -137,17 +135,23 @@ public class ButtonProcessor implements InputProcessor{
     }
 
     /**
+     * Getter for the game state.
      *
-     * @return
+     * @return returns the gameState variable.
      */
-    public static int getGameState() { return gameState; }
+    static int getGameState() {
+        return gameState;
+    }
 
-    void setGameState(int state) { gameState = state; }
+    void setGameState(int state) {
+        gameState = state;
+    }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         return false;
     }
+
     @Override
     public boolean keyDown(int keycode) {
         return false;
@@ -162,7 +166,6 @@ public class ButtonProcessor implements InputProcessor{
     public boolean keyTyped(char character) {
         return false;
     }
-
 
 
     @Override

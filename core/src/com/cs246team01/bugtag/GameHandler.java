@@ -29,38 +29,31 @@ class GameHandler {
     //Start screen - can possibly remove this. But buttons show up
     private SpriteBatch welcome;
 
-    //Font
-    private FreeTypeFontGenerator fontFT;
-    private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     private BitmapFont font;
 
-    // Font for timer
-    private FreeTypeFontGenerator digitalFontFT;
-    private FreeTypeFontGenerator.FreeTypeFontParameter digitalParameter;
     private BitmapFont digitalFont;
 
     //Timer
     private GameTime timer;
-    private float totalTime;
     private boolean timerReset;
 
     //game-state tag
     private static final String STATE = "GameState";
 
 
-    GameHandler(){
+    GameHandler() {
 
         welcome = new SpriteBatch();
 
         //Since this is a constant (or is it?)
         //we can just assign a hardcoded value
-        totalTime = 63;
+        float totalTime = 63;
         timer = new GameTime(totalTime);
         timerReset = true;
 
         //Font is chewy and font size is 50 colored red
-        fontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/chewy.ttf"));
-        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        FreeTypeFontGenerator fontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/chewy.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 50;
         parameter.borderColor = Color.BLACK;
         parameter.borderStraight = true;
@@ -69,28 +62,23 @@ class GameHandler {
         font.setColor(Color.RED);
 
         //Timer font is called digital dream
-        digitalFontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/digital-dream-skew-narrow.ttf"));
-        digitalParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        FreeTypeFontGenerator digitalFontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/digital-dream-skew-narrow.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter digitalParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         digitalParameter.size = 40;
         digitalParameter.borderColor = Color.BLACK;
         digitalParameter.borderStraight = true;
         digitalParameter.borderWidth = 1f;
         digitalFont = digitalFontFT.generateFont(digitalParameter);
         digitalFont.setColor(Color.RED);
-
-
     }
 
-
-
-
-    void run(){
+    void run() {
 
         // gameState is retrieved here
         gameState = MainGame.gameState;
-        //Gdx.app.log(STATE, "Game state: " + this.gameState); todo remove comment
+        //Gdx.app.log(STATE, "Game state: " + this.gameState); todo: my debug console was going nuts with this logging and I couldn't see anything else, so I had to comment it out. Feel free to un-comment it -Cameron
 
-        switch (gameState){
+        switch (gameState) {
             case GAME_WARM_UP:
                 warmUpGame();
                 break;
@@ -98,24 +86,22 @@ class GameHandler {
                 update();
                 break;
             case GAME_OVER:
-            timerReset = false;
+                timerReset = false;
                 break;
         }
-
-
     }
 
     private void warmUpGame() {
 
         //If game is restarted, the timer is reset to 63
-        if(!timerReset) {
+        if (!timerReset) {
             timer.setTimeRemaining(63);
             timerReset = true;
         }
 
         //tick down the timer
         timer.run();
-        if(timer.getTimeRemaining() < 60){
+        if (timer.getTimeRemaining() < 60) {
             MainGame.gameState = GAME_STARTED;
         }
 
@@ -126,20 +112,19 @@ class GameHandler {
         //update timer value
         timer.run();
 
-        if(!(timer.getTimeRemaining() > 0)){
+        if (!(timer.getTimeRemaining() > 0)) {
             MainGame.gameState = GAME_OVER;
         }
 
     }
 
-
-    void displayTime(SpriteBatch batch){
+    void displayTime(SpriteBatch batch) {
         //Display timer
-        if(timer.getTimeRemaining() >= 60) {
+        if (timer.getTimeRemaining() >= 60) {
             digitalFont.draw(batch, "0:60",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
                     Gdx.graphics.getWidth() / 2);
-        } else if(timer.getTimeRemaining() >= 10) {
+        } else if (timer.getTimeRemaining() >= 10) {
             digitalFont.draw(batch, "0:" + timer.getTimeRemaining(),
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
                     Gdx.graphics.getWidth() / 2);
@@ -157,37 +142,35 @@ class GameHandler {
         }
     }
 
-    void displayMessage(SpriteBatch batch){
-        if(gameState == GAME_NOT_STARTED) {
+    void displayMessage(SpriteBatch batch) {
+        if (gameState == GAME_NOT_STARTED) {
             welcome.begin();
             font.draw(welcome, "BUGTAG!",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5) ,
-                    Gdx.graphics.getWidth() / 2 );
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
+                    Gdx.graphics.getWidth() / 2);
             font.draw(welcome, "Press anywhere to start!",
-                    Gdx.graphics.getHeight() / 2 ,
-                    Gdx.graphics.getWidth() / 4 );
+                    Gdx.graphics.getHeight() / 2,
+                    Gdx.graphics.getWidth() / 4);
 
             welcome.end();
-        } else if(gameState == GAME_WARM_UP)
-        {
+        } else if (gameState == GAME_WARM_UP) {
             font.draw(batch, "Game starts in",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5) ,
-                    Gdx.graphics.getWidth() / 3 );
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
+                    Gdx.graphics.getWidth() / 3);
             font.draw(batch, (timer.getTimeRemaining() - 60) + "...",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12) ,
-                    Gdx.graphics.getWidth() / 4 );
-        }
-        else if (gameState == GAME_PAUSED) {
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+                    Gdx.graphics.getWidth() / 4);
+        } else if (gameState == GAME_PAUSED) {
             font.draw(batch, "GAME PAUSED!",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5) ,
-                    Gdx.graphics.getWidth() / 3 );
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
+                    Gdx.graphics.getWidth() / 3);
             font.draw(batch, "Press anywhere to resume!",
-                    Gdx.graphics.getHeight() / 3 ,
-                    Gdx.graphics.getWidth() / 4 );
+                    Gdx.graphics.getHeight() / 3,
+                    Gdx.graphics.getWidth() / 4);
         } else if (gameState == GAME_OVER) {
             font.draw(batch, "GAME OVER!",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5) ,
-                    Gdx.graphics.getWidth() / 4 );
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
+                    Gdx.graphics.getWidth() / 4);
            /* if(winner == 1) {
                 font.draw(batch, "Player 1 won the game!", //todo maybe make this say chaser?
                         Gdx.graphics.getHeight() / 2 ,
@@ -199,19 +182,14 @@ class GameHandler {
                         Gdx.graphics.getWidth() / 5 );
             }*/
             font.draw(batch, "Press anywhere to restart!",
-                    Gdx.graphics.getHeight() / 3 ,
-                    Gdx.graphics.getWidth() / 6 );
+                    Gdx.graphics.getHeight() / 3,
+                    Gdx.graphics.getWidth() / 6);
         }
     }
 
-
-
-    void dispose(){
+    void dispose() {
         font.dispose();
         digitalFont.dispose();
         welcome.dispose();
     }
-
-
-
 }

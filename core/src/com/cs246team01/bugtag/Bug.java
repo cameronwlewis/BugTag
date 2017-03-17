@@ -20,8 +20,6 @@ public class Bug extends GridObject {
     private static final String TAG = "DebugTagger";
 
     private boolean isChaser;
-    private float bug_height;
-    private float bug_width;
 
     //To keep track of player1 and player2 bugs
     private int playerID;
@@ -29,10 +27,10 @@ public class Bug extends GridObject {
     // bug/player hit box
     private Rectangle bug_hitbox;
 
-    public Bug(){
+    public Bug() {
     }
 
-    Bug(Texture bugImage, boolean chaser, int playerID){
+    Bug(Texture bugImage, boolean chaser, int playerID) {
         //This sets whether the bug will be the chaser randomly
         isChaser = chaser;
 
@@ -41,18 +39,17 @@ public class Bug extends GridObject {
 
         if (playerID == 1) {
             currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 8) / 10,
-                    Gdx.graphics.getHeight()/2);
+                    Gdx.graphics.getHeight() / 2);
             this.playerID = 1;
-        }
-        else {
+        } else {
             currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 2) / 10,
                     Gdx.graphics.getHeight() / 2);
             this.playerID = 2;
         }
 
         // make hit box for bug/player
-        bug_height = bugImage.getHeight();
-        bug_width  = bugImage.getWidth();
+        float bug_height = bugImage.getHeight();
+        float bug_width = bugImage.getWidth();
         bug_hitbox = new Rectangle(getX(), getY(), bug_width, bug_height);
 
 
@@ -60,13 +57,13 @@ public class Bug extends GridObject {
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
-     void updateHitBox(){
+    void updateHitBox() {
         bug_hitbox.setPosition(getX(), getY());
     }
 
     // todo make a 'touchingOverBug' function here using bug_hitbox.contains()
 
-    Rectangle getHitBox(){
+    Rectangle getHitBox() {
 
         return bug_hitbox;
     }
@@ -76,7 +73,7 @@ public class Bug extends GridObject {
     }
 
     //When the bug goes off of the screen
-    public void hide(){
+    public void hide() {
 
     }
 }

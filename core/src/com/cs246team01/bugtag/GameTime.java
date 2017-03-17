@@ -13,18 +13,25 @@ class GameTime {
 
     /**
      * Constructor to set the total amount of time.
+     *
      * @param totaltime the total amount of time available.
      */
-    GameTime(float totaltime) { time = totaltime; }
+    GameTime(float totaltime) {
+        time = totaltime;
+    }
 
     /**
      * Getter to return the amount of time remaining for the user before game ends.
+     *
      * @return The remaining amount of time, in seconds.
      */
-    int getTimeRemaining() { return remainingSeconds; }
+    int getTimeRemaining() {
+        return remainingSeconds;
+    }
 
     /**
      * Setter to change the total amount of time remaining.
+     *
      * @param totalTime the amount desired to be set.
      */
     void setTimeRemaining(float totalTime) {
@@ -38,6 +45,6 @@ class GameTime {
         float deltaTime = Gdx.graphics.getDeltaTime();
 
         time -= deltaTime;
-        remainingSeconds = ((int)time);
+        remainingSeconds = ((int) time);
     }
 }
