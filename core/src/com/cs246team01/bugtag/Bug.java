@@ -24,13 +24,26 @@ public class Bug extends GridObject {
     //To keep track of player1 and player2 bugs
     private int playerID;
     private Direction currentDirection;
+    private Texture upTexture;
+    private Texture downTexture;
+    private Texture leftTexture;
+    private Texture rightTexture;
 
     // bug/player hit box
     private Rectangle bug_hitbox;
 
+    //Default Contructor creates player 1;
     public Bug() {
+        currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 8) / 10,
+                Gdx.graphics.getHeight() / 2);
+        this.playerID = 1;
+        upTexture    = new Texture("bugs/bug1left.png");
+        downTexture  = new Texture("bugs/bug1right.png");
+        leftTexture  = new Texture("bugs/bug1down.png");
+        rightTexture = new Texture("bugs/bug1up.png");
     }
 
+    //non-default
     Bug(Texture bugImage, boolean chaser, int playerID) {
         //This sets whether the bug will be the chaser randomly
         isChaser = chaser;
@@ -42,11 +55,19 @@ public class Bug extends GridObject {
             currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 8) / 10,
                     Gdx.graphics.getHeight() / 2);
             this.playerID = 1;
+            upTexture    = new Texture("bugs/bug1left.png");
+            downTexture  = new Texture("bugs/bug1right.png");
+            leftTexture  = new Texture("bugs/bug1down.png");
+            rightTexture = new Texture("bugs/bug1up.png");
             setCurrentDirection(Direction.Up);
         } else {
             currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 2) / 10,
                     Gdx.graphics.getHeight() / 2);
             this.playerID = 2;
+            upTexture    = new Texture("bugs/bug2left.png");
+            downTexture  = new Texture("bugs/bug2right.png");
+            leftTexture  = new Texture("bugs/bug2down.png");
+            rightTexture = new Texture("bugs/bug2up.png");
             setCurrentDirection(Direction.Down);
         }
 
@@ -73,28 +94,16 @@ public class Bug extends GridObject {
 
         switch (currentDirection) {
             case Up:
-                if (playerID == 1)
-                    setTexture(new Texture("bugs/bug1left.png"));
-                else
-                    setTexture(new Texture("bugs/bug2left.png"));
+                setTexture(upTexture);
                 break;
             case Down:
-                if (playerID == 1)
-                    setTexture(new Texture("bugs/bug1right.png"));
-                else
-                    setTexture(new Texture("bugs/bug2right.png"));
+                setTexture(downTexture);
                 break;
             case Left:
-                if (playerID == 1)
-                    setTexture(new Texture("bugs/bug1down.png"));
-                else
-                    setTexture(new Texture("bugs/bug2down.png"));
+                setTexture(leftTexture);
                 break;
             case Right:
-                if (playerID == 1)
-                    setTexture(new Texture("bugs/bug1up.png"));
-                else
-                    setTexture(new Texture("bugs/bug2up.png"));
+                setTexture(rightTexture);
                 break;
             default:
                 break;
