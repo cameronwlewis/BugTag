@@ -29,7 +29,7 @@ class GameWin {
         Rectangle bug1_hitbox = bugGame.getBugOne().getHitBox();
         Rectangle bug2_hitbox = bugGame.getBugTwo().getHitBox();
 
-        if (bug1_hitbox.contains(bug2_hitbox.getX(), bug2_hitbox.getY()))
+        if (bug1_hitbox.overlaps(bug2_hitbox))
             return win_status = 3;
         else
             return win_status = 1;
