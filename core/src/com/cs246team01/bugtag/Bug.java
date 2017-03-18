@@ -23,6 +23,7 @@ public class Bug extends GridObject {
 
     //To keep track of player1 and player2 bugs
     private int playerID;
+    private Direction currentDirection;
 
     // bug/player hit box
     private Rectangle bug_hitbox;
@@ -41,10 +42,12 @@ public class Bug extends GridObject {
             currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 8) / 10,
                     Gdx.graphics.getHeight() / 2);
             this.playerID = 1;
+            setCurrentDirection(Direction.Up);
         } else {
             currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 2) / 10,
                     Gdx.graphics.getHeight() / 2);
             this.playerID = 2;
+            setCurrentDirection(Direction.Down);
         }
 
         // make hit box for bug/player
@@ -60,6 +63,49 @@ public class Bug extends GridObject {
         //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
     }
+
+    /**
+     *
+     * @param dir
+     */
+    void setCurrentDirection(Direction dir) {
+        this.currentDirection = dir;
+
+        switch (currentDirection) {
+            case Up:
+                if (playerID == 1)
+                    setTexture(new Texture("bugs/bug1left.png"));
+                else
+                    setTexture(new Texture("bugs/bug2left.png"));
+                break;
+            case Down:
+                if (playerID == 1)
+                    setTexture(new Texture("bugs/bug1right.png"));
+                else
+                    setTexture(new Texture("bugs/bug2right.png"));
+                break;
+            case Left:
+                if (playerID == 1)
+                    setTexture(new Texture("bugs/bug1down.png"));
+                else
+                    setTexture(new Texture("bugs/bug2down.png"));
+                break;
+            case Right:
+                if (playerID == 1)
+                    setTexture(new Texture("bugs/bug1up.png"));
+                else
+                    setTexture(new Texture("bugs/bug2up.png"));
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    Direction getCurrentDirection() { return currentDirection; }
 
     void updateHitBox() {
         bug_hitbox.setPosition(getX(), getY());

@@ -61,11 +61,11 @@ class GridObjectHandler {
         bug2 = new Bug(bug2_texture, !randBoolean, 2);
 
         //Initialize Obstacles
-        Obstacle obstacleOne = new Obstacle(new Texture("obstacles/Real_Pear.png"));
-        Obstacle obstacleTwo = new Obstacle(new Texture("obstacles/Real_Apple.png"));
+        Obstacle obstacleOne   = new Obstacle(new Texture("obstacles/Real_Pear.png"));
+        Obstacle obstacleTwo   = new Obstacle(new Texture("obstacles/Real_Apple.png"));
         Obstacle obstacleThree = new Obstacle(new Texture("obstacles/Real_Bread.png"));
-        Obstacle obstacleFour = new Obstacle(new Texture("obstacles/Real_Watermelon.png"));
-        Obstacle obstacleFive = new Obstacle(new Texture("obstacles/Real_Orange.png"));
+        Obstacle obstacleFour  = new Obstacle(new Texture("obstacles/Real_Watermelon.png"));
+        Obstacle obstacleFive  = new Obstacle(new Texture("obstacles/Real_Orange.png"));
 
         //Button textures
         Texture button1 = new Texture("buttons/arrow-left.png");
@@ -189,26 +189,47 @@ class GridObjectHandler {
         }
     }
 
+    /**
+     *
+     * @param b
+     */
     private void handleMove1(Bug b) {
-
+        //Up
         if (ButtonProcessor.moveUp1) {
             b.moveUp();
             ButtonProcessor.moveUp1 = false;
-        }
 
+            //set direction
+            if (b.getCurrentDirection() != Direction.Up)
+                b.setCurrentDirection(Direction.Up);
+        }
+        //Down
         if (ButtonProcessor.moveDown1) {
             b.moveDown();
             ButtonProcessor.moveDown1 = false;
+
+            //set direction
+            if (b.getCurrentDirection() != Direction.Down)
+                b.setCurrentDirection(Direction.Down);
         }
+        //Left
         if (ButtonProcessor.moveLeft1) {
             b.moveLeft();
             ButtonProcessor.moveLeft1 = false;
+
+            //set direction
+            if (b.getCurrentDirection() != Direction.Left)
+                b.setCurrentDirection(Direction.Left);
         }
+        //Right
         if (ButtonProcessor.moveRight1) {
             b.moveRight();
             ButtonProcessor.moveRight1 = false;
-        }
 
+            //set direction
+            if (b.getCurrentDirection() != Direction.Right)
+                b.setCurrentDirection(Direction.Right);
+        }
     }
 
     /**
@@ -217,23 +238,42 @@ class GridObjectHandler {
      * @param b
      */
     private void handleMove2(Bug b) {
-
+        //Down
         if (ButtonProcessor.moveUp2) {
             b.moveDown();
             ButtonProcessor.moveUp2 = false;
-        }
 
+
+            //set direction
+            if (b.getCurrentDirection() != Direction.Down)
+                b.setCurrentDirection(Direction.Down);
+        }
+        //Up
         if (ButtonProcessor.moveDown2) {
             b.moveUp();
             ButtonProcessor.moveDown2 = false;
+
+            //set direction
+            if (b.getCurrentDirection() != Direction.Up)
+                b.setCurrentDirection(Direction.Up);
         }
+        //Right
         if (ButtonProcessor.moveLeft2) {
             b.moveRight();
             ButtonProcessor.moveLeft2 = false;
+
+            //set direction
+            if (b.getCurrentDirection() != Direction.Right)
+                b.setCurrentDirection(Direction.Right);
         }
+        //Left
         if (ButtonProcessor.moveRight2) {
             b.moveLeft();
             ButtonProcessor.moveRight2 = false;
+
+            //set direction
+            if (b.getCurrentDirection() != Direction.Left)
+                b.setCurrentDirection(Direction.Left);
         }
     }
 
