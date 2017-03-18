@@ -48,8 +48,12 @@ public class Bug extends GridObject {
         }
 
         // make hit box for bug/player
-        float bug_height = bugImage.getHeight();
-        float bug_width = bugImage.getWidth();
+        //float bug_height = bugImage.getHeight();
+        //float bug_width = bugImage.getWidth();
+
+        //updated hit box dimensions, it is set to a universal size that adapts with the different screen sizes
+        float bug_height = Gdx.graphics.getHeight() / 14;
+        float bug_width = Gdx.graphics.getHeight() / 14;
         bug_hitbox = new Rectangle(getX(), getY(), bug_width, bug_height);
 
 

@@ -48,13 +48,13 @@ class GridObjectHandler {
         Texture bug1_texture = new Texture("bugs/yellow_idle_large.png");
         Texture bug2_texture = new Texture("bugs/red_idle.png");
 
-        //initialize starting positions for use in resetting game.
+        /*//initialize starting positions for use in resetting game.
         // This MUST HAPPEN before initializing bugs,
         // OR hit boxes WILL NOT generate.
         GridPoint2 bug1_pos_start = new GridPoint2((Gdx.graphics.getWidth() * 6) / 10,
                 Gdx.graphics.getHeight() / 2);
         GridPoint2 bug2_pos_start = new GridPoint2((Gdx.graphics.getWidth() * 4) / 10,
-                Gdx.graphics.getHeight() / 2);
+                Gdx.graphics.getHeight() / 2);*/
 
         //Initialize bugs
         bug1 = new Bug(bug1_texture, randBoolean, 1);
@@ -95,10 +95,6 @@ class GridObjectHandler {
         gridObjects.add(new Button(8, button8));
     }
 
-   /* void resetBugPositions() {
-        bug1.setPosition(bug1_pos_start);
-        bug2.setPosition(bug2_pos_start);
-    }*/
 
     /**
      * This is the only method we will call in the render method.
