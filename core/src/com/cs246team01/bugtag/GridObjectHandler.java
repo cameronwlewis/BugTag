@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.utils.Timer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,7 +152,7 @@ class GridObjectHandler {
 
         for (GridObject g : gridObjects) {
 
-            //bug handling
+            //if object is bug and is not hiding check for movement
             if (g instanceof Bug) {
 
                 Bug b = (Bug) g;
@@ -181,100 +182,179 @@ class GridObjectHandler {
         for (GridObject g : gridObjects) {
             if (g instanceof Button) {
                 batch.draw(g.getTexture(), g.getX(), g.getY(), buttonSide, buttonSide);
-            } else if (g instanceof Bug) {
+            } else if (g instanceof Bug && !((Bug) g).isHiding()) {
                 batch.draw(g.getTexture(), g.getX(), g.getY(), bugWidth, bugHeight);
             } else if (g instanceof Obstacle) {
                 batch.draw(g.getTexture(), g.getX(), g.getY(), obstacleWidth, obstacleHeight);
             }
+            //make the bug visible after 3 seconds
+            if(g instanceof Bug && ((Bug) g).isHiding()){
+                final Bug b = (Bug) g;
+                Timer.schedule(new Timer.Task(){
+                    @Override
+                    public void run() {
+                        if(b.isHiding())
+                            makeVisible(b);
+                    }
+                }
+                        ,3);//delay in seconds
         }
+
+        }
+
+
+
+    }
+
+    /** moves the bug back on screen and makes it visible
+     *
+     * @param b
+     */
+    private void makeVisible(Bug b) {
+        //wherever the bug is hiding, move it the opposite direction
+        if(b.isHidingLeft())
+            b.moveRight();
+        if(b.isHidingRight())
+            b.moveLeft();
+        if(b.isHidingTop())
+            b.moveDown();
+        if(b.isHidingDown())
+            b.moveUp();
+        //make it visible
+        b.setHiding(false);
     }
 
     /**
+     * Handles input from {@link ButtonProcessor} to move player 1
+     *
+     * The method takes taps received from player 1's buttons and checks if the player is currently
+     * hiding. If not it moves any direction that has been pressed and changes the direction of the
+     * image.
+     *
+     * If the bug is hiding it checks for several rules. First, the bug cannot continue to move
+     * farther away from the screen. Second, if the bug moves towards the screen it immediately
+     * becomes visible.
      *
      * @param b
      */
     private void handleMove1(Bug b) {
-        //Up
-        if (ButtonProcessor.moveUp1) {
-            b.moveUp();
-            ButtonProcessor.moveUp1 = false;
+            //move up if we are not hiding at top already
+            if (ButtonProcessor.moveUp1 && !b.isHidingTop()) {
+                b.moveUp();
+                ButtonProcessor.moveUp1 = false;
+                //now handle invisible movement
+                if(b.isHidingDown())
+                    b.setHiding(false);
 
-            //set direction
-            if (b.getCurrentDirection() != Direction.Up)
-                b.setCurrentDirection(Direction.Up);
-        }
-        //Down
-        if (ButtonProcessor.moveDown1) {
-            b.moveDown();
-            ButtonProcessor.moveDown1 = false;
+                //set direction
+                if (b.getCurrentDirection() != Direction.Up)
+                    b.setCurrentDirection(Direction.Up);
+            }
+            //Down
+            if (ButtonProcessor.moveDown1 && !b.isHidingDown()) {
+                b.moveDown();
+                ButtonProcessor.moveDown1 = false;
+                //now handle invisible movement
+                if(b.isHidingTop())
+                    b.setHiding(false);
 
-            //set direction
-            if (b.getCurrentDirection() != Direction.Down)
-                b.setCurrentDirection(Direction.Down);
-        }
-        //Left
-        if (ButtonProcessor.moveLeft1) {
-            b.moveLeft();
-            ButtonProcessor.moveLeft1 = false;
+                //set direction
+                if (b.getCurrentDirection() != Direction.Down)
+                    b.setCurrentDirection(Direction.Down);
+            }
+            //Left
+            if (ButtonProcessor.moveLeft1 && !b.isHidingLeft()) {
+                b.moveLeft();
+                ButtonProcessor.moveLeft1 = false;
+                //now handle invisible movement
+                if(b.isHidingRight())
+                    b.setHiding(false);
 
-            //set direction
-            if (b.getCurrentDirection() != Direction.Left)
-                b.setCurrentDirection(Direction.Left);
-        }
-        //Right
-        if (ButtonProcessor.moveRight1) {
-            b.moveRight();
-            ButtonProcessor.moveRight1 = false;
+                //set direction
+                if (b.getCurrentDirection() != Direction.Left)
+                    b.setCurrentDirection(Direction.Left);
+            }
+            //Right
+            if (ButtonProcessor.moveRight1 && !b.isHidingRight()) {
+                b.moveRight();
+                ButtonProcessor.moveRight1 = false;
+                //now handle invisible movement
+                if(b.isHidingLeft())
+                    b.setHiding(false);
 
-            //set direction
-            if (b.getCurrentDirection() != Direction.Right)
-                b.setCurrentDirection(Direction.Right);
-        }
+                //set direction
+                if (b.getCurrentDirection() != Direction.Right)
+                    b.setCurrentDirection(Direction.Right);
+            }
+
     }
 
+
     /**
+     * Handles input from {@link ButtonProcessor} to move player 1
+     *
      * Important Note, Movement is inverted for player bug2 buttons (upButton = moveDown())
+     * The method takes taps received from player 2's buttons and checks if the player is currently
+     * hiding. If not it moves any direction that has been pressed and changes the direction of the
+     * image.
+     *
+     * If the bug is hiding it checks for several rules. First, the bug cannot continue to move
+     * farther away from the screen. Second, if the bug moves towards the screen it immediately
+     * becomes visible. Invisble movement calls are also inverted from player 1's movement
      *
      * @param b
      */
     private void handleMove2(Bug b) {
-        //Down
-        if (ButtonProcessor.moveUp2) {
-            b.moveDown();
-            ButtonProcessor.moveUp2 = false;
+
+            //Down
+            if (ButtonProcessor.moveUp2 && !b.isHidingDown()) {
+                b.moveDown();
+                ButtonProcessor.moveUp2 = false;
+                //now handle invisible movement
+                if(b.isHidingTop())
+                    b.setHiding(false);
 
 
-            //set direction
-            if (b.getCurrentDirection() != Direction.Down)
-                b.setCurrentDirection(Direction.Down);
-        }
-        //Up
-        if (ButtonProcessor.moveDown2) {
-            b.moveUp();
-            ButtonProcessor.moveDown2 = false;
+                //set direction
+                if (b.getCurrentDirection() != Direction.Down)
+                    b.setCurrentDirection(Direction.Down);
+            }
+            //Up
+            if (ButtonProcessor.moveDown2 && !b.isHidingTop()) {
+                b.moveUp();
+                ButtonProcessor.moveDown2 = false;
+                //now handle invisible movement
+                if(b.isHidingDown())
+                    b.setHiding(false);
 
-            //set direction
-            if (b.getCurrentDirection() != Direction.Up)
-                b.setCurrentDirection(Direction.Up);
-        }
-        //Right
-        if (ButtonProcessor.moveLeft2) {
-            b.moveRight();
-            ButtonProcessor.moveLeft2 = false;
+                //set direction
+                if (b.getCurrentDirection() != Direction.Up)
+                    b.setCurrentDirection(Direction.Up);
+            }
+            //Right
+            if (ButtonProcessor.moveLeft2 && !b.isHidingRight()) {
+                b.moveRight();
+                ButtonProcessor.moveLeft2 = false;
+                //now handle invisible movement
+                if(b.isHidingLeft())
+                    b.setHiding(false);
 
-            //set direction
-            if (b.getCurrentDirection() != Direction.Right)
-                b.setCurrentDirection(Direction.Right);
-        }
-        //Left
-        if (ButtonProcessor.moveRight2) {
-            b.moveLeft();
-            ButtonProcessor.moveRight2 = false;
+                //set direction
+                if (b.getCurrentDirection() != Direction.Right)
+                    b.setCurrentDirection(Direction.Right);
+            }
+            //Left
+            if (ButtonProcessor.moveRight2 && !b.isHidingLeft()) {
+                b.moveLeft();
+                ButtonProcessor.moveRight2 = false;
+                //now handle invisible movement
+                if(b.isHidingRight())
+                    b.setHiding(false);
 
-            //set direction
-            if (b.getCurrentDirection() != Direction.Left)
-                b.setCurrentDirection(Direction.Left);
-        }
+                //set direction
+                if (b.getCurrentDirection() != Direction.Left)
+                    b.setCurrentDirection(Direction.Left);
+            }
     }
 
     private void handlemoveObs(Obstacle o) {

@@ -74,10 +74,7 @@ public class Button extends GridObject {
                 Gdx.graphics.getHeight() / 4, Gdx.graphics.getHeight() / 4);
     }
 
-    // We do not use this method
-    // It is here to satisfy the abstract class
-    public void hide() {
-    }
+
 
     /**
      * Getter to obtain the area which can be touched by the user
@@ -86,6 +83,20 @@ public class Button extends GridObject {
      */
     Rectangle getClickArea() {
         return clickArea;
+    }
+
+    // We do not use these methods
+    // They are here to satisfy the abstract class
+    void hideTop() {
+    }
+
+    void hideLeft() {
+    }
+
+    void hideRight() {
+    }
+
+    void hideDown() {
     }
 
 }

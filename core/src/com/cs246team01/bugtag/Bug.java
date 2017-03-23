@@ -20,6 +20,11 @@ public class Bug extends GridObject {
     private static final String TAG = "DebugTagger";
 
     private boolean isChaser;
+    //used to determine if bug should be visible
+    private boolean hidingLeft;
+    private boolean hidingRight;
+    private boolean hidingTop;
+    private boolean hidingDown;
 
     //To keep track of player1 and player2 bugs
     private int playerID;
@@ -41,6 +46,10 @@ public class Bug extends GridObject {
         downTexture  = new Texture("bugs/bug1right.png");
         leftTexture  = new Texture("bugs/bug1down.png");
         rightTexture = new Texture("bugs/bug1up.png");
+        hidingLeft = false;
+        hidingRight = false;
+        hidingTop = false;
+        hidingDown = false;
     }
 
     //non-default
@@ -52,7 +61,7 @@ public class Bug extends GridObject {
         //Set bug in bottom left corner
 
         if (playerID == 1) {
-            currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 8) / 10,
+            currentPosition = new GridPoint2((int) playArea.getWidth()+ (int) playArea.getX(),
                     Gdx.graphics.getHeight() / 2);
             this.playerID = 1;
             upTexture    = new Texture("bugs/bug1left.png");
@@ -61,7 +70,7 @@ public class Bug extends GridObject {
             rightTexture = new Texture("bugs/bug1up.png");
             setCurrentDirection(Direction.Up);
         } else {
-            currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 2) / 10,
+            currentPosition = new GridPoint2((int) playArea.getX(),
                     Gdx.graphics.getHeight() / 2);
             this.playerID = 2;
             upTexture    = new Texture("bugs/bug2left.png");
@@ -131,8 +140,64 @@ public class Bug extends GridObject {
         return playerID;
     }
 
-    //When the bug goes off of the screen
-    public void hide() {
+    /* hiding notes
+    * with each hide method, the bug moves slightly off screen and is not visible for
+    * 3 seconds. The bugs movement will be limited to the side they are on. If they try
+    * to move back to the screen they will become visible again.
+     */
 
+    //When the bug goes off of the screen
+    public void hideTop() {
+        this.hidingTop = true;
+
+        this.currentPosition.x -= Gdx.graphics.getWidth() / MAXSTEPS;
     }
+    public void hideDown(){
+        this.hidingDown = true;
+
+        this.currentPosition.x += Gdx.graphics.getWidth() / MAXSTEPS;
+    }
+
+    public void hideLeft(){
+        this.hidingLeft = true;
+        //move off screen
+        this.currentPosition.y -= Gdx.graphics.getWidth() / MAXSTEPS;
+    }
+    public void hideRight(){
+        this.hidingRight = true;
+        //move off screen
+        this.currentPosition.y += Gdx.graphics.getWidth() / MAXSTEPS;
+    }
+
+    public boolean isHiding(){
+        //return any instance of the bug hiding
+        if(this.hidingLeft || this.hidingTop || this.hidingRight || this.hidingDown)
+            return true;
+        else
+            return false;
+    }
+
+    public void setHiding(boolean hide){
+        this.hidingLeft = hide;
+        this.hidingRight = hide;
+        this.hidingTop = hide;
+        this.hidingDown = hide;
+    }
+
+    public boolean isHidingLeft() {
+        return hidingLeft;
+    }
+
+    public boolean isHidingRight() {
+        return hidingRight;
+    }
+
+    public boolean isHidingTop() {
+        return hidingTop;
+    }
+
+    public boolean isHidingDown() {
+        return hidingDown;
+    }
+
 }

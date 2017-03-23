@@ -63,8 +63,14 @@ public class Obstacle extends GridObject {
         Gdx.app.log(TAG, this.getPosition().toString());
     }
 
-    //for when an obstacle scrolls off the screen
-    public void hide() {
-
+    //methods for abstract class
+    void hideTop() {
     }
+    void hideLeft() {
+    }
+    void hideRight() {
+    }
+    void hideDown() {
+    }
+
 }

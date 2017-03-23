@@ -14,10 +14,12 @@ import com.badlogic.gdx.math.Rectangle;
 abstract public class GridObject {
     //Use this for tagging bugs
     static final String TAG = "DebugTagger";
-    private static final int MAXSTEPS = 40;
+    static final String MOVE = "MoveTagger";
+    protected static final int MAXSTEPS = 40;
+    protected static final int bugImageLength = Gdx.graphics.getHeight() / 16;
 
     //Data
-    protected GridPoint2 currentPosition = new GridPoint2(); 
+    protected GridPoint2 currentPosition = new GridPoint2();
     private int priority;
     Texture objectTexture;
 
@@ -26,11 +28,11 @@ abstract public class GridObject {
      * if the objects are contained within the rectangle then they can continue moving until
      * they reach the edge
      */
-    private static Rectangle playArea = new Rectangle(Gdx.graphics.getHeight() / 4, 0,
+    protected static Rectangle playArea = new Rectangle(Gdx.graphics.getHeight() / 4, 0,
             //width
-            Gdx.graphics.getWidth() - 2 * (Gdx.graphics.getHeight() / 4) - (Gdx.graphics.getHeight() / 24)
+            Gdx.graphics.getWidth() - 2 * (Gdx.graphics.getHeight() / 4) - (bugImageLength)
             //height
-            , Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 16);
+            , Gdx.graphics.getHeight() - bugImageLength);
 
 
     /**
@@ -171,7 +173,7 @@ abstract public class GridObject {
                 this.currentPosition.y + Gdx.graphics.getWidth() / MAXSTEPS))
             this.currentPosition.y += Gdx.graphics.getWidth() / MAXSTEPS;
         else
-            this.hide();
+            this.hideRight();
 
         //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
@@ -187,7 +189,7 @@ abstract public class GridObject {
                 this.currentPosition.y - Gdx.graphics.getWidth() / MAXSTEPS))
             this.currentPosition.y -= Gdx.graphics.getWidth() / MAXSTEPS;
         else
-            this.hide();
+            this.hideLeft();
 
         //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
@@ -202,7 +204,7 @@ abstract public class GridObject {
                 this.currentPosition.y))
             this.currentPosition.x -= Gdx.graphics.getWidth() / MAXSTEPS;
         else
-            this.hide();
+            this.hideTop();
 
         //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
@@ -220,18 +222,21 @@ abstract public class GridObject {
             this.currentPosition.x += Gdx.graphics.getWidth() / MAXSTEPS;
 
         } else {
-            this.hide();
+            this.hideDown();
         }
 
         //Keep track of bug's position
-        Gdx.app.log(TAG, "Rectangle: " + playArea.toString());
-        Gdx.app.log(TAG, "Rectangle contains bug: " + playArea.contains(this.currentPosition.x, this.currentPosition.y));
-        Gdx.app.log(TAG, "Position: " +this.getPosition().toString());
+        Gdx.app.log(MOVE, "Rectangle: " + playArea.toString());
+        Gdx.app.log(MOVE, "Rectangle contains bug: " + playArea.contains(this.currentPosition.x, this.currentPosition.y));
+        Gdx.app.log(MOVE, "Position: " +this.getPosition().toString());
     }
 
     /**
      * This function when called, hides the GridObject
      */
-    abstract void hide();
+    abstract void hideTop();
+    abstract void hideLeft();
+    abstract void hideRight();
+    abstract void hideDown();
 
 }
