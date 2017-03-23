@@ -17,7 +17,7 @@ abstract public class GridObject {
     private static final int MAXSTEPS = 40;
 
     //Data
-    GridPoint2 currentPosition = new GridPoint2(); //todo: this should seriously be private. But a lot of methods depend on this so it might take some work. -Cameron
+    protected GridPoint2 currentPosition = new GridPoint2(); 
     private int priority;
     Texture objectTexture;
 
