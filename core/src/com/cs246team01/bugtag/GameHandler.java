@@ -43,7 +43,7 @@ class GameHandler {
     private static final String STATE = "GameState";
 
     // non-default constructor to pass in both Bug objects to check who is the chaser at any time
-    GameHandler(Bug bug1_yellow, Bug bug2_red) {
+    GameHandler() {
 
         welcome = new SpriteBatch();
 
@@ -73,11 +73,7 @@ class GameHandler {
         digitalFont = digitalFontFT.generateFont(digitalParameter);
         digitalFont.setColor(Color.RED);
 
-        // Game greeting notifying who is the chaser
-        if (bug1_yellow.isChaser())
-            notifyChaser = "Yellow bug is the chaser!";
-        else if (bug2_red.isChaser())
-            notifyChaser = "Red bug is the chaser!";
+
     }
 
     void run() {
@@ -97,6 +93,14 @@ class GameHandler {
                 timerReset = false;
                 break;
         }
+    }
+    // set the greeting notifying who is the chaser
+    void setChaserStatus(Bug bug1_yellow, Bug bug2_red){
+
+        if (bug1_yellow.isChaser())
+            notifyChaser = "Yellow bug is the chaser!";
+        else if (bug2_red.isChaser())
+            notifyChaser = "Red bug is the chaser!";
     }
 
     private void warmUpGame() {

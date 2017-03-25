@@ -200,6 +200,6 @@ public class Bug extends GridObject {
         return hidingDown;
     }
 
-    public boolean isChaser() {return isChaser;}
+    boolean isChaser() {return isChaser;}
 
 }
