@@ -123,26 +123,6 @@ class GridObjectHandler {
     }
 
     /**
-     * This method checks if we should stop the game
-     * It returns a 1 if the
-     * wins, 2 if the timer runs out;
-     * -1 if game is still going
-     *
-     * @param chaserWin
-     * @param time
-     * @return
-     */
-    public int checkWin(boolean chaserWin, int time) {
-        if (time <= 0) {
-            return 2;
-        } else if (chaserWin) {
-            return -1;
-        } else {
-            return 0;
-        }
-    }
-
-    /**
      * Checks if screen has been tapped and moves the bug.
      * This method goes through each object in the game and determines which direction
      * they need to move. Bug movement is determined by the ButtonProcessor class.

@@ -35,6 +35,8 @@ class GameHandler {
 
     private String notifyChaser;
 
+    private String winnerMessage;
+
     //Timer
     private GameTime timer;
     private boolean timerReset;
@@ -80,7 +82,6 @@ class GameHandler {
 
         // gameState is retrieved here
         gameState = MainGame.gameState;
-        //Gdx.app.log(STATE, "Game state: " + this.gameState); todo: my debug console was going nuts with this logging and I couldn't see anything else, so I had to comment it out. Feel free to un-comment it -Cameron
 
         switch (gameState) {
             case GAME_WARM_UP:
@@ -102,6 +103,10 @@ class GameHandler {
         else if (bug2_red.isChaser())
             notifyChaser = "Red bug is the chaser!";
     }
+
+    void setWinnerMessage(String message){winnerMessage = message;}
+
+    int getGameTime(){return timer.getTimeRemaining();}
 
     private void warmUpGame() {
 
@@ -163,7 +168,6 @@ class GameHandler {
             font.draw(welcome, "Press anywhere to start!",
                     Gdx.graphics.getHeight() / 2,
                     Gdx.graphics.getWidth() / 4);
-
             welcome.end();
         } else if (gameState == GAME_WARM_UP) {
 
@@ -181,19 +185,9 @@ class GameHandler {
                     Gdx.graphics.getHeight() / 3,
                     Gdx.graphics.getWidth() / 4);
         } else if (gameState == GAME_OVER) {
-            font.draw(batch, "GAME OVER!",
+            font.draw(batch, winnerMessage + "\n GAME OVER!",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
                     Gdx.graphics.getWidth() / 4);
-           /* if(winner == 1) {
-                font.draw(batch, "Player 1 won the game!", //todo maybe make this say chaser?
-                        Gdx.graphics.getHeight() / 2 ,
-                        Gdx.graphics.getWidth() / 5 );
-            } else if (winner == 2)
-            {
-                font.draw(batch, "Player 2 won the game!", //todo and make this say evader?
-                        Gdx.graphics.getHeight() / 2 ,
-                        Gdx.graphics.getWidth() / 5 );
-            }*/
             font.draw(batch, "Press anywhere to restart!",
                     Gdx.graphics.getHeight() / 3,
                     Gdx.graphics.getWidth() / 6);

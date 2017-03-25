@@ -76,12 +76,12 @@ class MainGame extends Game {
         if (gameState == 1) {
             bugGame.run();
 
-            //update hit boxes after movement. todo: no worries, these can be moved elsewhere -Cameron
+            //update hit boxes after movement. todo: should maybe be moved to GameHandler
             bugGame.getBugOne().updateHitBox();
             bugGame.getBugTwo().updateHitBox();
 
-            //stuff to check for winner
-            gameState = winStatus.checkWin(bugGame);
+            //stuff to check for winner todo: perhaps it would be best to move this to GameHandler so we're not passing around so many objects
+            gameState = winStatus.checkWin(bugGame, game.getGameTime());
         }
 
         if (gameState != 0) {
@@ -100,8 +100,11 @@ class MainGame extends Game {
         // check to see if we need to reset
         reset = winStatus.isResetNeeded();
         //if timer is run out, the gameState will be 3 and we will reset
-        if(gameState == 3)
+        if(gameState == 3) {
             reset = true;
+            // make sure we notify the winner
+            game.setWinnerMessage(winStatus.whoIsWinner()); // todo: move to GameHandler
+        }
 
         _buttonProcessor.setGameState(gameState);
     }
