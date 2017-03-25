@@ -33,6 +33,8 @@ class GameHandler {
 
     private BitmapFont digitalFont;
 
+    private String notifyChaser;
+
     //Timer
     private GameTime timer;
     private boolean timerReset;
@@ -40,8 +42,8 @@ class GameHandler {
     //game-state tag
     private static final String STATE = "GameState";
 
-
-    GameHandler() {
+    // non-default constructor to pass in both Bug objects to check who is the chaser at any time
+    GameHandler(Bug bug1_yellow, Bug bug2_red) {
 
         welcome = new SpriteBatch();
 
@@ -70,6 +72,12 @@ class GameHandler {
         digitalParameter.borderWidth = 1f;
         digitalFont = digitalFontFT.generateFont(digitalParameter);
         digitalFont.setColor(Color.RED);
+
+        // Game greeting notifying who is the chaser
+        if (bug1_yellow.isChaser())
+            notifyChaser = "Yellow bug is the chaser!";
+        else if (bug2_red.isChaser())
+            notifyChaser = "Red bug is the chaser!";
     }
 
     void run() {
@@ -154,7 +162,8 @@ class GameHandler {
 
             welcome.end();
         } else if (gameState == GAME_WARM_UP) {
-            font.draw(batch, "Game starts in",
+
+            font.draw(batch, notifyChaser + "\n Game starts in",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
                     Gdx.graphics.getWidth() / 3);
             font.draw(batch, (timer.getTimeRemaining() - 60) + "...",

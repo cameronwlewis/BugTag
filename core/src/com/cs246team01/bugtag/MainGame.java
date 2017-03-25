@@ -45,7 +45,7 @@ class MainGame extends Game {
         winStatus = new GameWin();
 
         bugGame = new GridObjectHandler();
-        game = new GameHandler();
+        game = new GameHandler(bugGame.getBugOne(), bugGame.getBugTwo());
         reset = false;
 
         // gameState is initially set right here
