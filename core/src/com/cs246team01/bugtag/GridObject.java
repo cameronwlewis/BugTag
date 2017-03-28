@@ -20,6 +20,7 @@ abstract public class GridObject {
 
     //Data
     protected GridPoint2 currentPosition = new GridPoint2();
+    protected boolean refreshed;
     private int priority;
     Texture objectTexture;
 
@@ -172,8 +173,9 @@ abstract public class GridObject {
         if (playArea.contains(this.currentPosition.x,
                 this.currentPosition.y + Gdx.graphics.getWidth() / MAXSTEPS))
             this.currentPosition.y += Gdx.graphics.getWidth() / MAXSTEPS;
-        else
+        else if(this.isRefreshed()) {
             this.hideRight();
+        }
 
         //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
@@ -188,8 +190,9 @@ abstract public class GridObject {
         if (playArea.contains(this.currentPosition.x,
                 this.currentPosition.y - Gdx.graphics.getWidth() / MAXSTEPS))
             this.currentPosition.y -= Gdx.graphics.getWidth() / MAXSTEPS;
-        else
+        else if(this.isRefreshed()){
             this.hideLeft();
+        }
 
         //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
@@ -203,8 +206,9 @@ abstract public class GridObject {
         if (playArea.contains(this.currentPosition.x - Gdx.graphics.getWidth() / MAXSTEPS,
                 this.currentPosition.y))
             this.currentPosition.x -= Gdx.graphics.getWidth() / MAXSTEPS;
-        else
+        else if(this.isRefreshed()){
             this.hideTop();
+        }
 
         //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
@@ -221,14 +225,22 @@ abstract public class GridObject {
 
             this.currentPosition.x += Gdx.graphics.getWidth() / MAXSTEPS;
 
-        } else {
+        } else if(this.isRefreshed()){
             this.hideDown();
         }
 
         //Keep track of bug's position
-        Gdx.app.log(MOVE, "Rectangle: " + playArea.toString());
-        Gdx.app.log(MOVE, "Rectangle contains bug: " + playArea.contains(this.currentPosition.x, this.currentPosition.y));
+        Gdx.app.log(MOVE, "isRefreshed: " + this.isRefreshed());
         Gdx.app.log(MOVE, "Position: " +this.getPosition().toString());
+    }
+
+    //determines if bug can hide again
+    public boolean isRefreshed(){
+        return refreshed;
+    }
+
+    public void setRefreshed(boolean refresh){
+        refreshed = refresh;
     }
 
     /**

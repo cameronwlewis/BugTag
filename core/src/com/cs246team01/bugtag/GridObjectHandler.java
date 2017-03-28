@@ -195,6 +195,8 @@ class GridObjectHandler {
                     public void run() {
                         if(b.isHiding())
                             makeVisible(b);
+                        if(!b.isRefreshed())
+                            b.setRefreshed(true);
                     }
                 }
                         ,3);//delay in seconds
@@ -222,6 +224,8 @@ class GridObjectHandler {
             b.moveUp();
         //make it visible
         b.setHiding(false);
+        b.setRefreshed(false);
+
     }
 
     /**

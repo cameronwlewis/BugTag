@@ -26,6 +26,7 @@ public class Bug extends GridObject {
     private boolean hidingTop;
     private boolean hidingDown;
 
+
     //To keep track of player1 and player2 bugs
     private int playerID;
     private Direction currentDirection;
@@ -50,6 +51,7 @@ public class Bug extends GridObject {
         hidingRight = false;
         hidingTop = false;
         hidingDown = false;
+        refreshed = true;
     }
 
     //non-default
@@ -83,6 +85,11 @@ public class Bug extends GridObject {
         // make hit box for bug/player
         //float bug_height = bugImage.getHeight();
         //float bug_width = bugImage.getWidth();
+        hidingLeft = false;
+        hidingRight = false;
+        hidingTop = false;
+        hidingDown = false;
+        refreshed = true;
 
         //updated hit box dimensions, it is set to a universal size that adapts with the different screen sizes
         float bug_height = Gdx.graphics.getHeight() / 14;
