@@ -38,7 +38,7 @@ public class Bug extends GridObject {
     // bug/player hit box
     private Rectangle bug_hitbox;
 
-    //Default Contructor creates player 1;
+    //Default Constructor creates player 1;
     public Bug() {
         currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 8) / 10,
                 Gdx.graphics.getHeight() / 2);
@@ -54,7 +54,7 @@ public class Bug extends GridObject {
         refreshed = true;
     }
 
-    //non-default
+    //non-default constructor. Used in GridObjectHandler to initialize bugs
     Bug(Texture bugImage, boolean chaser, int playerID) {
         //This sets whether the bug will be the chaser randomly
         isChaser = chaser;
@@ -176,7 +176,7 @@ public class Bug extends GridObject {
         this.currentPosition.y += Gdx.graphics.getWidth() / MAXSTEPS;
     }
 
-    public boolean isHiding(){
+    boolean isHiding(){
         //return any instance of the bug hiding
         if(this.hidingLeft || this.hidingTop || this.hidingRight || this.hidingDown)
             return true;
@@ -184,27 +184,29 @@ public class Bug extends GridObject {
             return false;
     }
 
-    public void setHiding(boolean hide){
+    void setHiding(boolean hide){
         this.hidingLeft = hide;
         this.hidingRight = hide;
         this.hidingTop = hide;
         this.hidingDown = hide;
     }
 
-    public boolean isHidingLeft() {
+    boolean isHidingLeft() {
         return hidingLeft;
     }
 
-    public boolean isHidingRight() {
+    boolean isHidingRight() {
         return hidingRight;
     }
 
-    public boolean isHidingTop() {
+    boolean isHidingTop() {
         return hidingTop;
     }
 
-    public boolean isHidingDown() {
+    boolean isHidingDown() {
         return hidingDown;
     }
+
+    boolean isChaser() {return isChaser;}
 
 }

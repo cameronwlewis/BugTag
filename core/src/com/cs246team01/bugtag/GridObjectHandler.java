@@ -3,7 +3,6 @@ package com.cs246team01.bugtag;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Timer;
 
 import java.util.ArrayList;
@@ -31,8 +30,8 @@ class GridObjectHandler {
     private int bugHeight = Gdx.graphics.getHeight() / 14;
 
     private int buttonSide = Gdx.graphics.getHeight() / 4;
-    private Bug bug1;
-    private Bug bug2;
+    private Bug bug1_yellow;
+    private Bug bug2_red;
 
     /**
      * This will be initialized during the create method
@@ -58,8 +57,8 @@ class GridObjectHandler {
                 Gdx.graphics.getHeight() / 2);*/
 
         //Initialize bugs
-        bug1 = new Bug(bug1_texture, randBoolean, 1);
-        bug2 = new Bug(bug2_texture, !randBoolean, 2);
+        bug1_yellow = new Bug(bug1_texture, randBoolean, 1);
+        bug2_red = new Bug(bug2_texture, !randBoolean, 2);
 
         //Initialize Obstacles
         Obstacle obstacleOne   = new Obstacle(new Texture("obstacles/Real_Pear.png"));
@@ -79,8 +78,8 @@ class GridObjectHandler {
         Texture button8 = new Texture("buttons/arrow-down.png");
 
         //Add objects to the array
-        gridObjects.add(bug1);
-        gridObjects.add(bug2);
+        gridObjects.add(bug1_yellow);
+        gridObjects.add(bug2_red);
         gridObjects.add(obstacleOne);
         gridObjects.add(obstacleTwo);
         gridObjects.add(obstacleThree);
@@ -108,38 +107,19 @@ class GridObjectHandler {
     /**
      * Getter for Bug[1] object.
      *
-     * @return bug1 object.
+     * @return bug1_yellow object.
      */
     Bug getBugOne() {
-        return bug1;
+        return bug1_yellow;
     }
 
     /**
      * Getter for Bug[2] object.
      *
-     * @return bug2 object.
+     * @return bug2_red object.
      */
     Bug getBugTwo() {
-        return bug2;
-    }
-
-    /**
-     * This method checks if we should stop the game
-     * It returns a 1 if the chaser wins, 2 if the timer runs out;
-     * -1 if game is still going
-     *
-     * @param chaserWin
-     * @param time
-     * @return
-     */
-    public int checkWin(boolean chaserWin, int time) {
-        if (time <= 0) {
-            return 2;
-        } else if (chaserWin) {
-            return -1;
-        } else {
-            return 0;
-        }
+        return bug2_red;
     }
 
     /**
@@ -297,7 +277,7 @@ class GridObjectHandler {
     /**
      * Handles input from {@link ButtonProcessor} to move player 1
      *
-     * Important Note, Movement is inverted for player bug2 buttons (upButton = moveDown())
+     * Important Note, Movement is inverted for player bug2_red buttons (upButton = moveDown())
      * The method takes taps received from player 2's buttons and checks if the player is currently
      * hiding. If not it moves any direction that has been pressed and changes the direction of the
      * image.
