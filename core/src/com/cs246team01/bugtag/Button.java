@@ -99,4 +99,8 @@ public class Button extends GridObject {
     void hideDown() {
     }
 
+    boolean isHiding(){
+        return false;
+    }
+
 }

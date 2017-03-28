@@ -20,6 +20,7 @@ import java.util.Random;
 
 class GridObjectHandler {
 
+    static final String MOVE = "MoveTagger";
     //This holds any object used in game
     private List<GridObject> gridObjects;
 
@@ -173,14 +174,26 @@ class GridObjectHandler {
                 Timer.schedule(new Timer.Task(){
                     @Override
                     public void run() {
-                        if(b.isHiding())
+                        if(b.isHiding()) {
                             makeVisible(b);
-                        if(!b.isRefreshed())
-                            b.setRefreshed(true);
+                            b.setRefreshed(false);
+                            Gdx.app.log(MOVE, "isRefreshed: " + b.isRefreshed());
+                        }
                     }
                 }
                         ,3);//delay in seconds
         }
+            if (g instanceof Bug && !((Bug) g).isRefreshed()){
+                final Bug b = (Bug) g;
+                Timer.schedule(new Timer.Task(){
+                                   @Override
+                                   public void run() {
+                                       if(!b.isRefreshed())
+                                           b.setRefreshed(true);
+                                   }
+                               }
+                        ,3);//delay in seconds
+            }
 
         }
 
@@ -194,17 +207,18 @@ class GridObjectHandler {
      */
     private void makeVisible(Bug b) {
         //wherever the bug is hiding, move it the opposite direction
-        if(b.isHidingLeft())
-            b.moveRight();
-        if(b.isHidingRight())
-            b.moveLeft();
-        if(b.isHidingTop())
-            b.moveDown();
-        if(b.isHidingDown())
-            b.moveUp();
-        //make it visible
-        b.setHiding(false);
-        b.setRefreshed(false);
+        if(b.isHiding()) {
+            if (b.isHidingLeft())
+                b.moveRight();
+            if (b.isHidingRight())
+                b.moveLeft();
+            if (b.isHidingTop())
+                b.moveDown();
+            if (b.isHidingDown())
+                b.moveUp();
+            //make it visible
+            b.setHiding(false);
+        }
 
     }
 
@@ -227,8 +241,9 @@ class GridObjectHandler {
                 b.moveUp();
                 ButtonProcessor.moveUp1 = false;
                 //now handle invisible movement
-                if(b.isHidingDown())
+                if(b.isHidingDown()) {
                     b.setHiding(false);
+                }
 
                 //set direction
                 if (b.getCurrentDirection() != Direction.Up)
@@ -239,8 +254,9 @@ class GridObjectHandler {
                 b.moveDown();
                 ButtonProcessor.moveDown1 = false;
                 //now handle invisible movement
-                if(b.isHidingTop())
+                if(b.isHidingTop()) {
                     b.setHiding(false);
+                }
 
                 //set direction
                 if (b.getCurrentDirection() != Direction.Down)
@@ -251,8 +267,9 @@ class GridObjectHandler {
                 b.moveLeft();
                 ButtonProcessor.moveLeft1 = false;
                 //now handle invisible movement
-                if(b.isHidingRight())
+                if(b.isHidingRight()) {
                     b.setHiding(false);
+                }
 
                 //set direction
                 if (b.getCurrentDirection() != Direction.Left)
@@ -263,8 +280,9 @@ class GridObjectHandler {
                 b.moveRight();
                 ButtonProcessor.moveRight1 = false;
                 //now handle invisible movement
-                if(b.isHidingLeft())
+                if(b.isHidingLeft()) {
                     b.setHiding(false);
+                }
 
                 //set direction
                 if (b.getCurrentDirection() != Direction.Right)
@@ -295,8 +313,9 @@ class GridObjectHandler {
                 b.moveDown();
                 ButtonProcessor.moveUp2 = false;
                 //now handle invisible movement
-                if(b.isHidingTop())
+                if(b.isHidingTop()) {
                     b.setHiding(false);
+                }
 
 
                 //set direction
@@ -308,8 +327,9 @@ class GridObjectHandler {
                 b.moveUp();
                 ButtonProcessor.moveDown2 = false;
                 //now handle invisible movement
-                if(b.isHidingDown())
+                if(b.isHidingDown()) {
                     b.setHiding(false);
+                }
 
                 //set direction
                 if (b.getCurrentDirection() != Direction.Up)
@@ -320,8 +340,9 @@ class GridObjectHandler {
                 b.moveRight();
                 ButtonProcessor.moveLeft2 = false;
                 //now handle invisible movement
-                if(b.isHidingLeft())
+                if(b.isHidingLeft()) {
                     b.setHiding(false);
+                }
 
                 //set direction
                 if (b.getCurrentDirection() != Direction.Right)
@@ -332,8 +353,9 @@ class GridObjectHandler {
                 b.moveLeft();
                 ButtonProcessor.moveRight2 = false;
                 //now handle invisible movement
-                if(b.isHidingRight())
+                if(b.isHidingRight()) {
                     b.setHiding(false);
+                }
 
                 //set direction
                 if (b.getCurrentDirection() != Direction.Left)

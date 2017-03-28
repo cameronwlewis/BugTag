@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Rectangle;
  */
 abstract public class GridObject {
     //Use this for tagging bugs
-    static final String TAG = "DebugTagger";
+    public static final String TAG = "DebugTagger";
     static final String MOVE = "MoveTagger";
     protected static final int MAXSTEPS = 40;
     protected static final int bugImageLength = Gdx.graphics.getHeight() / 16;
@@ -171,16 +171,19 @@ abstract public class GridObject {
     void moveRight() {
 
         if (playArea.contains(this.currentPosition.x,
-                this.currentPosition.y + Gdx.graphics.getWidth() / MAXSTEPS))
+                this.currentPosition.y + Gdx.graphics.getWidth() / MAXSTEPS)
+                || (this.isHiding() && this.currentPosition.y < playArea.getHeight())) {
+
             this.currentPosition.y += Gdx.graphics.getWidth() / MAXSTEPS;
+        }
         else if(this.isRefreshed()) {
             this.hideRight();
         }
 
         //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
-        Gdx.app.log(TAG, "Rectangle: " + playArea.toString());
-        Gdx.app.log(TAG, "Rectangle contains bug: " + playArea.contains(this.currentPosition.x, this.currentPosition.y));
+        Gdx.app.log(MOVE, "Play area Y height: " +playArea.getHeight());
+        Gdx.app.log(MOVE, "Moving towards top!: " +this.getPosition().toString());
     }
 
     /**
@@ -188,23 +191,28 @@ abstract public class GridObject {
      */
     void moveLeft() {
         if (playArea.contains(this.currentPosition.x,
-                this.currentPosition.y - Gdx.graphics.getWidth() / MAXSTEPS))
+                this.currentPosition.y - Gdx.graphics.getWidth() / MAXSTEPS)
+                || (this.isHiding() && this.currentPosition.y > playArea.getY() + bugImageLength)) {
+
             this.currentPosition.y -= Gdx.graphics.getWidth() / MAXSTEPS;
+        }
         else if(this.isRefreshed()){
             this.hideLeft();
         }
 
         //Keep track of bug's position
-        Gdx.app.log(TAG, this.getPosition().toString());
+        //Gdx.app.log(TAG, this.getPosition().toString());
+        Gdx.app.log(MOVE, "Moving towards bottom of screen: " +this.getPosition().toString());
+        Gdx.app.log(MOVE, "Play area Y coordinate: " +playArea.getY());
     }
 
     /**
-     * This function when called, moves the GridObject up
+     * This function when called, moves the GridObject towards left side of screen
      */
     void moveUp() {
 
         if (playArea.contains(this.currentPosition.x - Gdx.graphics.getWidth() / MAXSTEPS,
-                this.currentPosition.y))
+                this.currentPosition.y) || (this.isHiding() && this.currentPosition.x > playArea.getX()))
             this.currentPosition.x -= Gdx.graphics.getWidth() / MAXSTEPS;
         else if(this.isRefreshed()){
             this.hideTop();
@@ -212,16 +220,17 @@ abstract public class GridObject {
 
         //Keep track of bug's position
         Gdx.app.log(TAG, this.getPosition().toString());
+        Gdx.app.log(MOVE, "moving towards Left side!: " +this.getPosition().toString());
     }
 
     /**
-     * This function when called, moves the GridObject down
+     * This function when called, moves the GridObject towards right side of screen
      */
     void moveDown() {
 
         //if the bug will not be moving out of bounds allow it to move
         if (playArea.contains(this.currentPosition.x + Gdx.graphics.getWidth() / MAXSTEPS,
-                this.currentPosition.y)) {
+                this.currentPosition.y) || (this.isHiding() && this.currentPosition.x < playArea.getX() + playArea.getWidth())) {
 
             this.currentPosition.x += Gdx.graphics.getWidth() / MAXSTEPS;
 
@@ -231,7 +240,7 @@ abstract public class GridObject {
 
         //Keep track of bug's position
         Gdx.app.log(MOVE, "isRefreshed: " + this.isRefreshed());
-        Gdx.app.log(MOVE, "Position: " +this.getPosition().toString());
+        Gdx.app.log(MOVE, "Moving towards right side!: " +this.getPosition().toString());
     }
 
     //determines if bug can hide again
@@ -250,5 +259,6 @@ abstract public class GridObject {
     abstract void hideLeft();
     abstract void hideRight();
     abstract void hideDown();
+    abstract boolean isHiding();
 
 }

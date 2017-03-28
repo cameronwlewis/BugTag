@@ -72,5 +72,8 @@ public class Obstacle extends GridObject {
     }
     void hideDown() {
     }
+    boolean isHiding(){
+        return false;
+    }
 
 }

@@ -136,8 +136,6 @@ public class Bug extends GridObject {
         bug_hitbox.setPosition(getX(), getY());
     }
 
-    // todo make a 'touchingOverBug' function here using bug_hitbox.contains()
-
     Rectangle getHitBox() {
 
         return bug_hitbox;
@@ -146,6 +144,7 @@ public class Bug extends GridObject {
     int getPlayerID() {
         return playerID;
     }
+
 
     /* hiding notes
     * with each hide method, the bug moves slightly off screen and is not visible for
