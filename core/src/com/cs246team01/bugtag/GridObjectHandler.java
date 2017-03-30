@@ -102,7 +102,6 @@ class GridObjectHandler {
         gridObjects.add(new Button(6, button6));
         gridObjects.add(new Button(7, button7));
         gridObjects.add(new Button(8, button8));
-        gridObjects.add(new Button(9, startButton));
     }
 
 

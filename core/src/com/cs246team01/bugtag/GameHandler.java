@@ -46,8 +46,8 @@ class GameHandler {
 
     //Main Menu
     private Button startGame;
-    private int startButtonWidth = Gdx.graphics.getWidth()/5;
-    private int startButtonHeight = Gdx.graphics.getHeight()/5;
+    private int startButtonWidth;
+    private int startButtonHeight;
 
     //game-state tag
     private static final String STATE = "GameState";
@@ -58,6 +58,8 @@ class GameHandler {
         welcome = new SpriteBatch();
 
         startGame = new Button(9, new Texture("buttons/startgame.png"));
+        startButtonWidth = startGame.getTexture().getWidth();
+        startButtonHeight = startGame.getTexture().getHeight();
 
         //Since this is a constant (or is it?)
         //we can just assign a hardcoded value
