@@ -2,9 +2,12 @@ package com.cs246team01.bugtag;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import sun.applet.Main;
 
@@ -41,6 +44,11 @@ class GameHandler {
     private GameTime timer;
     private boolean timerReset;
 
+    //Main Menu
+    private Button startGame;
+    private int startButtonWidth = Gdx.graphics.getWidth()/5;
+    private int startButtonHeight = Gdx.graphics.getHeight()/5;
+
     //game-state tag
     private static final String STATE = "GameState";
 
@@ -48,6 +56,8 @@ class GameHandler {
     GameHandler() {
 
         welcome = new SpriteBatch();
+
+        startGame = new Button(9, new Texture("buttons/startgame.png"));
 
         //Since this is a constant (or is it?)
         //we can just assign a hardcoded value
@@ -74,7 +84,6 @@ class GameHandler {
         digitalParameter.borderWidth = 1f;
         digitalFont = digitalFontFT.generateFont(digitalParameter);
         digitalFont.setColor(Color.RED);
-
 
     }
 
@@ -159,17 +168,33 @@ class GameHandler {
         }
     }
 
-    void displayMessage(SpriteBatch batch) {
+    void displayMenu() {
         if (gameState == GAME_NOT_STARTED) {
             welcome.begin();
             font.draw(welcome, "BUGTAG!",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
                     Gdx.graphics.getWidth() / 2);
-            font.draw(welcome, "Press anywhere to start!",
-                    Gdx.graphics.getHeight() / 2,
-                    Gdx.graphics.getWidth() / 4);
+            welcome.draw(startGame.getTexture(), startGame.getX(), startGame.getY(), startButtonWidth, startButtonHeight);
             welcome.end();
-        } else if (gameState == GAME_WARM_UP) {
+        }
+    }
+
+    void displayMessage(SpriteBatch batch) {
+        if (gameState == GAME_NOT_STARTED) {
+            displayMenu();
+        }
+//            welcome.begin();
+//            font.draw(welcome, "BUGTAG!",
+//                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
+//                    Gdx.graphics.getWidth() / 2);
+//            font.draw(welcome, "Press anywhere to start!",
+//                    Gdx.graphics.getHeight() / 2,
+//                    Gdx.graphics.getWidth() / 4);
+//
+//            welcome.end();
+//        } else
+//
+        if (gameState == GAME_WARM_UP) {
 
             font.draw(batch, notifyChaser + "\n Game starts in",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),

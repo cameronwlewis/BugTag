@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class Button extends GridObject {
 
     private Rectangle clickArea;
+    private Texture startGame = new Texture("buttons/startGame.png");
 
     public Button() {
         //Do not use this constructor
@@ -41,6 +42,9 @@ public class Button extends GridObject {
         int button6y = Gdx.graphics.getHeight() / 2;
         int button7y = Gdx.graphics.getHeight() / 4;
         int button8y = 0;
+        //StartGame Button
+        int startGameX = (Gdx.graphics.getWidth()/2)-(startGame.getWidth()/2);
+        int startGameY = (Gdx.graphics.getHeight()/2)-(startGame.getHeight()/2);
 
         switch (ID) {
             case 1:
@@ -67,11 +71,20 @@ public class Button extends GridObject {
             case 8:
                 currentPosition = new GridPoint2(buttonx2, button8y);
                 break;
+            case 9:
+                currentPosition = new GridPoint2(startGameX, startGameY);
+                break;
         }
 
         //Now set the area to be clicked. first two parameters are position, then size
-        clickArea = new Rectangle(currentPosition.x, currentPosition.y,
-                Gdx.graphics.getHeight() / 4, Gdx.graphics.getHeight() / 4);
+        if (ID == 9)
+        {
+            clickArea = new Rectangle();
+        }
+        else {
+            clickArea = new Rectangle(currentPosition.x, currentPosition.y,
+                    Gdx.graphics.getHeight() / 4, Gdx.graphics.getHeight() / 4);
+        }
     }
 
 
