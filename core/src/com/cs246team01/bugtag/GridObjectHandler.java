@@ -3,6 +3,7 @@ package com.cs246team01.bugtag;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Timer;
 
 import java.util.ArrayList;
@@ -34,8 +35,6 @@ class GridObjectHandler {
 
     //Button Dimensions
     private int buttonSide = Gdx.graphics.getHeight() / 4;
-
-
 
     //Players declared
     private Bug bug1_yellow;
@@ -69,11 +68,13 @@ class GridObjectHandler {
         bug2_red = new Bug(bug2_texture, !randBoolean, 2);
 
         //Initialize Obstacles
-        Obstacle obstacleOne   = new Obstacle(new Texture("obstacles/Real_Pear.png"));
-        Obstacle obstacleTwo   = new Obstacle(new Texture("obstacles/Real_Apple.png"));
-        Obstacle obstacleThree = new Obstacle(new Texture("obstacles/Real_Bread.png"));
-        Obstacle obstacleFour  = new Obstacle(new Texture("obstacles/Real_Watermelon.png"));
-        Obstacle obstacleFive  = new Obstacle(new Texture("obstacles/Real_Orange.png"));
+        Obstacle obstacleOne     = new Obstacle(new Texture("obstacles/Real_Pear.png"));
+        Obstacle obstacleTwo     = new Obstacle(new Texture("obstacles/Real_Apple.png"));
+        Obstacle obstacleThree   = new Obstacle(new Texture("obstacles/Real_Bread.png"));
+        Obstacle obstacleFour    = new Obstacle(new Texture("obstacles/Real_Watermelon.png"));
+        Obstacle obstacleFive    = new Obstacle(new Texture("obstacles/Real_Orange.png"));
+//        Obstacle obstacleSix     = new Obstacle(new Texture("obstacles/Real_Potato.png"));
+//        Obstacle obstacleSeven   = new Obstacle(new Texture("obstacles/Real_Bananas.png"));
 
         //Button textures
         Texture button1 = new Texture("buttons/arrow-left.png");
@@ -84,7 +85,6 @@ class GridObjectHandler {
         Texture button6 = new Texture("buttons/arrow-left.png");
         Texture button7 = new Texture("buttons/arrow-up.png");
         Texture button8 = new Texture("buttons/arrow-down.png");
-        Texture startButton = new Texture("buttons/startgame.png");
 
         //Add objects to the array
         gridObjects.add(bug1_yellow);
@@ -94,6 +94,8 @@ class GridObjectHandler {
         gridObjects.add(obstacleThree);
         gridObjects.add(obstacleFour);
         gridObjects.add(obstacleFive);
+//        gridObjects.add(obstacleSix);
+//        gridObjects.add(obstacleSeven);
         gridObjects.add(new Button(1, button1));
         gridObjects.add(new Button(2, button2));
         gridObjects.add(new Button(3, button3));
@@ -104,14 +106,10 @@ class GridObjectHandler {
         gridObjects.add(new Button(8, button8));
     }
 
-
     /**
      * This is the only method we will call in the render method.
      */
-    void run() {
-        update();
-
-    }
+    void run() { update(); }
 
     /**
      * Getter for Bug[1] object.
@@ -159,10 +157,13 @@ class GridObjectHandler {
 
                 if (o.getY() == 0 - o.getTexture().getHeight()) {
                     o.setY(Gdx.graphics.getHeight());
+                    //X spawn is randomly generated
+                    int width = Gdx.graphics.getWidth() - (Gdx.graphics.getHeight() / 2);
+                    Random r = new Random();
+                    o.setX(r.nextInt(width) + (Gdx.graphics.getHeight() / 8));
                 }
             }
         }
-
     }
 
     //Keeping it modularized
@@ -202,11 +203,7 @@ class GridObjectHandler {
                                }
                         ,3);//delay in seconds
             }
-
         }
-
-
-
     }
 
     /** moves the bug back on screen and makes it visible
@@ -383,8 +380,6 @@ class GridObjectHandler {
             Button b = (Button) gridObjects.get(i);
             buttons.add(b);
         }
-
         return buttons;
     }
-
 }

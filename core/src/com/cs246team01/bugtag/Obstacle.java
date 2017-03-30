@@ -47,9 +47,7 @@ public class Obstacle extends GridObject {
         int x = r.nextInt(width) + (Gdx.graphics.getHeight() / 8);
         int y = r.nextInt(height);
 
-        GridPoint2 loc = new GridPoint2(x, y);
-
-        currentPosition = loc;
+        currentPosition = new GridPoint2(x, y);
     }
 
     /**

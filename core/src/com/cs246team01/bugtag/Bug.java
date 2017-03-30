@@ -47,11 +47,11 @@ public class Bug extends GridObject {
         downTexture  = new Texture("bugs/bug1right.png");
         leftTexture  = new Texture("bugs/bug1down.png");
         rightTexture = new Texture("bugs/bug1up.png");
-        hidingLeft = false;
+        hidingLeft  = false;
         hidingRight = false;
-        hidingTop = false;
-        hidingDown = false;
-        refreshed = true;
+        hidingTop   = false;
+        hidingDown  = false;
+        refreshed   = true;
     }
 
     //non-default constructor. Used in GridObjectHandler to initialize bugs
