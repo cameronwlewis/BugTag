@@ -44,8 +44,9 @@ class GameHandler {
     private GameTime timer;
     private boolean timerReset;
 
+
     //Main Menu
-    private Button startGame;
+    private static Button startGame;
     private int startButtonWidth;
     private int startButtonHeight;
 
@@ -219,6 +220,11 @@ class GameHandler {
                     Gdx.graphics.getHeight() / 3,
                     Gdx.graphics.getWidth() / 6);
         }
+    }
+
+
+    public static Button getStartButton() {
+        return startGame;
     }
 
     void dispose() {

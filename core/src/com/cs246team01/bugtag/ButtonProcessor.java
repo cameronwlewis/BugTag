@@ -33,6 +33,8 @@ class ButtonProcessor implements InputProcessor {
 
     //This holds all of our button objects
     private ArrayList<Button> buttons;
+    //this is the main menu start button
+    private Button startButton;
 
     ButtonProcessor(ArrayList<Button> buttons, int state) {
         moveLeft1 = false;
@@ -45,6 +47,7 @@ class ButtonProcessor implements InputProcessor {
         moveUp2 = false;
 
         this.buttons = buttons;
+        startButton = GameHandler.getStartButton();
         gameState = state;
     }
 
@@ -59,8 +62,10 @@ class ButtonProcessor implements InputProcessor {
         int GAME_WARM_UP = 4;
         if (gameState == GAME_NOT_STARTED) {
             //Start game warm up stage
-            gameState = GAME_WARM_UP;
-            Gdx.app.log(TAG, "Game in warm up");
+            if (startButton.getClickArea().contains(screenX,screenY)) {
+                gameState = GAME_WARM_UP;
+                Gdx.app.log(TAG, "Game in warm up");
+            }
         } else if (gameState == GAME_STARTED) {
             int buttonPressed1 = 0;
             int buttonPressed2 = 0;
