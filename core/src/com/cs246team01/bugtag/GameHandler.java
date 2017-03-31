@@ -128,7 +128,7 @@ class GameHandler {
             timerReset = true;
         }
 
-        //tick down the timer
+        //tick down the timer before game begins
         timer.run();
         if (timer.getTimeRemaining() < 60) {
             MainGame.gameState = GAME_STARTED;
@@ -141,7 +141,7 @@ class GameHandler {
         //update timer value
         timer.run();
 
-        if (!(timer.getTimeRemaining() > 0)) {
+        if (timer.getTimeRemaining() < 0) {
             MainGame.gameState = GAME_OVER;
         }
 

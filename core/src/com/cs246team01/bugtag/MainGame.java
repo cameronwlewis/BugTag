@@ -24,7 +24,7 @@ class MainGame extends Game {
     private GridObjectHandler bugGame;
     private ButtonProcessor _buttonProcessor;
     private int winner = 0;
-    private GameHandler game;
+    private GameHandler game; // todo: hmm. Maybe rename to prevent confusion with BugGame
     private GameWin winStatus;
 
     //keeps track of current gameState
@@ -83,14 +83,17 @@ class MainGame extends Game {
 
         //This is where we move our objects and set win variables
         if (gameState == 1) {
+            //stuff to check for winner todo: perhaps it would be best to move this to GameHandler so we're not passing around so many objects
+            // UPDATE: this must be placed before bugGame.run() or when the timer runs out, the winner will be 'null'
+            gameState = winStatus.checkWin(bugGame, game.getGameTime());
+
             bugGame.run();
 
             //update hit boxes after movement. todo: should maybe be moved to GameHandler
             bugGame.getBugOne().updateHitBox();
             bugGame.getBugTwo().updateHitBox();
 
-            //stuff to check for winner todo: perhaps it would be best to move this to GameHandler so we're not passing around so many objects
-            gameState = winStatus.checkWin(bugGame, game.getGameTime());
+
         }
 
         if (gameState != 0) {
