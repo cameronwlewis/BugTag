@@ -40,6 +40,8 @@ class GameHandler {
 
     private String winnerMessage;
 
+    private GameScore score;
+
     //Timer
     private GameTime timer;
     private boolean timerReset;
@@ -133,6 +135,10 @@ class GameHandler {
         if (timer.getTimeRemaining() < 60) {
             MainGame.gameState = GAME_STARTED;
         }
+
+    }
+
+    void calculateScore(){
 
     }
 

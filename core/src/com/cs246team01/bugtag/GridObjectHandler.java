@@ -109,7 +109,13 @@ class GridObjectHandler {
     /**
      * This is the only method we will call in the render method.
      */
-    void run() { update(); }
+    void run() {
+        update();
+
+        //update bug hit boxes after movement.
+        bug1_yellow.updateHitBox();
+        bug2_red.updateHitBox();
+    }
 
     /**
      * Getter for Bug[1] object.

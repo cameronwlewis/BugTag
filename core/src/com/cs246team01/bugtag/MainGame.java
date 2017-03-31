@@ -83,17 +83,11 @@ class MainGame extends Game {
 
         //This is where we move our objects and set win variables
         if (gameState == 1) {
-            //stuff to check for winner todo: perhaps it would be best to move this to GameHandler so we're not passing around so many objects
+            //stuff to check for winner
             // UPDATE: this must be placed before bugGame.run() or when the timer runs out, the winner will be 'null'
             gameState = winStatus.checkWin(bugGame, game.getGameTime());
 
             bugGame.run();
-
-            //update hit boxes after movement. todo: should maybe be moved to GameHandler
-            bugGame.getBugOne().updateHitBox();
-            bugGame.getBugTwo().updateHitBox();
-
-
         }
 
         if (gameState != 0) {
@@ -116,7 +110,7 @@ class MainGame extends Game {
         if(gameState == 3) {
             reset = true;
             // make sure we notify the winner
-            game.setWinnerMessage(winStatus.whoIsWinner()); // todo: move to GameHandler
+            game.setWinnerMessage(winStatus.whoIsWinner());
         }
 
         _buttonProcessor.setGameState(gameState);
