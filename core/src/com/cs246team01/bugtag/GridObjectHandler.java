@@ -38,8 +38,8 @@ public class GridObjectHandler {
     private int buttonSide = Gdx.graphics.getHeight() / 4;
 
     //Players declared
-    private Bug bug1_yellow;
-    private Bug bug2_red;
+    public static Bug bug1_yellow;
+    public static Bug bug2_red;
 
     /**
      * This will be initialized during the create method
@@ -49,8 +49,7 @@ public class GridObjectHandler {
 
         gridObjects = new ArrayList<GridObject>();
 
-        Random rand = new Random();
-        boolean randBoolean = rand.nextBoolean();
+
 
         // Player Textures
         Texture bug1_texture = new Texture("bugs/yellow_idle_large.png");
@@ -65,8 +64,8 @@ public class GridObjectHandler {
                 Gdx.graphics.getHeight() / 2);*/
 
         //Initialize bugs
-        bug1_yellow = new Bug(bug1_texture, randBoolean, 1);
-        bug2_red = new Bug(bug2_texture, !randBoolean, 2);
+        bug1_yellow = new Bug(bug1_texture, 1);
+        bug2_red = new Bug(bug2_texture, 2);
 
         //Initialize Obstacles                                                                //ID
         Obstacle obstacleOne     = new Obstacle(new Texture("obstacles/Real_Pear.png"),         1);
@@ -110,11 +109,7 @@ public class GridObjectHandler {
 
         //set the chaser buttons to the correct color
         int chaserID = 0;
-        if (bug1_yellow.isChaser())
-            chaserID = 1;
-        else
-            chaserID = 2;
-        setChaserButtonColor(chaserID);
+
     }
 
     /**
@@ -148,22 +143,22 @@ public class GridObjectHandler {
 
     /**
      * Will set the buttons of the player who is the chaser to the color of their bug
-     * @param chaser Who the chaser is
+     * @param redIsChaser Who the chaser is
      */
-    void setChaserButtonColor(int chaser) {
+    void setChaserButtonColor(boolean redIsChaser) {
         int bIndex = 0;
         for(GridObject current: gridObjects){ //get the index to the buttons
             if(current instanceof Button)
                 break;
             bIndex++;
         }
-        if (chaser == 1) { //yellow bug
+        if (!redIsChaser) { //yellow bug buttons change
             gridObjects.get(bIndex).setTexture(new Texture("buttons/arrow-left-yellow.png"));
             gridObjects.get(bIndex + 1).setTexture(new Texture("buttons/arrow-right-yellow.png"));
             gridObjects.get(bIndex + 2).setTexture(new Texture("buttons/arrow-down-yellow.png"));
             gridObjects.get(bIndex + 3).setTexture(new Texture("buttons/arrow-up-yellow.png"));
         }
-        else if (chaser == 2) { //red bug
+        else if (redIsChaser) { //red bug buttons change
             gridObjects.get(bIndex + 4).setTexture(new Texture("buttons/arrow-right-red.png"));
             gridObjects.get(bIndex + 5).setTexture(new Texture("buttons/arrow-left-red.png"));
             gridObjects.get(bIndex + 6).setTexture(new Texture("buttons/arrow-up-red.png"));
