@@ -193,17 +193,6 @@ class GameHandler {
         if (gameState == GAME_NOT_STARTED) {
             displayMenu();
         }
-//            welcome.begin();
-//            font.draw(welcome, "BUGTAG!",
-//                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
-//                    Gdx.graphics.getWidth() / 2);
-//            font.draw(welcome, "Press anywhere to start!",
-//                    Gdx.graphics.getHeight() / 2,
-//                    Gdx.graphics.getWidth() / 4);
-//
-//            welcome.end();
-//        } else
-//
         if (gameState == GAME_WARM_UP) {
             font.draw(batch, notifyChaser + "\n    Game starts in",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 4),
@@ -222,9 +211,6 @@ class GameHandler {
             font.draw(batch, winnerMessage + "\n     GAME OVER!",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
                     Gdx.graphics.getWidth() / 3);
-            //font.draw(batch, "GAME OVER!",
-            //        Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
-            //        Gdx.graphics.getWidth() / 4);
             font.draw(batch, "    Press anywhere to restart!",
                     Gdx.graphics.getHeight() / 3,
                     Gdx.graphics.getWidth() / 6);
