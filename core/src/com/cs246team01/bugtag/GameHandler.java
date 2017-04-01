@@ -245,7 +245,6 @@ public class GameHandler{
                     ((Gdx.graphics.getWidth() - w) / 2),
                     Gdx.graphics.getWidth() / 2);
         } else {
-
             time = "0:00";
             tgl .setText(digitalFont, time);
             w = tgl.width;
@@ -253,7 +252,7 @@ public class GameHandler{
             digitalFont.draw(batch, time,
                     ((Gdx.graphics.getWidth() - w) / 2),
                     Gdx.graphics.getWidth() / 2);
-            font.draw(batch, "TIME UP",
+            font.draw(batch, "TIME UP!",
                     ((Gdx.graphics.getWidth() - w) / 2),
                     Gdx.graphics.getWidth() / 4);
         }
@@ -331,14 +330,14 @@ public class GameHandler{
             gl.setText(font, pressResumeText);
             w = gl.width;
 
-
             font.draw(batch, pressResumeText,
                     (Gdx.graphics.getWidth() - w) / 2,
                     Gdx.graphics.getWidth() / 4);
         } else if (gameState == GAME_OVER) {
 
-            String gameOverText = "\t      GAME OVER!\n      " + winnerMessage + "\n  Yellow Bug score: " + bug1_yellow.getPlayerScore() +
-                    "\n      Red Bug Score: " + bug2_red.getPlayerScore();
+            String gameOverText = "\t       GAME OVER!\n      " + winnerMessage +
+                    "\n Yellow Bug score: " + bug1_yellow.getPlayerScore() +
+                    "\n     Red Bug Score: " + bug2_red.getPlayerScore();
             String restartText = "Press anywhere to restart!";
 
             gl.setText(font, gameOverText);
