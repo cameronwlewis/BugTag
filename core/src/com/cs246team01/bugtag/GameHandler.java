@@ -1,18 +1,13 @@
 package com.cs246team01.bugtag;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-
-import sun.applet.Main;
-
-import static com.cs246team01.bugtag.GridObject.TAG;
 
 /**
  * Tracks all variables that are not grid objects but still essential to game play.
@@ -32,34 +27,49 @@ public class GameHandler {
 
     //Start screen - can possibly remove this. But buttons show up
     private SpriteBatch welcome;
-    //for all game text besides timer
-    private BitmapFont font;
-    //timer text
-    private BitmapFont digitalFont;
-    //tells players which bug is chasing
-    private String notifyChaser;
-    //displays winner for round
-    private String winnerMessage;
 
+    private BitmapFont font;
+
+    private BitmapFont digitalFont;
+
+    private String notifyChaser;
+
+    int winPoint;
+
+    private String winnerMessage;
 
     //Timer
     private GameTime timer;
     private boolean timerReset;
 
+    // storage for player scores
+    Preferences MyScores;
+
+    // storage for high score
+    Preferences HighScore;
 
     //Main Menu
     private static Button startGame;
     private int startButtonWidth;
     private int startButtonHeight;
 
-    //game-state log tag
+    //game-state tag
     private static final String STATE = "GameState";
 
     /**
-     * default constructor initializes fonts,start button and bugs
+     * non-default constructor to pass in both Bug objects to check who is the chaser at any time
      */
 
-    GameHandler( ) {
+    GameHandler(Bug bug1_yellow, Bug bug2_red) {
+        // initialize player scores preferences files
+        MyScores = Gdx.app.getPreferences("MyScores");
+        HighScore = Gdx.app.getPreferences("HighScore");
+
+        // retrieve scores
+        bug1_yellow.setPlayerScore(MyScores.getInteger("YellowScores"));
+        bug2_red.setPlayerScore(MyScores.getInteger("RedScores"));
+
+        winPoint = 1;
 
         welcome = new SpriteBatch();
 
@@ -67,8 +77,8 @@ public class GameHandler {
         startButtonWidth = startGame.getTexture().getWidth();
         startButtonHeight = startGame.getTexture().getHeight();
 
-
-        //timer starts at 63 seconds to include warm up mode
+        //Since this is a constant (or is it?)
+        //we can just assign a hardcoded value
         float totalTime = 63;
         timer = new GameTime(totalTime);
         timerReset = true;
@@ -119,7 +129,6 @@ public class GameHandler {
     /**
      * set the greeting notifying who is the chaser
      */
-
     void setChaserStatus(Bug bug1_yellow, Bug bug2_red){
 
         if (bug1_yellow.isChaser())
@@ -156,7 +165,29 @@ public class GameHandler {
     }
 
 
+    void calculateScore(int _gameState, Bug bug1_yellow, Bug bug2_red){
+        if (_gameState == 3) {
+            if (winnerMessage.contains("Red")) {
+                bug2_red.setPlayerScore(winPoint);
+                MyScores.putInteger("RedScores", bug2_red.getPlayerScore());
+                MyScores.flush();
+                if(HighScore.getInteger("HighScore") < bug2_red.getPlayerScore()){
+                    HighScore.putInteger("HighScore", bug2_red.getPlayerScore());
+                    HighScore.flush();
+                }
 
+            }
+            else {
+                bug1_yellow.setPlayerScore(winPoint);
+                MyScores.putInteger("YellowScores", bug1_yellow.getPlayerScore());
+                MyScores.flush();
+                if(HighScore.getInteger("HighScore") < bug1_yellow.getPlayerScore()){
+                    HighScore.putInteger("HighScore", bug1_yellow.getPlayerScore());
+                    HighScore.flush();
+                }
+            }
+        }
+    }
 
     /**
      * runs the timer and checks if it runs out
@@ -200,6 +231,7 @@ public class GameHandler {
         }
     }
 
+
     /**
      * displays main start menu before gameplay begins
      */
@@ -218,24 +250,14 @@ public class GameHandler {
      * displays all other text on screen during gameplay
      * @param batch
      */
-    void displayMessage(SpriteBatch batch) {
+    void displayMessage(SpriteBatch batch, Bug bug1_yellow, Bug bug2_red) {
 
         GlyphLayout gl = new GlyphLayout();
 
         if (gameState == GAME_NOT_STARTED) {
             displayMenu();
         }
-//            welcome.begin();
-//            font.draw(welcome, "BUGTAG!",
-//                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
-//                    Gdx.graphics.getWidth() / 2);
-//            font.draw(welcome, "Press anywhere to start!",
-//                    Gdx.graphics.getHeight() / 2,
-//                    Gdx.graphics.getWidth() / 4);
-//
-//            welcome.end();
-//        } else
-//
+
         if (gameState == GAME_WARM_UP) {
 
             String chaserText=  notifyChaser;
@@ -271,13 +293,14 @@ public class GameHandler {
                     Gdx.graphics.getHeight() / 3,
                     Gdx.graphics.getWidth() / 4);
         } else if (gameState == GAME_OVER) {
-            font.draw(batch, winnerMessage + "\n     GAME OVER!",
+            font.draw(batch, "GAME OVER!\n" + winnerMessage + "\n\nYellow Bug score: " + bug1_yellow.getPlayerScore() +
+                            "\nRed Bug Score: " + bug2_red.getPlayerScore(),
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
                     Gdx.graphics.getWidth() / 3);
             //font.draw(batch, "GAME OVER!",
             //        Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
             //        Gdx.graphics.getWidth() / 4);
-            font.draw(batch, "    Press anywhere to restart!",
+            font.draw(batch, "\nPress anywhere to restart!",
                     Gdx.graphics.getHeight() / 3,
                     Gdx.graphics.getWidth() / 6);
         }

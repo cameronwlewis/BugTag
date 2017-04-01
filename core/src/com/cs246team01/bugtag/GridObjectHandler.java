@@ -305,7 +305,7 @@ public class GridObjectHandler {
 
 
     /**
-     * Handles input from {@link ButtonProcessor} to move player 1
+     * Handles input from {@link ButtonProcessor} to move player 2
      *
      * Important Note, Movement is inverted for player bug2_red buttons (upButton = moveDown())
      * The method takes taps received from player 2's buttons and checks if the player is currently
@@ -380,7 +380,16 @@ public class GridObjectHandler {
         o.moveLeft();
     }
 
-    //This takes all of the buttons and places them in a list for the input processor
+    /**
+     * Takes all of the buttons and places them in a list for the input processor
+     *
+     * It iterates through all of the gridobjects in our array until it reaches a button. All 8
+     * of the gameplay buttons should be added at the END of the array. Once it finds a button it
+     * stores the remaining objects of the gridObjects array into the buttons array.
+     *
+     * @return returns a list of all the gameplay buttons which are used in the {@link ButtonProcessor}.
+     */
+
     ArrayList<Button> getButtons() {
         ArrayList<Button> buttons = new ArrayList<Button>();
         int bIndex = 0;
