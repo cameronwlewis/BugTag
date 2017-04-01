@@ -56,7 +56,7 @@ class GameHandler {
     //game-state tag
     private static final String STATE = "GameState";
     //BOGUS COMMENTS HERE
-    // non-default constructor to pass in both Bug objects to check who is the chaser at any time
+    // non-default constructor
     GameHandler(Bug bug1_yellow, Bug bug2_red) {
         // initialize player scores preferences files
         MyScores = Gdx.app.getPreferences("MyScores");
@@ -149,9 +149,11 @@ class GameHandler {
     }
 
     void calculateScore(int _gameState, Bug bug1_yellow, Bug bug2_red){
+        int currentScore;
         if (_gameState == 3) {
             if (winnerMessage.contains("Red")) {
-                bug2_red.setPlayerScore(winPoint);
+                currentScore = MyScores.getInteger("RedScores");
+                bug2_red.addToPlayerScore(winPoint);
                 MyScores.putInteger("RedScores", bug2_red.getPlayerScore());
                 MyScores.flush();
                 if(HighScore.getInteger("HighScore") < bug2_red.getPlayerScore()){
@@ -161,7 +163,7 @@ class GameHandler {
 
             }
             else {
-                bug1_yellow.setPlayerScore(winPoint);
+                bug1_yellow.addToPlayerScore(winPoint);
                 MyScores.putInteger("YellowScores", bug1_yellow.getPlayerScore());
                 MyScores.flush();
                 if(HighScore.getInteger("HighScore") < bug1_yellow.getPlayerScore()){
