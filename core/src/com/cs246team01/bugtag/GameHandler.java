@@ -181,7 +181,7 @@ class GameHandler {
         if (gameState == GAME_NOT_STARTED) {
             welcome.begin();
             font.draw(welcome, "BUGTAG!",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 8),
                     Gdx.graphics.getWidth() / 2);
             welcome.draw(startGame.getTexture(), startGame.getX(), startGame.getY(), startButtonWidth, startButtonHeight);
             welcome.end();
@@ -204,11 +204,10 @@ class GameHandler {
 //        } else
 //
         if (gameState == GAME_WARM_UP) {
-
             font.draw(batch, notifyChaser + "\n Game starts in",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 4),
                     Gdx.graphics.getWidth() / 3);
-            font.draw(batch, (timer.getTimeRemaining() - 60) + "...",
+            font.draw(batch, "\n" + (timer.getTimeRemaining() - 60) + "...",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
                     Gdx.graphics.getWidth() / 4);
         } else if (gameState == GAME_PAUSED) {
@@ -219,7 +218,10 @@ class GameHandler {
                     Gdx.graphics.getHeight() / 3,
                     Gdx.graphics.getWidth() / 4);
         } else if (gameState == GAME_OVER) {
-            font.draw(batch, winnerMessage + "\n GAME OVER!",
+            font.draw(batch, winnerMessage,
+                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 4),
+                    Gdx.graphics.getWidth() / 3);
+            font.draw(batch, "GAME OVER!",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
                     Gdx.graphics.getWidth() / 4);
             font.draw(batch, "Press anywhere to restart!",
