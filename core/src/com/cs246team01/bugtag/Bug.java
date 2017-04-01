@@ -1,6 +1,7 @@
 package com.cs246team01.bugtag;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
@@ -39,7 +40,7 @@ public class Bug extends GridObject {
     private Rectangle bug_hitbox;
 
     // bug/player score
-    private int score;
+    private int current_score;
 
     //Default Constructor creates player 1;
     public Bug() {
@@ -61,6 +62,9 @@ public class Bug extends GridObject {
     Bug(Texture bugImage, boolean chaser, int playerID) {
         //This sets whether the bug will be the chaser randomly
         isChaser = chaser;
+
+        //set initial score
+        current_score = 0;
 
         this.setTexture(bugImage);
         //Set bug in bottom left corner
@@ -144,8 +148,8 @@ public class Bug extends GridObject {
         return bug_hitbox;
     }
 
-    int getPlayerScore(){return score;}
-    void setPlayerScore(int score){this.score = score;}
+    int getPlayerScore(){return current_score;}
+    void setPlayerScore(int score){this.current_score = score;}
 
     int getPlayerID() {
         return playerID;

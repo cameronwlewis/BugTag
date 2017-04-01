@@ -54,7 +54,7 @@ class MainGame extends Game {
         winStatus = new GameWin();
 
         bugGame = new GridObjectHandler();
-        game = new GameHandler();
+        game = new GameHandler(bugGame.getBugOne(), bugGame.getBugTwo());
         game.setChaserStatus(bugGame.getBugOne(), bugGame.getBugTwo());
         reset = false;
 
@@ -100,7 +100,7 @@ class MainGame extends Game {
 
         game.run();
 
-        game.displayMessage(batch);
+        game.displayMessage(batch, bugGame.getBugOne(), bugGame.getBugTwo());
 
         batch.end();
 
@@ -111,6 +111,7 @@ class MainGame extends Game {
             reset = true;
             // make sure we notify the winner
             game.setWinnerMessage(winStatus.whoIsWinner());
+            game.calculateScore(gameState, bugGame.getBugOne(), bugGame.getBugTwo());
         }
 
         _buttonProcessor.setGameState(gameState);
