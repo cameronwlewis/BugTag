@@ -199,7 +199,6 @@ public class GameHandler{
      * runs the timer and checks if it runs out
      */
     private void update() {
-
         //update timer value
         timer.run();
 
@@ -214,6 +213,7 @@ public class GameHandler{
      * @param batch
      */
     void displayTime(SpriteBatch batch) {
+
         //Display timer
         String time;
         GlyphLayout tgl = new GlyphLayout();
@@ -245,7 +245,6 @@ public class GameHandler{
                     ((Gdx.graphics.getWidth() - w) / 2),
                     Gdx.graphics.getWidth() / 2);
         } else {
-
             time = "0:00";
             tgl .setText(digitalFont, time);
             w = tgl.width;
@@ -253,7 +252,7 @@ public class GameHandler{
             digitalFont.draw(batch, time,
                     ((Gdx.graphics.getWidth() - w) / 2),
                     Gdx.graphics.getWidth() / 2);
-            font.draw(batch, "TIME UP",
+            font.draw(batch, "TIME UP!",
                     ((Gdx.graphics.getWidth() - w) / 2),
                     Gdx.graphics.getWidth() / 4);
         }
@@ -319,8 +318,6 @@ public class GameHandler{
             font.draw(batch, gl,
                     ((Gdx.graphics.getWidth()- w) / 2),
                     Gdx.graphics.getWidth() / 5);
-
-
         } else if (gameState == GAME_PAUSED) {
             String gamePausedText = "GAME PAUSED!";
             String pressResumeText = "Press anywhere to resume!";
@@ -335,14 +332,14 @@ public class GameHandler{
             gl.setText(font, pressResumeText);
             w = gl.width;
 
-
             font.draw(batch, pressResumeText,
                     (Gdx.graphics.getWidth() - w) / 2,
                     Gdx.graphics.getWidth() / 4);
         } else if (gameState == GAME_OVER) {
 
-            String gameOverText = "\t      GAME OVER!\n      " + winnerMessage + "\n  Yellow Bug score: " + bug1_yellow.getPlayerScore() +
-                    "\n      Red Bug Score: " + bug2_red.getPlayerScore();
+            String gameOverText = "\t       GAME OVER!\n      " + winnerMessage +
+                    "\n Yellow Bug score: " + bug1_yellow.getPlayerScore() +
+                    "\n     Red Bug Score: " + bug2_red.getPlayerScore();
             String restartText = "Press anywhere to restart!";
 
             gl.setText(font, gameOverText);
@@ -351,42 +348,6 @@ public class GameHandler{
             font.draw(batch, gameOverText,
                     (Gdx.graphics.getWidth() - w) / 2,
                     Gdx.graphics.getWidth() / 2);
-
-
-            /*
-            String gameOverText = "GAME OVER!";
-            String yellowBugScoreText = "Yellow Bug score: " + bug1_yellow.getPlayerScore();
-            String redBugScoreText = "Red Bug score: " + bug2_red.getPlayerScore();
-            String restartText = "Press anywhere to restart!";
-
-            gl.setText(font, gameOverText);
-            w = gl.width;
-
-            font.draw(batch, gameOverText,
-                    (Gdx.graphics.getWidth() - w) / 2,
-                    Gdx.graphics.getWidth() / 2);
-
-            gl.setText(font, winnerMessage);
-            w = gl.width;
-
-            font.draw(batch, winnerMessage,
-                    (Gdx.graphics.getWidth() - w) / 2,
-                    Gdx.graphics.getWidth() / 3);
-
-            gl.setText(font, yellowBugScoreText);
-            w = gl.width;
-
-            font.draw(batch, yellowBugScoreText,
-                    (Gdx.graphics.getWidth() - w) / 2,
-                    Gdx.graphics.getWidth() / 4);
-
-            gl.setText(font, redBugScoreText);
-            w = gl.width;
-
-            font.draw(batch, redBugScoreText,
-                    (Gdx.graphics.getWidth() - w) / 2,
-                    Gdx.graphics.getWidth() / 5);
-            */
 
             gl.setText(font, restartText);
             w = gl.width;
