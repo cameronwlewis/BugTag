@@ -270,7 +270,7 @@ public class GameHandler{
 
         if (gameState == GAME_NOT_STARTED) {
             welcome.begin();
-            font.draw(welcome, gl, ((Gdx.graphics.getWidth() - w) / 2), Gdx.graphics.getWidth() / 5);
+            font.draw(welcome, gl, ((Gdx.graphics.getWidth() - w) / 2), Gdx.graphics.getWidth() / 7);
             welcome.draw(startGame.getTexture(), startGame.getX(), startGame.getY(), startButtonWidth, startButtonHeight);
             welcome.end();
         }
