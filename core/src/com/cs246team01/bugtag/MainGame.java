@@ -57,6 +57,7 @@ class MainGame extends Game {
         // reset game scores since last game quit
         bugGame.getBugTwo().resetScore();
         bugGame.getBugOne().resetScore();
+
         game = new GameHandler();
         game.setChaserStatus(bugGame.getBugOne(), bugGame.getBugTwo());
         reset = false;

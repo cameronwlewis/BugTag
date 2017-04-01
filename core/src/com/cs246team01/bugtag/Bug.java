@@ -76,7 +76,7 @@ public class Bug extends GridObject {
 
             // retrieve old scores from last round for yellow bug
             MyScores = Gdx.app.getPreferences("MyScores");
-            setPlayerScore(MyScores.getInteger("YellowScores"));
+            currentScore = MyScores.getInteger("YellowScores");
 
             currentPosition = new GridPoint2((int) playArea.getWidth()+ (int) playArea.getX(),
                     Gdx.graphics.getHeight() / 2);
@@ -88,7 +88,7 @@ public class Bug extends GridObject {
             setCurrentDirection(Direction.Up);
         } else {
             // retrieve old scores from last round for red bug
-            setPlayerScore(MyScores.getInteger("RedScores"));
+            currentScore = MyScores.getInteger("RedScores");
 
             currentPosition = new GridPoint2((int) playArea.getX(),
                     Gdx.graphics.getHeight() / 2);
@@ -160,7 +160,7 @@ public class Bug extends GridObject {
     }
 
     int getPlayerScore(){return currentScore;}
-    void setPlayerScore(int score){this.currentScore = score;}
+
     void saveNewScore(int newScore){
         currentScore += newScore;
         if (playerID == 1) {
