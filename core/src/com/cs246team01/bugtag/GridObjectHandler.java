@@ -14,13 +14,14 @@ import java.util.Random;
  * Handles movement and visualization for all {@link GridObject} instances
  * <p>
  * All of the GridObjects are stored in an array list. The list is iterated through and each object
- * is checked. Its position is updated if it has moved and the object is drawn accordingly.
+ * is checked. Its position is updated if it has moved and the object is drawn accordingly.</p>
  *
  * @author everyone
  */
 
-class GridObjectHandler {
+public class GridObjectHandler {
 
+    //log tagger
     static final String MOVE = "MoveTagger";
     //This holds any object used in game
     private List<GridObject> gridObjects;
@@ -86,7 +87,7 @@ class GridObjectHandler {
         Texture button7 = new Texture("buttons/arrow-up.png");
         Texture button8 = new Texture("buttons/arrow-down.png");
 
-        //Add objects to the array
+        //Add all gridobjects to the array
         gridObjects.add(bug1_yellow);
         gridObjects.add(bug2_red);
         gridObjects.add(obstacleOne);

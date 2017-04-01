@@ -18,7 +18,7 @@ import static com.cs246team01.bugtag.GridObject.TAG;
  * Tracks all variables that are not grid objects but still essential to game play.
  */
 
-class GameHandler {
+public class GameHandler {
 
     //game state variables
     private static final int GAME_NOT_STARTED = 0;
@@ -32,13 +32,13 @@ class GameHandler {
 
     //Start screen - can possibly remove this. But buttons show up
     private SpriteBatch welcome;
-
+    //for all game text besides timer
     private BitmapFont font;
-
+    //timer text
     private BitmapFont digitalFont;
-
+    //tells players which bug is chasing
     private String notifyChaser;
-
+    //displays winner for round
     private String winnerMessage;
 
     private GameScore score;
@@ -53,10 +53,13 @@ class GameHandler {
     private int startButtonWidth;
     private int startButtonHeight;
 
-    //game-state tag
+    //game-state log tag
     private static final String STATE = "GameState";
 
-    // non-default constructor to pass in both Bug objects to check who is the chaser at any time
+    /**
+     * default constructor initializes fonts and start button
+     */
+
     GameHandler() {
 
         welcome = new SpriteBatch();
@@ -65,8 +68,8 @@ class GameHandler {
         startButtonWidth = startGame.getTexture().getWidth();
         startButtonHeight = startGame.getTexture().getHeight();
 
-        //Since this is a constant (or is it?)
-        //we can just assign a hardcoded value
+
+        //timer starts at 63 seconds to include warm up mode
         float totalTime = 63;
         timer = new GameTime(totalTime);
         timerReset = true;
@@ -93,6 +96,9 @@ class GameHandler {
 
     }
 
+    /**
+     * determines which method is being called based on the current game state
+     */
     void run() {
 
         // gameState is retrieved here
@@ -110,7 +116,11 @@ class GameHandler {
                 break;
         }
     }
-    // set the greeting notifying who is the chaser
+
+    /**
+     * set the greeting notifying who is the chaser
+     */
+
     void setChaserStatus(Bug bug1_yellow, Bug bug2_red){
 
         if (bug1_yellow.isChaser())
@@ -121,8 +131,15 @@ class GameHandler {
 
     void setWinnerMessage(String message){winnerMessage = message;}
 
+    /**
+     * returns time remaining on the timer
+     * @return
+     */
     int getGameTime(){return timer.getTimeRemaining();}
 
+    /**
+     * resets the timer to 63 and counts down to the start of gameplay
+     */
     private void warmUpGame() {
 
         //If game is restarted, the timer is reset to 63
@@ -139,11 +156,15 @@ class GameHandler {
 
     }
 
+
     void calculateScore(int _gameState, Bug bug1_yellow, Bug bug2_red){
         if (gameState == 3)
             score.awardWinPoints(winnerMessage, bug1_yellow, bug2_red);
     }
 
+    /**
+     * runs the timer and checks if it runs out
+     */
     private void update() {
 
         //update timer value
@@ -155,6 +176,10 @@ class GameHandler {
 
     }
 
+    /**
+     * draws timer to screen
+     * @param batch
+     */
     void displayTime(SpriteBatch batch) {
         //Display timer
         if (timer.getTimeRemaining() >= 60) {
@@ -179,6 +204,9 @@ class GameHandler {
         }
     }
 
+    /**
+     * displays main start menu before gameplay begins
+     */
     void displayMenu() {
         if (gameState == GAME_NOT_STARTED) {
             welcome.begin();
@@ -190,6 +218,10 @@ class GameHandler {
         }
     }
 
+    /**
+     * displays all other text on screen during gameplay
+     * @param batch
+     */
     void displayMessage(SpriteBatch batch) {
 
         GlyphLayout gl = new GlyphLayout();

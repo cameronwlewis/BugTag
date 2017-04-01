@@ -13,12 +13,20 @@ import static com.cs246team01.bugtag.GridObject.TAG;
  * <p>
  * The ButtonProcessor has a list of static booleans and integers that determine what state the
  * game is currently in and where on the screen the user has clicked. These variables are used
- * extensively within the {@link GridObjectHandler} class.
+ * extensively within the {@link GridObjectHandler} class.</p>
+ *
+ * <p>Using Rectangle objects from the libgdx library, we are able to divide the screen up into
+ * sections. Rectangle has a contain method that determines if the user's finger is touching
+ * within the area of the rectangle. When a Rectangle contains the user's finger it sends a
+ * movement number to the GridObjectHandler which determines bug movement.</p>
+ *
+ * If the game is not in play mode the processor also handles changes for the state of the game
+ * (ex. checking if the startGame button is pressed).
  *
  * @author Landon, Likhith
  * @since 2017-03-08
  */
-class ButtonProcessor implements InputProcessor {
+public class ButtonProcessor implements InputProcessor {
 
     //These variables will be used for handling user input
     static boolean moveLeft1;
@@ -36,6 +44,8 @@ class ButtonProcessor implements InputProcessor {
     //this is the main menu start button
     private Button startButton;
 
+    //the constructor takes in an array of buttons passed in from GridObjectHandler and the current
+    //game state
     ButtonProcessor(ArrayList<Button> buttons, int state) {
         moveLeft1 = false;
         moveRight1 = false;
@@ -54,6 +64,30 @@ class ButtonProcessor implements InputProcessor {
     }
 
 
+    /**
+     * Handles user input when they touch the screen
+     *
+     * <p>When the user touches down on the screen. This method checks for where on the screen they
+     * have pressed using the screenX and screenY variables. There are 5 game states the processor
+     * is concerned with. They are as follows:</p><br/>
+     *
+     * <p>-GAME_NOT_STARTED: The main menu is being displayed.
+     * -GAME_STARTED: The game is currently being played. touchDown checks what buttons are pressed.
+     * -GAME_PAUSED: The game is currently paused.
+     * -GAME_OVER: Either the timer has run out or the bugs have touched each other.
+     * -GAME_WARM_UP: New round started. A timer counts for 3 seconds letting players get ready</p>
+     *
+     * <p>The array of buttons is looped through to determine which one has been pressed. When it
+     * is found it sets its corresponding movement boolean to true which will be used to determine
+     * bug movement in the {@link GridObjectHandler}.</p>
+     *
+     *
+     * @param screenX
+     * @param screenY
+     * @param pointer
+     * @param button
+     * @return
+     */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         //Variables for game state tracking
@@ -149,6 +183,16 @@ class ButtonProcessor implements InputProcessor {
         gameState = state;
     }
 
+    /**
+     * Checks if the main start button has been pressed and released
+     *
+     *
+     * @param screenX
+     * @param screenY
+     * @param pointer
+     * @param button
+     * @return
+     */
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 
@@ -171,6 +215,8 @@ class ButtonProcessor implements InputProcessor {
         return true;
     }
 
+    //none of the variables below are used, they are included as methods from the InputProcessor
+    //interface
     @Override
     public boolean keyDown(int keycode) {
         return false;
