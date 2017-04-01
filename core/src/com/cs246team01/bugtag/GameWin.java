@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
  * @author Cameron Lewis (cameronwlewis@gmail.com)
  * @since 3/16/2017
  */
-class GameWin {
+public class GameWin {
     private int win_status;
     private String whoIsWinner;
 

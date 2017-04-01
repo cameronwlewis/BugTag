@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
  * Tracks all variables that are not grid objects but still essential to game play.
  */
 
-class GameHandler {
+public class GameHandler {
 
     //game state variables
     private static final int GAME_NOT_STARTED = 0;
@@ -55,6 +55,11 @@ class GameHandler {
 
     //game-state tag
     private static final String STATE = "GameState";
+
+    /**
+     * non-default constructor to pass in both Bug objects to check who is the chaser at any time
+     */
+
     //BOGUS COMMENTS HERE
     // non-default constructor
     GameHandler(Bug bug1_yellow, Bug bug2_red) {
@@ -102,6 +107,9 @@ class GameHandler {
 
     }
 
+    /**
+     * determines which method is being called based on the current game state
+     */
     void run() {
 
         // gameState is retrieved here
@@ -119,7 +127,10 @@ class GameHandler {
                 break;
         }
     }
-    // set the greeting notifying who is the chaser
+
+    /**
+     * set the greeting notifying who is the chaser
+     */
     void setChaserStatus(Bug bug1_yellow, Bug bug2_red){
 
         if (bug1_yellow.isChaser())
@@ -130,8 +141,15 @@ class GameHandler {
 
     void setWinnerMessage(String message){winnerMessage = message;}
 
+    /**
+     * returns time remaining on the timer
+     * @return
+     */
     int getGameTime(){return timer.getTimeRemaining();}
 
+    /**
+     * resets the timer to 63 and counts down to the start of gameplay
+     */
     private void warmUpGame() {
 
         //If game is restarted, the timer is reset to 63
@@ -148,22 +166,23 @@ class GameHandler {
 
     }
 
+
     void calculateScore(int _gameState, Bug bug1_yellow, Bug bug2_red){
         int currentScore;
         if (_gameState == 3) {
             if (winnerMessage.contains("Red")) {
                 currentScore = MyScores.getInteger("RedScores");
-                bug2_red.addToPlayerScore(winPoint);
+                bug2_red.setPlayerScore(currentScore + winPoint);
                 MyScores.putInteger("RedScores", bug2_red.getPlayerScore());
                 MyScores.flush();
                 if(HighScore.getInteger("HighScore") < bug2_red.getPlayerScore()){
                     HighScore.putInteger("HighScore", bug2_red.getPlayerScore());
                     HighScore.flush();
                 }
-
             }
             else {
-                bug1_yellow.addToPlayerScore(winPoint);
+                currentScore = MyScores.getInteger("YellowScores");
+                bug1_yellow.setPlayerScore(currentScore + winPoint);
                 MyScores.putInteger("YellowScores", bug1_yellow.getPlayerScore());
                 MyScores.flush();
                 if(HighScore.getInteger("HighScore") < bug1_yellow.getPlayerScore()){
@@ -174,6 +193,9 @@ class GameHandler {
         }
     }
 
+    /**
+     * runs the timer and checks if it runs out
+     */
     private void update() {
 
         //update timer value
@@ -185,6 +207,10 @@ class GameHandler {
 
     }
 
+    /**
+     * draws timer to screen
+     * @param batch
+     */
     void displayTime(SpriteBatch batch) {
         //Display timer
         if (timer.getTimeRemaining() >= 60) {
@@ -209,6 +235,10 @@ class GameHandler {
         }
     }
 
+
+    /**
+     * displays main start menu before gameplay begins
+     */
     void displayMenu() {
         if (gameState == GAME_NOT_STARTED) {
             welcome.begin();
@@ -220,6 +250,10 @@ class GameHandler {
         }
     }
 
+    /**
+     * displays all other text on screen during gameplay
+     * @param batch
+     */
     void displayMessage(SpriteBatch batch, Bug bug1_yellow, Bug bug2_red) {
 
         GlyphLayout gl = new GlyphLayout();
@@ -227,17 +261,7 @@ class GameHandler {
         if (gameState == GAME_NOT_STARTED) {
             displayMenu();
         }
-//            welcome.begin();
-//            font.draw(welcome, "BUGTAG!",
-//                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
-//                    Gdx.graphics.getWidth() / 2);
-//            font.draw(welcome, "Press anywhere to start!",
-//                    Gdx.graphics.getHeight() / 2,
-//                    Gdx.graphics.getWidth() / 4);
-//
-//            welcome.end();
-//        } else
-//
+
         if (gameState == GAME_WARM_UP) {
 
             String chaserText=  notifyChaser;
