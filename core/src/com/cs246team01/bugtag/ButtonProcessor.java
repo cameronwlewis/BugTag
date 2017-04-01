@@ -97,9 +97,8 @@ public class ButtonProcessor implements InputProcessor {
         int GAME_WARM_UP = 4;
 
         if (gameState == GAME_NOT_STARTED) {
-            //Start game warm up stage
-            Texture down = new Texture("buttons/startgame_down.png");
-            startButton.setTexture(down);
+            //Button press animation
+            startButton.setTexture(new Texture("buttons/startgame_down.png"));
         }
 
         if (gameState == GAME_STARTED) {
@@ -209,6 +208,9 @@ public class ButtonProcessor implements InputProcessor {
         int GAME_WARM_UP = 4;
 
         if (gameState == GAME_NOT_STARTED) {
+            //Reset start button texture
+            startButton.setTexture(new Texture("buttons/startgame_up.png"));
+
             //Start game warm up stage
             if (startButton.getClickArea().contains(screenX, screenY)) {
                 gameState = GAME_WARM_UP;
