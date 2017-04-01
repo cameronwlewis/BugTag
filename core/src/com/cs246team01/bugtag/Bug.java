@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 
-import org.w3c.dom.css.Rect;
-
 /**
  * This class contains the implementation of a bug, which extends GridObject
  * A bug will have a specific texture and a player ID. This object will
@@ -27,6 +25,8 @@ public class Bug extends GridObject {
     private boolean hidingTop;
     private boolean hidingDown;
 
+    // storage for player scores
+    Preferences MyScores;
 
     //To keep track of player1 and player2 bugs
     private int playerID;
@@ -40,7 +40,7 @@ public class Bug extends GridObject {
     private Rectangle bug_hitbox;
 
     // bug/player score
-    private int current_score;
+    private int currentScore;
 
     //Default Constructor creates player 1;
     public Bug() {
@@ -64,12 +64,19 @@ public class Bug extends GridObject {
         isChaser = chaser;
 
         //set initial score
-        current_score = 0;
+        currentScore = 0;
 
         this.setTexture(bugImage);
         //Set bug in bottom left corner
 
+        // initialize player scores preferences files
+        MyScores = Gdx.app.getPreferences("MyScores");
+
+
         if (playerID == 1) {
+            // retrieve old scores from last round for yellow bug
+            setPlayerScore(MyScores.getInteger("YellowScores"));
+
             currentPosition = new GridPoint2((int) playArea.getWidth()+ (int) playArea.getX(),
                     Gdx.graphics.getHeight() / 2);
             this.playerID = 1;
@@ -79,6 +86,9 @@ public class Bug extends GridObject {
             rightTexture = new Texture("bugs/bug1up.png");
             setCurrentDirection(Direction.Up);
         } else {
+            // retrieve old scores from last round for red bug
+            setPlayerScore(MyScores.getInteger("RedScores"));
+
             currentPosition = new GridPoint2((int) playArea.getX(),
                     Gdx.graphics.getHeight() / 2);
             this.playerID = 2;
@@ -148,8 +158,18 @@ public class Bug extends GridObject {
         return bug_hitbox;
     }
 
-    int getPlayerScore(){return current_score;}
-    void setPlayerScore(int score){this.current_score = score;}
+    int getPlayerScore(){return currentScore;}
+    void setPlayerScore(int score){this.currentScore = score;}
+    void saveNewScore(int newScore){
+        currentScore += newScore;
+        if (playerID == 1) {
+            MyScores.putInteger("YellowScores", currentScore);
+        }
+        else if (playerID == 2) {
+            MyScores.putInteger("RedScores", currentScore);
+        }
+        MyScores.flush();
+    }
 
     int getPlayerID() {
         return playerID;

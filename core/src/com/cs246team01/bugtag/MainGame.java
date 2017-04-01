@@ -3,7 +3,6 @@ package com.cs246team01.bugtag;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -32,6 +31,7 @@ class MainGame extends Game {
     static int gameState = 0;
 
     private boolean reset;
+    private boolean areScoresCalculated;
 
     //Use this for tagging bugs
     private static final String TAG = "DebugTagger";
@@ -41,6 +41,8 @@ class MainGame extends Game {
     public void create() {
         Preferences numMovesPrefs = Gdx.app.getPreferences("MOVES");
         int numMoves = numMovesPrefs.getInteger("moves", 0);
+
+        areScoresCalculated = false;
 
         //Debugging only - remove
         Gdx.app.log(TAG, "The number of moves are " + numMoves);
@@ -54,7 +56,7 @@ class MainGame extends Game {
         winStatus = new GameWin();
 
         bugGame = new GridObjectHandler();
-        game = new GameHandler(bugGame.getBugOne(), bugGame.getBugTwo());
+        game = new GameHandler();
         game.setChaserStatus(bugGame.getBugOne(), bugGame.getBugTwo());
         reset = false;
 
@@ -77,6 +79,7 @@ class MainGame extends Game {
             bugGame = new GridObjectHandler();
             game.setChaserStatus(bugGame.getBugOne(), bugGame.getBugTwo());
             reset = false;
+            areScoresCalculated = false;
         }
 
         batch.begin();
@@ -111,7 +114,10 @@ class MainGame extends Game {
             reset = true;
             // make sure we notify the winner
             game.setWinnerMessage(winStatus.whoIsWinner());
-            game.calculateScore(gameState, bugGame.getBugOne(), bugGame.getBugTwo());
+            if (!areScoresCalculated) {
+                game.calculateScore(gameState, bugGame.getBugOne(), bugGame.getBugTwo());
+                areScoresCalculated = true;
+            }
         }
 
         _buttonProcessor.setGameState(gameState);

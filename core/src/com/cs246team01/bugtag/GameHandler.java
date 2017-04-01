@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
+import static com.badlogic.gdx.Input.Keys.M;
+
 /**
  * Tracks all variables that are not grid objects but still essential to game play.
  */
@@ -36,17 +38,14 @@ public class GameHandler {
 
     int winPoint;
 
+    // storage for high score
+    Preferences HighScore;
+
     private String winnerMessage;
 
     //Timer
     private GameTime timer;
     private boolean timerReset;
-
-    // storage for player scores
-    Preferences MyScores;
-
-    // storage for high score
-    Preferences HighScore;
 
     //Main Menu
     private static Button startGame;
@@ -62,16 +61,12 @@ public class GameHandler {
 
     //BOGUS COMMENTS HERE
     // non-default constructor
-    GameHandler(Bug bug1_yellow, Bug bug2_red) {
-        // initialize player scores preferences files
-        MyScores = Gdx.app.getPreferences("MyScores");
-        HighScore = Gdx.app.getPreferences("HighScore");
-
-        // retrieve scores
-        bug1_yellow.setPlayerScore(MyScores.getInteger("YellowScores"));
-        bug2_red.setPlayerScore(MyScores.getInteger("RedScores"));
-
+    GameHandler() {
+        // points given to player for a win
         winPoint = 1;
+
+        // retrieve saved high score
+        HighScore = Gdx.app.getPreferences("HighScore");
 
         welcome = new SpriteBatch();
 
@@ -166,25 +161,18 @@ public class GameHandler {
 
     }
 
-
     void calculateScore(int _gameState, Bug bug1_yellow, Bug bug2_red){
-        int currentScore;
+
         if (_gameState == 3) {
             if (winnerMessage.contains("Red")) {
-                currentScore = MyScores.getInteger("RedScores");
-                bug2_red.setPlayerScore(currentScore + winPoint);
-                MyScores.putInteger("RedScores", bug2_red.getPlayerScore());
-                MyScores.flush();
+                bug2_red.saveNewScore(winPoint);
                 if(HighScore.getInteger("HighScore") < bug2_red.getPlayerScore()){
                     HighScore.putInteger("HighScore", bug2_red.getPlayerScore());
                     HighScore.flush();
                 }
             }
             else {
-                currentScore = MyScores.getInteger("YellowScores");
-                bug1_yellow.setPlayerScore(currentScore + winPoint);
-                MyScores.putInteger("YellowScores", bug1_yellow.getPlayerScore());
-                MyScores.flush();
+               bug1_yellow.saveNewScore(winPoint);
                 if(HighScore.getInteger("HighScore") < bug1_yellow.getPlayerScore()){
                     HighScore.putInteger("HighScore", bug1_yellow.getPlayerScore());
                     HighScore.flush();
@@ -297,6 +285,13 @@ public class GameHandler {
                     Gdx.graphics.getHeight() / 3,
                     Gdx.graphics.getWidth() / 4);
         } else if (gameState == GAME_OVER) {
+            if (bug1_yellow.getPlayerScore() <= 0 || bug2_red.getPlayerScore() <= 0){
+                int stuffis_broken = 0;
+
+                for(int i = 0; i < 5; i++){
+                    stuffis_broken++;
+                }
+            }
             font.draw(batch, "GAME OVER!\n" + winnerMessage + "\n\nYellow Bug score: " + bug1_yellow.getPlayerScore() +
                             "\nRed Bug Score: " + bug2_red.getPlayerScore(),
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
