@@ -223,12 +223,15 @@ public class GameHandler{
     /**
      * displays main start menu before gameplay begins
      */
-    void displayMenu() {
+    void displayMenu(GlyphLayout gl) {
+        int highScore_int = HighScore.getInteger("HighScore");
+        String highScore_string = Integer.toString(highScore_int);
+        gl.setText(font, highScore_string);
+        float w = gl.width;
+
         if (gameState == GAME_NOT_STARTED) {
             welcome.begin();
-            font.draw(welcome, "BUGTAG!",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 8),
-                    Gdx.graphics.getWidth() / 2);
+            font.draw(welcome,"\n\n\n\n\nCurrent high score:\n" + gl + " consecutive wins", ((Gdx.graphics.getWidth() - w) / 2), Gdx.graphics.getWidth() / 3);
             welcome.draw(startGame.getTexture(), startGame.getX(), startGame.getY(), startButtonWidth, startButtonHeight);
             welcome.end();
         }
@@ -243,7 +246,7 @@ public class GameHandler{
         GlyphLayout gl = new GlyphLayout();
 
         if (gameState == GAME_NOT_STARTED) {
-            displayMenu();
+            displayMenu(gl);
         }
 
         if (gameState == GAME_WARM_UP) {
@@ -255,9 +258,7 @@ public class GameHandler{
             gl.setText(font, chaserText);
             float w = gl.width;
 
-            font.draw(batch,gl,
-                   ((Gdx.graphics.getWidth() - w) / 2),
-                    Gdx.graphics.getWidth() / 3);
+            font.draw(batch,gl, ((Gdx.graphics.getWidth() - w) / 2), Gdx.graphics.getWidth() / 3);
             gl.setText(font,warmUpText);
             w = gl.width;
 
@@ -295,7 +296,7 @@ public class GameHandler{
     }
 
 
-    public static Button getStartButton() {
+    static Button getStartButton() {
         return startGame;
     }
 
