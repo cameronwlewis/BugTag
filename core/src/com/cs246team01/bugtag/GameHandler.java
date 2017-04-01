@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
+import java.util.Random;
+
 /**
  * Tracks all variables that are not grid objects but still essential to game play.
  */
@@ -96,6 +98,12 @@ public class GameHandler{
         digitalFont = digitalFontFT.generateFont(digitalParameter);
         digitalFont.setColor(1f,1f,1f,1f);
 
+        Random rand = new Random();
+        boolean randBoolean = rand.nextBoolean();
+        GridObjectHandler.bug1_yellow.setChaser(randBoolean);
+        GridObjectHandler.bug2_red.setChaser(!randBoolean);
+
+
     }
 
     /**
@@ -120,9 +128,19 @@ public class GameHandler{
     }
 
     /**
-     * set the greeting notifying who is the chaser
+     * flip-flops the chaser each round and sets the greeting notifying who is the chaser
      */
-    void setChaserStatus(Bug bug1_yellow, Bug bug2_red){
+    void setChaserStatus(Bug bug1_yellow, Bug bug2_red, boolean yellowIsChaser){
+
+        if(yellowIsChaser){
+            bug1_yellow.setChaser(false);
+            bug2_red.setChaser(true);
+        }
+        else{
+            bug1_yellow.setChaser(true);
+            bug2_red.setChaser(false);
+        }
+
 
         if (bug1_yellow.isChaser())
             notifyChaser = "Yellow bug is the chaser!";
@@ -168,7 +186,7 @@ public class GameHandler{
                 }
             }
             else {
-               bug1_yellow.saveNewScore(winPoint);
+                bug1_yellow.saveNewScore(winPoint);
                 if(HighScore.getInteger("HighScore") < bug1_yellow.getPlayerScore()){
                     HighScore.putInteger("HighScore", bug1_yellow.getPlayerScore());
                     HighScore.flush();
@@ -197,25 +215,47 @@ public class GameHandler{
      */
     void displayTime(SpriteBatch batch) {
         //Display timer
+        String time;
+        GlyphLayout tgl = new GlyphLayout();
+        float w;
+
         if (timer.getTimeRemaining() >= 60) {
-            digitalFont.draw(batch, "0:60",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+            time = "0:60";
+
+            tgl .setText(digitalFont, time);
+            w = tgl.width;
+
+            digitalFont.draw(batch, time,
+                    ((Gdx.graphics.getWidth() - w) / 2),
                     Gdx.graphics.getWidth() / 2);
         } else if (timer.getTimeRemaining() >= 10) {
-            digitalFont.draw(batch, "0:" + timer.getTimeRemaining(),
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+            time = "0:" + timer.getTimeRemaining();
+            tgl .setText(digitalFont, time);
+            w = tgl.width;
+
+            digitalFont.draw(batch, time,
+                    ((Gdx.graphics.getWidth() - w) / 2),
                     Gdx.graphics.getWidth() / 2);
         } else if (timer.getTimeRemaining() < 10 && timer.getTimeRemaining() > 0) {
-            digitalFont.draw(batch, "0:0" + timer.getTimeRemaining(),
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+            time = "0:0" + timer.getTimeRemaining();
+            tgl .setText(digitalFont, time);
+            w = tgl.width;
+
+            digitalFont.draw(batch, time,
+                    ((Gdx.graphics.getWidth() - w) / 2),
                     Gdx.graphics.getWidth() / 2);
         } else {
-            digitalFont.draw(batch, "0:00",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+
+            time = "0:00";
+            tgl .setText(digitalFont, time);
+            w = tgl.width;
+
+            digitalFont.draw(batch, time,
+                    ((Gdx.graphics.getWidth() - w) / 2),
                     Gdx.graphics.getWidth() / 2);
             font.draw(batch, "TIME UP",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 10),
-                    Gdx.graphics.getWidth() / 3);
+                    ((Gdx.graphics.getWidth() - w) / 2),
+                    Gdx.graphics.getWidth() / 4);
         }
     }
 
@@ -244,6 +284,7 @@ public class GameHandler{
     void displayMessage(SpriteBatch batch, Bug bug1_yellow, Bug bug2_red) {
 
         GlyphLayout gl = new GlyphLayout();
+        float w;
 
         if (gameState == GAME_NOT_STARTED) {
             displayMenu(gl);
@@ -256,9 +297,11 @@ public class GameHandler{
             String timerText = (timer.getTimeRemaining() - 60) + "...";
 
             gl.setText(font, chaserText);
-            float w = gl.width;
+            w = gl.width;
 
-            font.draw(batch,gl, ((Gdx.graphics.getWidth() - w) / 2), Gdx.graphics.getWidth() / 3);
+            font.draw(batch,gl,
+                    ((Gdx.graphics.getWidth() - w) / 2),
+                    Gdx.graphics.getWidth() / 3);
             gl.setText(font,warmUpText);
             w = gl.width;
 
@@ -275,23 +318,78 @@ public class GameHandler{
 
 
         } else if (gameState == GAME_PAUSED) {
-            font.draw(batch, "GAME PAUSED!",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
+            String gamePausedText = "GAME PAUSED!";
+            String pressResumeText = "Press anywhere to resume!";
+
+            gl.setText(font, gamePausedText);
+            w = gl.width;
+
+            font.draw(batch, gamePausedText,
+                    (Gdx.graphics.getWidth() - w) / 2,
                     Gdx.graphics.getWidth() / 3);
-            font.draw(batch, "Press anywhere to resume!",
-                    Gdx.graphics.getHeight() / 3,
+
+            gl.setText(font, pressResumeText);
+            w = gl.width;
+
+
+            font.draw(batch, pressResumeText,
+                    (Gdx.graphics.getWidth() - w) / 2,
                     Gdx.graphics.getWidth() / 4);
         } else if (gameState == GAME_OVER) {
-            font.draw(batch, "GAME OVER!\n" + winnerMessage + "\n\nYellow Bug score: " + bug1_yellow.getPlayerScore() +
-                            "\nRed Bug Score: " + bug2_red.getPlayerScore(),
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
+
+            String gameOverText = "\t      GAME OVER!\n      " + winnerMessage + "\n  Yellow Bug score: " + bug1_yellow.getPlayerScore() +
+                    "\n      Red Bug Score: " + bug2_red.getPlayerScore();
+            String restartText = "Press anywhere to restart!";
+
+            gl.setText(font, gameOverText);
+            w = gl.width;
+
+            font.draw(batch, gameOverText,
+                    (Gdx.graphics.getWidth() - w) / 2,
+                    Gdx.graphics.getWidth() / 2);
+
+
+            /*
+            String gameOverText = "GAME OVER!";
+            String yellowBugScoreText = "Yellow Bug score: " + bug1_yellow.getPlayerScore();
+            String redBugScoreText = "Red Bug score: " + bug2_red.getPlayerScore();
+            String restartText = "Press anywhere to restart!";
+
+            gl.setText(font, gameOverText);
+            w = gl.width;
+
+            font.draw(batch, gameOverText,
+                    (Gdx.graphics.getWidth() - w) / 2,
+                    Gdx.graphics.getWidth() / 2);
+
+            gl.setText(font, winnerMessage);
+            w = gl.width;
+
+            font.draw(batch, winnerMessage,
+                    (Gdx.graphics.getWidth() - w) / 2,
                     Gdx.graphics.getWidth() / 3);
-            //font.draw(batch, "GAME OVER!",
-            //        Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
-            //        Gdx.graphics.getWidth() / 4);
-            font.draw(batch, "\nPress anywhere to restart!",
-                    Gdx.graphics.getHeight() / 3,
-                    Gdx.graphics.getWidth() / 6);
+
+            gl.setText(font, yellowBugScoreText);
+            w = gl.width;
+
+            font.draw(batch, yellowBugScoreText,
+                    (Gdx.graphics.getWidth() - w) / 2,
+                    Gdx.graphics.getWidth() / 4);
+
+            gl.setText(font, redBugScoreText);
+            w = gl.width;
+
+            font.draw(batch, redBugScoreText,
+                    (Gdx.graphics.getWidth() - w) / 2,
+                    Gdx.graphics.getWidth() / 5);
+            */
+
+            gl.setText(font, restartText);
+            w = gl.width;
+
+            font.draw(batch, restartText,
+                    (Gdx.graphics.getWidth() - w) / 2,
+                    Gdx.graphics.getWidth() / 7);
         }
     }
 
