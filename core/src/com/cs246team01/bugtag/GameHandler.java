@@ -56,10 +56,10 @@ public class GameHandler {
     private static final String STATE = "GameState";
 
     /**
-     * default constructor initializes fonts and start button
+     * default constructor initializes fonts,start button and bugs
      */
 
-    GameHandler() {
+    GameHandler( ) {
 
         welcome = new SpriteBatch();
 
@@ -156,10 +156,7 @@ public class GameHandler {
     }
 
 
-    void calculateScore(int _gameState, Bug bug1_yellow, Bug bug2_red){
-        if (gameState == 3)
-            score.awardWinPoints(winnerMessage, bug1_yellow, bug2_red);
-    }
+
 
     /**
      * runs the timer and checks if it runs out
