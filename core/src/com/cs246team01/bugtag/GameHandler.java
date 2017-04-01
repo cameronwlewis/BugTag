@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -190,6 +191,9 @@ class GameHandler {
     }
 
     void displayMessage(SpriteBatch batch) {
+
+        GlyphLayout gl = new GlyphLayout();
+
         if (gameState == GAME_NOT_STARTED) {
             displayMenu();
         }
@@ -205,12 +209,32 @@ class GameHandler {
 //        } else
 //
         if (gameState == GAME_WARM_UP) {
-            font.draw(batch, notifyChaser + "\n    Game starts in",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 4),
+
+            String chaserText=  notifyChaser;
+            String warmUpText = "Game starts in";
+            String timerText = (timer.getTimeRemaining() - 60) + "...";
+
+            gl.setText(font, chaserText);
+            float w = gl.width;
+
+            font.draw(batch,gl,
+                   ((Gdx.graphics.getWidth() - w) / 2),
                     Gdx.graphics.getWidth() / 3);
-            font.draw(batch, "\n" + (timer.getTimeRemaining() - 60) + "...",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+            gl.setText(font,warmUpText);
+            w = gl.width;
+
+            font.draw(batch, gl,
+                    ((Gdx.graphics.getWidth()- w) / 2),
                     Gdx.graphics.getWidth() / 4);
+
+            gl.setText(font,timerText);
+            w = gl.width;
+
+            font.draw(batch, gl,
+                    ((Gdx.graphics.getWidth()- w) / 2),
+                    Gdx.graphics.getWidth() / 5);
+
+
         } else if (gameState == GAME_PAUSED) {
             font.draw(batch, "GAME PAUSED!",
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
