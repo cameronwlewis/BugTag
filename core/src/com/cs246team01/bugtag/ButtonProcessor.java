@@ -1,6 +1,7 @@
 package com.cs246team01.bugtag;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -218,17 +219,53 @@ public class ButtonProcessor implements InputProcessor {
             }
         }
 
-
         return true;
     }
 
-    //none of the variables below are used, they are included as methods from the InputProcessor
-    //interface
     @Override
     public boolean keyDown(int keycode) {
+        switch (keycode) {
+            case Input.Keys.LEFT:
+                moveUp1 = true;
+                Gdx.app.log(TAG, "Pressed UP key");
+                break;
+            case Input.Keys.RIGHT:
+                moveDown1 = true;
+                Gdx.app.log(TAG, "Pressed DOWN key");
+                break;
+            case Input.Keys.DOWN:
+                moveLeft1 = true;
+                Gdx.app.log(TAG, "Pressed LEFT key");
+                break;
+            case Input.Keys.UP:
+                moveRight1 = true;
+                Gdx.app.log(TAG, "Pressed RIGHT key");
+                break;
+            case Input.Keys.D:
+                moveUp2 = true;
+                Gdx.app.log(TAG, "Pressed W key");
+                break;
+            case Input.Keys.A:
+                moveDown2 = true;
+                Gdx.app.log(TAG, "Pressed S key");
+                break;
+            case Input.Keys.W:
+                moveLeft2 = true;
+                Gdx.app.log(TAG, "Pressed A key");
+                break;
+            case Input.Keys.S:
+                moveRight2 = true;
+                Gdx.app.log(TAG, "Pressed D key");
+                break;
+            default:
+                break;
+        }
+
         return false;
     }
 
+    //None of the methods below are used, they are included as methods from the InputProcessor
+    //interface
     @Override
     public boolean keyUp(int keycode) {
         return false;
@@ -238,7 +275,6 @@ public class ButtonProcessor implements InputProcessor {
     public boolean keyTyped(char character) {
         return false;
     }
-
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
