@@ -14,13 +14,14 @@ import java.util.Random;
  * Handles movement and visualization for all {@link GridObject} instances
  * <p>
  * All of the GridObjects are stored in an array list. The list is iterated through and each object
- * is checked. Its position is updated if it has moved and the object is drawn accordingly.
+ * is checked. Its position is updated if it has moved and the object is drawn accordingly.</p>
  *
  * @author everyone
  */
 
-class GridObjectHandler {
+public class GridObjectHandler {
 
+    //log tagger
     static final String MOVE = "MoveTagger";
     //This holds any object used in game
     private List<GridObject> gridObjects;
@@ -30,8 +31,8 @@ class GridObjectHandler {
     private int obstacleHeight = Gdx.graphics.getHeight() / 3;
 
     //Bug Dimensions
-    private int bugWidth = Gdx.graphics.getHeight() / 14;
-    private int bugHeight = Gdx.graphics.getHeight() / 14;
+    private int bugWidth = Gdx.graphics.getHeight() / 13;
+    private int bugHeight = Gdx.graphics.getHeight() / 13;
 
     //Button Dimensions
     private int buttonSide = Gdx.graphics.getHeight() / 4;
@@ -67,14 +68,15 @@ class GridObjectHandler {
         bug1_yellow = new Bug(bug1_texture, randBoolean, 1);
         bug2_red = new Bug(bug2_texture, !randBoolean, 2);
 
-        //Initialize Obstacles
-        Obstacle obstacleOne     = new Obstacle(new Texture("obstacles/Real_Pear.png"));
-        Obstacle obstacleTwo     = new Obstacle(new Texture("obstacles/Real_Apple.png"));
-        Obstacle obstacleThree   = new Obstacle(new Texture("obstacles/Real_Bread.png"));
-        Obstacle obstacleFour    = new Obstacle(new Texture("obstacles/Real_Watermelon.png"));
-        Obstacle obstacleFive    = new Obstacle(new Texture("obstacles/Real_Orange.png"));
-        Obstacle obstacleSix     = new Obstacle(new Texture("obstacles/Real_Potato.png"));
-        Obstacle obstacleSeven   = new Obstacle(new Texture("obstacles/Real_Bananas.png"));
+        //Initialize Obstacles                                                                //ID
+        Obstacle obstacleOne     = new Obstacle(new Texture("obstacles/Real_Pear.png"),         1);
+        Obstacle obstacleTwo     = new Obstacle(new Texture("obstacles/Real_Apple.png"),        0);
+        Obstacle obstacleThree   = new Obstacle(new Texture("obstacles/Real_Bread.png"),        0);
+        Obstacle obstacleFour    = new Obstacle(new Texture("obstacles/Real_Watermelon.png"),   1);
+        Obstacle obstacleFive    = new Obstacle(new Texture("obstacles/Real_Orange.png"),       0);
+        Obstacle obstacleSix     = new Obstacle(new Texture("obstacles/Real_Blackberries.png"), 0);
+        Obstacle obstacleSeven   = new Obstacle(new Texture("obstacles/Real_Blueberries.png"),  0);
+        Obstacle obstacleEight   = new Obstacle(new Texture("obstacles/Real_Bananas.png"),      1);
 
         //Button textures
         Texture button1 = new Texture("buttons/arrow-left.png");
@@ -86,7 +88,7 @@ class GridObjectHandler {
         Texture button7 = new Texture("buttons/arrow-up.png");
         Texture button8 = new Texture("buttons/arrow-down.png");
 
-        //Add objects to the array
+        //Add all gridobjects to the array
         gridObjects.add(bug1_yellow);
         gridObjects.add(bug2_red);
         gridObjects.add(obstacleOne);
@@ -96,6 +98,7 @@ class GridObjectHandler {
         gridObjects.add(obstacleFive);
         gridObjects.add(obstacleSix);
         gridObjects.add(obstacleSeven);
+        gridObjects.add(obstacleEight);
         gridObjects.add(new Button(1, button1));
         gridObjects.add(new Button(2, button2));
         gridObjects.add(new Button(3, button3));
@@ -104,6 +107,14 @@ class GridObjectHandler {
         gridObjects.add(new Button(6, button6));
         gridObjects.add(new Button(7, button7));
         gridObjects.add(new Button(8, button8));
+
+        //set the chaser buttons to the correct color
+        int chaserID = 0;
+        if (bug1_yellow.isChaser())
+            chaserID = 1;
+        else
+            chaserID = 2;
+        setChaserButtonColor(chaserID);
     }
 
     /**
@@ -136,6 +147,31 @@ class GridObjectHandler {
     }
 
     /**
+     * Will set the buttons of the player who is the chaser to the color of their bug
+     * @param chaser Who the chaser is
+     */
+    void setChaserButtonColor(int chaser) {
+        int bIndex = 0;
+        for(GridObject current: gridObjects){ //get the index to the buttons
+            if(current instanceof Button)
+                break;
+            bIndex++;
+        }
+        if (chaser == 1) { //yellow bug
+            gridObjects.get(bIndex).setTexture(new Texture("buttons/arrow-left-yellow.png"));
+            gridObjects.get(bIndex + 1).setTexture(new Texture("buttons/arrow-right-yellow.png"));
+            gridObjects.get(bIndex + 2).setTexture(new Texture("buttons/arrow-down-yellow.png"));
+            gridObjects.get(bIndex + 3).setTexture(new Texture("buttons/arrow-up-yellow.png"));
+        }
+        else if (chaser == 2) { //red bug
+            gridObjects.get(bIndex + 4).setTexture(new Texture("buttons/arrow-right-red.png"));
+            gridObjects.get(bIndex + 5).setTexture(new Texture("buttons/arrow-left-red.png"));
+            gridObjects.get(bIndex + 6).setTexture(new Texture("buttons/arrow-up-red.png"));
+            gridObjects.get(bIndex + 7).setTexture(new Texture("buttons/arrow-down-red.png"));
+        }
+    }
+
+    /**
      * Checks if screen has been tapped and moves the bug.
      * This method goes through each object in the game and determines which direction
      * they need to move. Bug movement is determined by the ButtonProcessor class.
@@ -161,7 +197,16 @@ class GridObjectHandler {
                 Obstacle o = (Obstacle) g;
                 handlemoveObs(o);
 
-                if (o.getY() == 0 - o.getTexture().getHeight()) {
+                if (o.getID() == 1) {
+                    if (o.getY() == 0 - (o.getTexture().getHeight()) * 1.5f) {
+                        o.setY(Gdx.graphics.getHeight());
+                        //X spawn is randomly generated
+                        int width = Gdx.graphics.getWidth() - (Gdx.graphics.getHeight() / 2);
+                        Random r = new Random();
+                        o.setX(r.nextInt(width) + (Gdx.graphics.getHeight() / 8));
+                    }
+                }
+                else if (o.getY() == 0 - o.getTexture().getHeight()) {
                     o.setY(Gdx.graphics.getHeight());
                     //X spawn is randomly generated
                     int width = Gdx.graphics.getWidth() - (Gdx.graphics.getHeight() / 2);
@@ -181,7 +226,12 @@ class GridObjectHandler {
             } else if (g instanceof Bug && !((Bug) g).isHiding()) {
                 batch.draw(g.getTexture(), g.getX(), g.getY(), bugWidth, bugHeight);
             } else if (g instanceof Obstacle) {
-                batch.draw(g.getTexture(), g.getX(), g.getY(), obstacleWidth, obstacleHeight);
+                if (((Obstacle) g).getID() == 1)
+                    //draw big
+                    batch.draw(g.getTexture(), g.getX(), g.getY(), obstacleWidth * 1.5f, obstacleHeight * 1.5f);
+                else
+                    //draw normal
+                    batch.draw(g.getTexture(), g.getX(), g.getY(), obstacleWidth, obstacleHeight);
             }
             //make the bug visible after 3 seconds
             if(g instanceof Bug && ((Bug) g).isHiding()){
@@ -212,7 +262,8 @@ class GridObjectHandler {
         }
     }
 
-    /** moves the bug back on screen and makes it visible
+    /**
+     * Moves the bug back on screen and makes it visible
      *
      * @param b
      */
@@ -230,7 +281,6 @@ class GridObjectHandler {
             //make it visible
             b.setHiding(false);
         }
-
     }
 
     /**
@@ -299,12 +349,11 @@ class GridObjectHandler {
                 if (b.getCurrentDirection() != Direction.Right)
                     b.setCurrentDirection(Direction.Right);
             }
-
     }
 
 
     /**
-     * Handles input from {@link ButtonProcessor} to move player 1
+     * Handles input from {@link ButtonProcessor} to move player 2
      *
      * Important Note, Movement is inverted for player bug2_red buttons (upButton = moveDown())
      * The method takes taps received from player 2's buttons and checks if the player is currently
@@ -379,7 +428,16 @@ class GridObjectHandler {
         o.moveLeft();
     }
 
-    //This takes all of the buttons and places them in a list for the input processor
+    /**
+     * Takes all of the buttons and places them in a list for the input processor
+     *
+     * It iterates through all of the gridobjects in our array until it reaches a button. All 8
+     * of the gameplay buttons should be added at the END of the array. Once it finds a button it
+     * stores the remaining objects of the gridObjects array into the buttons array.
+     *
+     * @return returns a list of all the gameplay buttons which are used in the {@link ButtonProcessor}.
+     */
+
     ArrayList<Button> getButtons() {
         ArrayList<Button> buttons = new ArrayList<Button>();
         int bIndex = 0;

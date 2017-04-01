@@ -19,25 +19,12 @@ import java.util.Random;
 
 public class Obstacle extends GridObject {
 
-    //Default Constructor
-    public Obstacle() { //todo: weird...it says this constructor is never used -Cameron
-
-        int width = Gdx.graphics.getWidth();
-        int height = Gdx.graphics.getHeight();
-
-        Random r = new Random();
-
-        int x = r.nextInt(width);
-        int y = r.nextInt(height);
-
-        GridPoint2 loc = new GridPoint2(x, y);
-
-        currentPosition = loc;
-    }
+    int ID;
 
     //Constructor to set Texture and Location
-    Obstacle(Texture type) {
+    Obstacle(Texture type, int myID) {
         this.setTexture(type);
+        ID = myID;
 
         int width = Gdx.graphics.getWidth() - (Gdx.graphics.getHeight() / 2);
         int height = Gdx.graphics.getHeight();
@@ -49,6 +36,9 @@ public class Obstacle extends GridObject {
 
         currentPosition = new GridPoint2(x, y);
     }
+
+    void setID(int myID) { ID = myID; }
+    int  getID()         { return ID; }
 
     /**
      * This function when called, moves the GridObject to the left

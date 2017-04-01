@@ -1,11 +1,10 @@
 package com.cs246team01.bugtag;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
-
-import org.w3c.dom.css.Rect;
 
 /**
  * This class contains the implementation of a bug, which extends GridObject
@@ -26,6 +25,8 @@ public class Bug extends GridObject {
     private boolean hidingTop;
     private boolean hidingDown;
 
+    // storage for player scores
+    Preferences MyScores;
 
     //To keep track of player1 and player2 bugs
     private int playerID;
@@ -39,7 +40,7 @@ public class Bug extends GridObject {
     private Rectangle bug_hitbox;
 
     // bug/player score
-    private int score;
+    private int currentScore;
 
     //Default Constructor creates player 1;
     public Bug() {
@@ -62,10 +63,21 @@ public class Bug extends GridObject {
         //This sets whether the bug will be the chaser randomly
         isChaser = chaser;
 
+        //set initial score
+        currentScore = 0;
+
         this.setTexture(bugImage);
         //Set bug in bottom left corner
 
+        // initialize player scores preferences files
+        MyScores = Gdx.app.getPreferences("MyScores");
+
         if (playerID == 1) {
+
+            // retrieve old scores from last round for yellow bug
+            MyScores = Gdx.app.getPreferences("MyScores");
+            currentScore = MyScores.getInteger("YellowScores");
+
             currentPosition = new GridPoint2((int) playArea.getWidth()+ (int) playArea.getX(),
                     Gdx.graphics.getHeight() / 2);
             this.playerID = 1;
@@ -75,6 +87,9 @@ public class Bug extends GridObject {
             rightTexture = new Texture("bugs/bug1up.png");
             setCurrentDirection(Direction.Up);
         } else {
+            // retrieve old scores from last round for red bug
+            currentScore = MyScores.getInteger("RedScores");
+
             currentPosition = new GridPoint2((int) playArea.getX(),
                     Gdx.graphics.getHeight() / 2);
             this.playerID = 2;
@@ -144,8 +159,29 @@ public class Bug extends GridObject {
         return bug_hitbox;
     }
 
-    int getPlayerScore(){return score;}
-    void setPlayerScore(int score){this.score = score;}
+    int getPlayerScore(){return currentScore;}
+
+    void saveNewScore(int newScore){
+        currentScore += newScore;
+        if (playerID == 1) {
+            MyScores.putInteger("YellowScores", currentScore);
+        }
+        else if (playerID == 2) {
+            MyScores.putInteger("RedScores", currentScore);
+        }
+        MyScores.flush();
+    }
+    void resetScore(){
+        currentScore = 0;
+
+        if (playerID == 1) {
+            MyScores.putInteger("YellowScores", 0);
+        }
+        else if (playerID == 2) {
+            MyScores.putInteger("RedScores", 0);
+        }
+        MyScores.flush();
+    }
 
     int getPlayerID() {
         return playerID;

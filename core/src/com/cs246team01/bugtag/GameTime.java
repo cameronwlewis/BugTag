@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
  * For keeping track of time.
  * Shows up as a timer on the screen, counting down from 60 seconds.
  */
-class GameTime {
+public class GameTime {
 
     private float time;
     private int remainingSeconds;

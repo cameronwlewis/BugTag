@@ -3,7 +3,6 @@ package com.cs246team01.bugtag;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -17,14 +16,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 class MainGame extends Game {
 
-    //Game
-    public static Texture backgroundTexture;
-    public static Sprite backgroundSprite;
+    private static Sprite backgroundSprite;
     private SpriteBatch batch;
     private GridObjectHandler bugGame;
     private ButtonProcessor _buttonProcessor;
-    private int winner = 0;
-    private GameHandler game; // todo: hmm. Maybe rename to prevent confusion with BugGame
+    private GameHandler game;
     private GameWin winStatus;
 
     //keeps track of current gameState
@@ -32,6 +28,7 @@ class MainGame extends Game {
     static int gameState = 0;
 
     private boolean reset;
+    private boolean areScoresCalculated;
 
     //Use this for tagging bugs
     private static final String TAG = "DebugTagger";
@@ -42,10 +39,12 @@ class MainGame extends Game {
         Preferences numMovesPrefs = Gdx.app.getPreferences("MOVES");
         int numMoves = numMovesPrefs.getInteger("moves", 0);
 
+        areScoresCalculated = false;
+
         //Debugging only - remove
         Gdx.app.log(TAG, "The number of moves are " + numMoves);
 
-        backgroundTexture = new Texture("misc/background_wood.jpeg");
+        Texture backgroundTexture = new Texture("misc/background_wood.jpeg");
         backgroundSprite = new Sprite(backgroundTexture);
         backgroundSprite.setScale(2f);
 
@@ -54,6 +53,11 @@ class MainGame extends Game {
         winStatus = new GameWin();
 
         bugGame = new GridObjectHandler();
+
+        // reset game scores since last game quit
+        bugGame.getBugTwo().resetScore();
+        bugGame.getBugOne().resetScore();
+
         game = new GameHandler();
         game.setChaserStatus(bugGame.getBugOne(), bugGame.getBugTwo());
         reset = false;
@@ -77,6 +81,7 @@ class MainGame extends Game {
             bugGame = new GridObjectHandler();
             game.setChaserStatus(bugGame.getBugOne(), bugGame.getBugTwo());
             reset = false;
+            areScoresCalculated = false;
         }
 
         batch.begin();
@@ -100,7 +105,7 @@ class MainGame extends Game {
 
         game.run();
 
-        game.displayMessage(batch);
+        game.displayMessage(batch, bugGame.getBugOne(), bugGame.getBugTwo());
 
         batch.end();
 
@@ -111,6 +116,10 @@ class MainGame extends Game {
             reset = true;
             // make sure we notify the winner
             game.setWinnerMessage(winStatus.whoIsWinner());
+            if (!areScoresCalculated) {
+                game.calculateScore(gameState, bugGame.getBugOne(), bugGame.getBugTwo());
+                areScoresCalculated = true;
+            }
         }
 
         _buttonProcessor.setGameState(gameState);
@@ -118,6 +127,8 @@ class MainGame extends Game {
 
     @Override
     public void dispose() {
+        bugGame.getBugOne().resetScore();
+        bugGame.getBugTwo().resetScore();
         game.dispose();
         batch.dispose();
     }
