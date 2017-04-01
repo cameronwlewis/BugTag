@@ -41,7 +41,6 @@ public class GameHandler {
     //displays winner for round
     private String winnerMessage;
 
-    private GameScore score;
 
     //Timer
     private GameTime timer;
