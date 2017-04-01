@@ -27,9 +27,7 @@ public class GameHandler{
 
     //Start screen - can possibly remove this. But buttons show up
     private SpriteBatch welcome;
-
     private BitmapFont font;
-
     private BitmapFont digitalFont;
 
     private String notifyChaser;
@@ -68,7 +66,7 @@ public class GameHandler{
 
         welcome = new SpriteBatch();
 
-        startGame = new Button(9, new Texture("buttons/startgame.png"));
+        startGame = new Button(9, new Texture("buttons/startgame_up.png"));
         startButtonWidth = startGame.getTexture().getWidth();
         startButtonHeight = startGame.getTexture().getHeight();
 

@@ -2,6 +2,7 @@ package com.cs246team01.bugtag;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
 
@@ -47,22 +48,20 @@ public class ButtonProcessor implements InputProcessor {
     //the constructor takes in an array of buttons passed in from GridObjectHandler and the current
     //game state
     ButtonProcessor(ArrayList<Button> buttons, int state) {
-        moveLeft1 = false;
+        //initialize states
+        moveLeft1  = false;
         moveRight1 = false;
-        moveDown1 = false;
-        moveUp1 = false;
-        moveLeft2 = false;
+        moveDown1  = false;
+        moveUp1    = false;
+        moveLeft2  = false;
         moveRight2 = false;
-        moveDown2 = false;
-        moveUp2 = false;
-
-
+        moveDown2  = false;
+        moveUp2    = false;
 
         this.buttons = buttons;
         startButton = GameHandler.getStartButton();
         gameState = state;
     }
-
 
     /**
      * Handles user input when they touch the screen
@@ -96,6 +95,12 @@ public class ButtonProcessor implements InputProcessor {
         int GAME_PAUSED = 2;
         int GAME_OVER = 3;
         int GAME_WARM_UP = 4;
+
+        if (gameState == GAME_NOT_STARTED) {
+            //Start game warm up stage
+            Texture down = new Texture("buttons/startgame_down.png");
+            startButton.setTexture(down);
+        }
 
         if (gameState == GAME_STARTED) {
             int buttonPressed1 = 0;

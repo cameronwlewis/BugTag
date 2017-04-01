@@ -31,8 +31,8 @@ public class GridObjectHandler {
     private int obstacleHeight = Gdx.graphics.getHeight() / 3;
 
     //Bug Dimensions
-    private int bugWidth = Gdx.graphics.getHeight() / 14;
-    private int bugHeight = Gdx.graphics.getHeight() / 14;
+    private int bugWidth = Gdx.graphics.getHeight() / 13;
+    private int bugHeight = Gdx.graphics.getHeight() / 13;
 
     //Button Dimensions
     private int buttonSide = Gdx.graphics.getHeight() / 4;
@@ -68,14 +68,15 @@ public class GridObjectHandler {
         bug1_yellow = new Bug(bug1_texture, randBoolean, 1);
         bug2_red = new Bug(bug2_texture, !randBoolean, 2);
 
-        //Initialize Obstacles
-        Obstacle obstacleOne     = new Obstacle(new Texture("obstacles/Real_Pear.png"));
-        Obstacle obstacleTwo     = new Obstacle(new Texture("obstacles/Real_Apple.png"));
-        Obstacle obstacleThree   = new Obstacle(new Texture("obstacles/Real_Bread.png"));
-        Obstacle obstacleFour    = new Obstacle(new Texture("obstacles/Real_Watermelon.png"));
-        Obstacle obstacleFive    = new Obstacle(new Texture("obstacles/Real_Orange.png"));
-        Obstacle obstacleSix     = new Obstacle(new Texture("obstacles/Real_Potato.png"));
-        Obstacle obstacleSeven   = new Obstacle(new Texture("obstacles/Real_Bananas.png"));
+        //Initialize Obstacles                                                                //ID
+        Obstacle obstacleOne     = new Obstacle(new Texture("obstacles/Real_Pear.png"),         1);
+        Obstacle obstacleTwo     = new Obstacle(new Texture("obstacles/Real_Apple.png"),        0);
+        Obstacle obstacleThree   = new Obstacle(new Texture("obstacles/Real_Bread.png"),        0);
+        Obstacle obstacleFour    = new Obstacle(new Texture("obstacles/Real_Watermelon.png"),   1);
+        Obstacle obstacleFive    = new Obstacle(new Texture("obstacles/Real_Orange.png"),       0);
+        Obstacle obstacleSix     = new Obstacle(new Texture("obstacles/Real_Blackberries.png"), 0);
+        Obstacle obstacleSeven   = new Obstacle(new Texture("obstacles/Real_Blueberries.png"),  0);
+        Obstacle obstacleEight   = new Obstacle(new Texture("obstacles/Real_Bananas.png"),      1);
 
         //Button textures
         Texture button1 = new Texture("buttons/arrow-left.png");
@@ -97,6 +98,7 @@ public class GridObjectHandler {
         gridObjects.add(obstacleFive);
         gridObjects.add(obstacleSix);
         gridObjects.add(obstacleSeven);
+        gridObjects.add(obstacleEight);
         gridObjects.add(new Button(1, button1));
         gridObjects.add(new Button(2, button2));
         gridObjects.add(new Button(3, button3));
@@ -162,7 +164,16 @@ public class GridObjectHandler {
                 Obstacle o = (Obstacle) g;
                 handlemoveObs(o);
 
-                if (o.getY() == 0 - o.getTexture().getHeight()) {
+                if (o.getID() == 1) {
+                    if (o.getY() == 0 - (o.getTexture().getHeight()) * 1.5f) {
+                        o.setY(Gdx.graphics.getHeight());
+                        //X spawn is randomly generated
+                        int width = Gdx.graphics.getWidth() - (Gdx.graphics.getHeight() / 2);
+                        Random r = new Random();
+                        o.setX(r.nextInt(width) + (Gdx.graphics.getHeight() / 8));
+                    }
+                }
+                else if (o.getY() == 0 - o.getTexture().getHeight()) {
                     o.setY(Gdx.graphics.getHeight());
                     //X spawn is randomly generated
                     int width = Gdx.graphics.getWidth() - (Gdx.graphics.getHeight() / 2);
@@ -182,7 +193,12 @@ public class GridObjectHandler {
             } else if (g instanceof Bug && !((Bug) g).isHiding()) {
                 batch.draw(g.getTexture(), g.getX(), g.getY(), bugWidth, bugHeight);
             } else if (g instanceof Obstacle) {
-                batch.draw(g.getTexture(), g.getX(), g.getY(), obstacleWidth, obstacleHeight);
+                if (((Obstacle) g).getID() == 1)
+                    //draw big
+                    batch.draw(g.getTexture(), g.getX(), g.getY(), obstacleWidth * 1.5f, obstacleHeight * 1.5f);
+                else
+                    //draw normal
+                    batch.draw(g.getTexture(), g.getX(), g.getY(), obstacleWidth, obstacleHeight);
             }
             //make the bug visible after 3 seconds
             if(g instanceof Bug && ((Bug) g).isHiding()){
