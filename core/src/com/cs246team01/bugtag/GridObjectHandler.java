@@ -107,6 +107,14 @@ public class GridObjectHandler {
         gridObjects.add(new Button(6, button6));
         gridObjects.add(new Button(7, button7));
         gridObjects.add(new Button(8, button8));
+
+        //set the chaser buttons to the correct color
+        int chaserID = 0;
+        if (bug1_yellow.isChaser())
+            chaserID = 1;
+        else
+            chaserID = 2;
+        setChaserButtonColor(chaserID);
     }
 
     /**
@@ -136,6 +144,31 @@ public class GridObjectHandler {
      */
     Bug getBugTwo() {
         return bug2_red;
+    }
+
+    /**
+     * Will set the buttons of the player who is the chaser to the color of their bug
+     * @param chaser Who the chaser is
+     */
+    void setChaserButtonColor(int chaser) {
+        int bIndex = 0;
+        for(GridObject current: gridObjects){ //get the index to the buttons
+            if(current instanceof Button)
+                break;
+            bIndex++;
+        }
+        if (chaser == 1) { //yellow bug
+            gridObjects.get(bIndex).setTexture(new Texture("buttons/arrow-left-yellow.png"));
+            gridObjects.get(bIndex + 1).setTexture(new Texture("buttons/arrow-right-yellow.png"));
+            gridObjects.get(bIndex + 2).setTexture(new Texture("buttons/arrow-down-yellow.png"));
+            gridObjects.get(bIndex + 3).setTexture(new Texture("buttons/arrow-up-yellow.png"));
+        }
+        else if (chaser == 2) { //red bug
+            gridObjects.get(bIndex + 4).setTexture(new Texture("buttons/arrow-right-red.png"));
+            gridObjects.get(bIndex + 5).setTexture(new Texture("buttons/arrow-left-red.png"));
+            gridObjects.get(bIndex + 6).setTexture(new Texture("buttons/arrow-up-red.png"));
+            gridObjects.get(bIndex + 7).setTexture(new Texture("buttons/arrow-down-red.png"));
+        }
     }
 
     /**
@@ -229,7 +262,8 @@ public class GridObjectHandler {
         }
     }
 
-    /** moves the bug back on screen and makes it visible
+    /**
+     * Moves the bug back on screen and makes it visible
      *
      * @param b
      */
@@ -247,7 +281,6 @@ public class GridObjectHandler {
             //make it visible
             b.setHiding(false);
         }
-
     }
 
     /**
@@ -316,7 +349,6 @@ public class GridObjectHandler {
                 if (b.getCurrentDirection() != Direction.Right)
                     b.setCurrentDirection(Direction.Right);
             }
-
     }
 
 

@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class Button extends GridObject {
 
     private Rectangle clickArea;
-
+    private int ID;
 
     public Button() {
         //Do not use this constructor
@@ -28,6 +28,7 @@ public class Button extends GridObject {
      */
     Button(int ID, Texture image) {
 
+        this.ID = ID;
         objectTexture = image;
 
         //Player 1 buttons
@@ -88,8 +89,6 @@ public class Button extends GridObject {
         }
     }
 
-
-
     /**
      * Getter to obtain the area which can be touched by the user
      *
@@ -98,6 +97,8 @@ public class Button extends GridObject {
     Rectangle getClickArea() {
         return clickArea;
     }
+
+    int getButtonID() { return ID; }
 
     // We do not use these methods
     // They are here to satisfy the abstract class
