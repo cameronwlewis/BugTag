@@ -78,7 +78,7 @@ class GameHandler {
         parameter.borderStraight = true;
         parameter.borderWidth = 2f;
         font = fontFT.generateFont(parameter);
-        font.setColor(Color.RED);
+        font.setColor(88/255f,186/255f,232/255f,1f);
 
         //Timer font is called digital dream
         FreeTypeFontGenerator digitalFontFT = new FreeTypeFontGenerator(Gdx.files.internal("fonts/digital-dream-skew-narrow.ttf"));
@@ -86,9 +86,9 @@ class GameHandler {
         digitalParameter.size = 40;
         digitalParameter.borderColor = Color.BLACK;
         digitalParameter.borderStraight = true;
-        digitalParameter.borderWidth = 1f;
+        digitalParameter.borderWidth = 3f;
         digitalFont = digitalFontFT.generateFont(digitalParameter);
-        digitalFont.setColor(Color.RED);
+        digitalFont.setColor(1f,1f,1f,1f);
 
     }
 
