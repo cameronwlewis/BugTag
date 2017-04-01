@@ -54,7 +54,7 @@ class MainGame extends Game {
         winStatus = new GameWin();
 
         bugGame = new GridObjectHandler();
-        game = new GameHandler();
+        game = new GameHandler(bugGame.getBugOne(), bugGame.getBugTwo());
         game.setChaserStatus(bugGame.getBugOne(), bugGame.getBugTwo());
         reset = false;
 
@@ -98,7 +98,7 @@ class MainGame extends Game {
             game.displayTime(batch);
         }
 
-        game.run(bugGame.getBugOne(), bugGame.getBugTwo());
+        game.run();
 
         game.displayMessage(batch, bugGame.getBugOne(), bugGame.getBugTwo());
 

@@ -1,18 +1,13 @@
 package com.cs246team01.bugtag;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-
-import sun.applet.Main;
-
-import static com.cs246team01.bugtag.GridObject.TAG;
 
 /**
  * Tracks all variables that are not grid objects but still essential to game play.
@@ -43,12 +38,15 @@ class GameHandler {
 
     private String winnerMessage;
 
-    private GameScore score;
-
     //Timer
     private GameTime timer;
     private boolean timerReset;
 
+    // storage for player scores
+    Preferences MyScores;
+
+    // storage for high score
+    Preferences HighScore;
 
     //Main Menu
     private static Button startGame;
@@ -59,7 +57,14 @@ class GameHandler {
     private static final String STATE = "GameState";
 
     // non-default constructor to pass in both Bug objects to check who is the chaser at any time
-    GameHandler() {
+    GameHandler(Bug bug1_yellow, Bug bug2_red) {
+        // initialize player scores preferences files
+        MyScores = Gdx.app.getPreferences("MyScores");
+        HighScore = Gdx.app.getPreferences("HighScore");
+
+        // retrieve scores
+        bug1_yellow.setPlayerScore(MyScores.getInteger("YellowScores"));
+        bug2_red.setPlayerScore(MyScores.getInteger("RedScores"));
 
         winPoint = 1;
 
@@ -97,7 +102,7 @@ class GameHandler {
 
     }
 
-    void run(Bug bug1_yellow, Bug bug2_red) {
+    void run() {
 
         // gameState is retrieved here
         gameState = MainGame.gameState;
@@ -145,10 +150,25 @@ class GameHandler {
 
     void calculateScore(int _gameState, Bug bug1_yellow, Bug bug2_red){
         if (_gameState == 3) {
-            if (winnerMessage.contains("Red"))
+            if (winnerMessage.contains("Red")) {
                 bug2_red.setPlayerScore(winPoint);
-            else
+                MyScores.putInteger("RedScores", bug2_red.getPlayerScore());
+                MyScores.flush();
+                if(HighScore.getInteger("HighScore") < bug2_red.getPlayerScore()){
+                    HighScore.putInteger("HighScore", bug2_red.getPlayerScore());
+                    HighScore.flush();
+                }
+
+            }
+            else {
                 bug1_yellow.setPlayerScore(winPoint);
+                MyScores.putInteger("YellowScores", bug1_yellow.getPlayerScore());
+                MyScores.flush();
+                if(HighScore.getInteger("HighScore") < bug1_yellow.getPlayerScore()){
+                    HighScore.putInteger("HighScore", bug1_yellow.getPlayerScore());
+                    HighScore.flush();
+                }
+            }
         }
     }
 
