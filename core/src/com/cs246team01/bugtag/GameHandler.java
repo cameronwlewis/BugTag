@@ -265,12 +265,12 @@ public class GameHandler{
     void displayMenu(GlyphLayout gl) {
         int highScore_int = HighScore.getInteger("HighScore");
         String highScore_string = Integer.toString(highScore_int);
-        gl.setText(font, highScore_string);
+        gl.setText(font, "Current high score: " + highScore_string);
         float w = gl.width;
 
         if (gameState == GAME_NOT_STARTED) {
             welcome.begin();
-            font.draw(welcome,"\n\n\n\n\nCurrent high score:\n" + gl + " consecutive wins", ((Gdx.graphics.getWidth() - w) / 2), Gdx.graphics.getWidth() / 3);
+            font.draw(welcome, gl, ((Gdx.graphics.getWidth() - w) / 2), Gdx.graphics.getWidth() / 5);
             welcome.draw(startGame.getTexture(), startGame.getX(), startGame.getY(), startButtonWidth, startButtonHeight);
             welcome.end();
         }
@@ -290,7 +290,6 @@ public class GameHandler{
         }
 
         if (gameState == GAME_WARM_UP) {
-
             String chaserText=  notifyChaser;
             String warmUpText = "Game starts in";
             String timerText = (timer.getTimeRemaining() - 60) + "...";
