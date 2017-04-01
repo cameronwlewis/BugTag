@@ -98,9 +98,9 @@ class MainGame extends Game {
             game.displayTime(batch);
         }
 
-        game.run();
+        game.run(bugGame.getBugOne(), bugGame.getBugTwo());
 
-        game.displayMessage(batch);
+        game.displayMessage(batch, bugGame.getBugOne(), bugGame.getBugTwo());
 
         batch.end();
 
@@ -111,6 +111,7 @@ class MainGame extends Game {
             reset = true;
             // make sure we notify the winner
             game.setWinnerMessage(winStatus.whoIsWinner());
+            game.calculateScore(gameState, bugGame.getBugOne(), bugGame.getBugTwo());
         }
 
         _buttonProcessor.setGameState(gameState);

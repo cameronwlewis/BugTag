@@ -5,16 +5,13 @@ package com.cs246team01.bugtag;
  */
 
 class GameScore {
-    int winPoints;
+    int winPoint;
 
     GameScore(){
-        winPoints = 1000;
+        winPoint = 1;
     }
 
     void awardWinPoints(String winnerMessage, Bug bug1_yellow, Bug bug2_red){
-        if (winnerMessage.contains("Red"))
-            bug2_red.setPlayerScore(winPoints);
-        else
-            bug1_yellow.setPlayerScore(winPoints);
+
     }
 }

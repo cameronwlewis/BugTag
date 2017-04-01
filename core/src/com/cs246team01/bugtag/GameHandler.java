@@ -39,6 +39,8 @@ class GameHandler {
 
     private String notifyChaser;
 
+    int winPoint;
+
     private String winnerMessage;
 
     private GameScore score;
@@ -58,6 +60,8 @@ class GameHandler {
 
     // non-default constructor to pass in both Bug objects to check who is the chaser at any time
     GameHandler() {
+
+        winPoint = 1;
 
         welcome = new SpriteBatch();
 
@@ -93,7 +97,7 @@ class GameHandler {
 
     }
 
-    void run() {
+    void run(Bug bug1_yellow, Bug bug2_red) {
 
         // gameState is retrieved here
         gameState = MainGame.gameState;
@@ -140,8 +144,12 @@ class GameHandler {
     }
 
     void calculateScore(int _gameState, Bug bug1_yellow, Bug bug2_red){
-        if (gameState == 3)
-            score.awardWinPoints(winnerMessage, bug1_yellow, bug2_red);
+        if (_gameState == 3) {
+            if (winnerMessage.contains("Red"))
+                bug2_red.setPlayerScore(winPoint);
+            else
+                bug1_yellow.setPlayerScore(winPoint);
+        }
     }
 
     private void update() {
@@ -190,7 +198,7 @@ class GameHandler {
         }
     }
 
-    void displayMessage(SpriteBatch batch) {
+    void displayMessage(SpriteBatch batch, Bug bug1_yellow, Bug bug2_red) {
 
         GlyphLayout gl = new GlyphLayout();
 
@@ -243,13 +251,14 @@ class GameHandler {
                     Gdx.graphics.getHeight() / 3,
                     Gdx.graphics.getWidth() / 4);
         } else if (gameState == GAME_OVER) {
-            font.draw(batch, winnerMessage + "\n     GAME OVER!",
+            font.draw(batch, "GAME OVER!\n" + winnerMessage + "\n\nYellow Bug score: " + bug1_yellow.getPlayerScore() +
+                            "\nRed Bug Score: " + bug2_red.getPlayerScore(),
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
                     Gdx.graphics.getWidth() / 3);
             //font.draw(batch, "GAME OVER!",
             //        Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
             //        Gdx.graphics.getWidth() / 4);
-            font.draw(batch, "    Press anywhere to restart!",
+            font.draw(batch, "\nPress anywhere to restart!",
                     Gdx.graphics.getHeight() / 3,
                     Gdx.graphics.getWidth() / 6);
         }

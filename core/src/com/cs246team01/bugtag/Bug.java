@@ -62,6 +62,9 @@ public class Bug extends GridObject {
         //This sets whether the bug will be the chaser randomly
         isChaser = chaser;
 
+        //set initial score
+        score = 0;
+
         this.setTexture(bugImage);
         //Set bug in bottom left corner
 

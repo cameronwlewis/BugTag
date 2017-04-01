@@ -16,8 +16,6 @@ import static org.junit.Assert.assertEquals;
 
 public class GridObjectUnitTest {
 
-
-
     @Test
     public void position_change() throws Exception {
         System.out.println("Position_Change");
