@@ -46,6 +46,8 @@ class ButtonProcessor implements InputProcessor {
         moveDown2 = false;
         moveUp2 = false;
 
+
+
         this.buttons = buttons;
         startButton = GameHandler.getStartButton();
         gameState = state;
@@ -60,13 +62,8 @@ class ButtonProcessor implements InputProcessor {
         int GAME_PAUSED = 2;
         int GAME_OVER = 3;
         int GAME_WARM_UP = 4;
-        if (gameState == GAME_NOT_STARTED) {
-            //Start game warm up stage
-            if (startButton.getClickArea().contains(screenX,screenY)) {
-                gameState = GAME_WARM_UP;
-                Gdx.app.log(TAG, "Game in warm up");
-            }
-        } else if (gameState == GAME_STARTED) {
+
+        if (gameState == GAME_STARTED) {
             int buttonPressed1 = 0;
             int buttonPressed2 = 0;
 
@@ -154,7 +151,24 @@ class ButtonProcessor implements InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
+
+        //Variables for game state tracking
+        int GAME_NOT_STARTED = 0;
+        int GAME_STARTED = 1;
+        int GAME_PAUSED = 2;
+        int GAME_OVER = 3;
+        int GAME_WARM_UP = 4;
+
+        if (gameState == GAME_NOT_STARTED) {
+            //Start game warm up stage
+            if (startButton.getClickArea().contains(screenX, screenY)) {
+                gameState = GAME_WARM_UP;
+                Gdx.app.log(TAG, "Game in warm up");
+            }
+        }
+
+
+        return true;
     }
 
     @Override

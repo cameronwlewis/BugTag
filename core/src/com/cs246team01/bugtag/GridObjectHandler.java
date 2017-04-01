@@ -73,8 +73,8 @@ class GridObjectHandler {
         Obstacle obstacleThree   = new Obstacle(new Texture("obstacles/Real_Bread.png"));
         Obstacle obstacleFour    = new Obstacle(new Texture("obstacles/Real_Watermelon.png"));
         Obstacle obstacleFive    = new Obstacle(new Texture("obstacles/Real_Orange.png"));
-//        Obstacle obstacleSix     = new Obstacle(new Texture("obstacles/Real_Potato.png"));
-//        Obstacle obstacleSeven   = new Obstacle(new Texture("obstacles/Real_Bananas.png"));
+        Obstacle obstacleSix     = new Obstacle(new Texture("obstacles/Real_Potato.png"));
+        Obstacle obstacleSeven   = new Obstacle(new Texture("obstacles/Real_Bananas.png"));
 
         //Button textures
         Texture button1 = new Texture("buttons/arrow-left.png");
@@ -94,8 +94,8 @@ class GridObjectHandler {
         gridObjects.add(obstacleThree);
         gridObjects.add(obstacleFour);
         gridObjects.add(obstacleFive);
-//        gridObjects.add(obstacleSix);
-//        gridObjects.add(obstacleSeven);
+        gridObjects.add(obstacleSix);
+        gridObjects.add(obstacleSeven);
         gridObjects.add(new Button(1, button1));
         gridObjects.add(new Button(2, button2));
         gridObjects.add(new Button(3, button3));
@@ -382,7 +382,13 @@ class GridObjectHandler {
     //This takes all of the buttons and places them in a list for the input processor
     ArrayList<Button> getButtons() {
         ArrayList<Button> buttons = new ArrayList<Button>();
-        for (int i = 7; i < gridObjects.size(); i++) {
+        int bIndex = 0;
+        for(GridObject current: gridObjects){
+            if(current instanceof Button)
+                break;
+            bIndex++;
+        }
+        for (int i = bIndex; i < gridObjects.size(); i++) {
             Button b = (Button) gridObjects.get(i);
             buttons.add(b);
         }
