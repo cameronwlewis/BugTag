@@ -38,6 +38,9 @@ public class Bug extends GridObject {
     // bug/player hit box
     private Rectangle bug_hitbox;
 
+    // bug/player score
+    private int score;
+
     //Default Constructor creates player 1;
     public Bug() {
         currentPosition = new GridPoint2((Gdx.graphics.getWidth() * 8) / 10,
@@ -140,6 +143,9 @@ public class Bug extends GridObject {
 
         return bug_hitbox;
     }
+
+    int getPlayerScore(){return score;}
+    void setPlayerScore(int score){this.score = score;}
 
     int getPlayerID() {
         return playerID;

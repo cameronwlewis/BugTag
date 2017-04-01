@@ -138,8 +138,9 @@ class GameHandler {
 
     }
 
-    void calculateScore(){
-
+    void calculateScore(int _gameState, Bug bug1_yellow, Bug bug2_red){
+        if (gameState == 3)
+            score.awardWinPoints(winnerMessage, bug1_yellow, bug2_red);
     }
 
     private void update() {
