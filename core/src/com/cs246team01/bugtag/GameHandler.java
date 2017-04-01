@@ -285,13 +285,6 @@ public class GameHandler {
                     Gdx.graphics.getHeight() / 3,
                     Gdx.graphics.getWidth() / 4);
         } else if (gameState == GAME_OVER) {
-            if (bug1_yellow.getPlayerScore() <= 0 || bug2_red.getPlayerScore() <= 0){
-                int stuffis_broken = 0;
-
-                for(int i = 0; i < 5; i++){
-                    stuffis_broken++;
-                }
-            }
             font.draw(batch, "GAME OVER!\n" + winnerMessage + "\n\nYellow Bug score: " + bug1_yellow.getPlayerScore() +
                             "\nRed Bug Score: " + bug2_red.getPlayerScore(),
                     Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 5),
