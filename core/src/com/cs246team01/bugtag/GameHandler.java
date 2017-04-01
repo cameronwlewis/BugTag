@@ -55,7 +55,7 @@ class GameHandler {
 
     //game-state tag
     private static final String STATE = "GameState";
-
+    //BOGUS COMMENTS HERE
     // non-default constructor to pass in both Bug objects to check who is the chaser at any time
     GameHandler(Bug bug1_yellow, Bug bug2_red) {
         // initialize player scores preferences files
