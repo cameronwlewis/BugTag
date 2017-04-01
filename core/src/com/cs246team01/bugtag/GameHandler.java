@@ -197,25 +197,47 @@ public class GameHandler{
      */
     void displayTime(SpriteBatch batch) {
         //Display timer
+        String time;
+        GlyphLayout tgl = new GlyphLayout();
+        float w;
+
         if (timer.getTimeRemaining() >= 60) {
-            digitalFont.draw(batch, "0:60",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+            time = "0:60";
+
+            tgl .setText(digitalFont, time);
+            w = tgl.width;
+
+            digitalFont.draw(batch, time,
+                    ((Gdx.graphics.getWidth() - w) / 2),
                     Gdx.graphics.getWidth() / 2);
         } else if (timer.getTimeRemaining() >= 10) {
-            digitalFont.draw(batch, "0:" + timer.getTimeRemaining(),
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+            time = "0:" + timer.getTimeRemaining();
+            tgl .setText(digitalFont, time);
+            w = tgl.width;
+
+            digitalFont.draw(batch, time,
+                    ((Gdx.graphics.getWidth() - w) / 2),
                     Gdx.graphics.getWidth() / 2);
         } else if (timer.getTimeRemaining() < 10 && timer.getTimeRemaining() > 0) {
-            digitalFont.draw(batch, "0:0" + timer.getTimeRemaining(),
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+            time = "0:0" + timer.getTimeRemaining();
+            tgl .setText(digitalFont, time);
+            w = tgl.width;
+
+            digitalFont.draw(batch, time,
+                    ((Gdx.graphics.getWidth() - w) / 2),
                     Gdx.graphics.getWidth() / 2);
         } else {
-            digitalFont.draw(batch, "0:00",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 12),
+
+            time = "0:00";
+            tgl .setText(digitalFont, time);
+            w = tgl.width;
+
+            digitalFont.draw(batch, time,
+                    ((Gdx.graphics.getWidth() - w) / 2),
                     Gdx.graphics.getWidth() / 2);
             font.draw(batch, "TIME UP",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 10),
-                    Gdx.graphics.getWidth() / 3);
+                    ((Gdx.graphics.getWidth() - w) / 2),
+                    Gdx.graphics.getWidth() / 4);
         }
     }
 
@@ -298,14 +320,12 @@ public class GameHandler{
                     "\n      Red Bug Score: " + bug2_red.getPlayerScore();
             String restartText = "Press anywhere to restart!";
 
-
-
             gl.setText(font, gameOverText);
             w = gl.width;
 
             font.draw(batch, gameOverText,
                     (Gdx.graphics.getWidth() - w) / 2,
-                    Gdx.graphics.getWidth() / 3);
+                    Gdx.graphics.getWidth() / 2);
 
 
             /*
