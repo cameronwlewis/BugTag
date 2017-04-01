@@ -59,9 +59,8 @@ public class Bug extends GridObject {
     }
 
     //non-default constructor. Used in GridObjectHandler to initialize bugs
-    Bug(Texture bugImage, boolean chaser, int playerID) {
-        //This sets whether the bug will be the chaser randomly
-        isChaser = chaser;
+    Bug(Texture bugImage, int playerID) {
+
 
         //set initial score
         currentScore = 0;
@@ -249,5 +248,9 @@ public class Bug extends GridObject {
     }
 
     boolean isChaser() {return isChaser;}
+
+    public void setChaser(boolean chaser ){
+        isChaser = chaser;
+    }
 
 }

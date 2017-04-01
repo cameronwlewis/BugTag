@@ -29,6 +29,8 @@ class MainGame extends Game {
 
     private boolean reset;
     private boolean areScoresCalculated;
+    //this determines which bug is chaser each round
+    boolean chaserFlipFlop;
 
     //Use this for tagging bugs
     private static final String TAG = "DebugTagger";
@@ -59,7 +61,10 @@ class MainGame extends Game {
         bugGame.getBugOne().resetScore();
 
         game = new GameHandler();
-        game.setChaserStatus(bugGame.getBugOne(), bugGame.getBugTwo());
+        chaserFlipFlop = bugGame.getBugOne().isChaser();
+        game.setChaserStatus(bugGame.getBugOne(), bugGame.getBugTwo(), chaserFlipFlop);
+        //determines which buttons light up depending on if yellow bug is currently chaser
+        bugGame.setChaserButtonColor(chaserFlipFlop);
         reset = false;
 
         // gameState is initially set right here
@@ -77,9 +82,11 @@ class MainGame extends Game {
 
         //reset the grid objects if it is game over
         if (gameState == 4 && reset) {
+            chaserFlipFlop = bugGame.getBugOne().isChaser();
             bugGame = null;
             bugGame = new GridObjectHandler();
-            game.setChaserStatus(bugGame.getBugOne(), bugGame.getBugTwo());
+            game.setChaserStatus(bugGame.getBugOne(), bugGame.getBugTwo(), chaserFlipFlop);
+            bugGame.setChaserButtonColor(chaserFlipFlop);
             reset = false;
             areScoresCalculated = false;
         }

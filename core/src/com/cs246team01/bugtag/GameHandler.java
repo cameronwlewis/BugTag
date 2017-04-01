@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
+import java.util.Random;
+
 /**
  * Tracks all variables that are not grid objects but still essential to game play.
  */
@@ -96,6 +98,12 @@ public class GameHandler{
         digitalFont = digitalFontFT.generateFont(digitalParameter);
         digitalFont.setColor(1f,1f,1f,1f);
 
+        Random rand = new Random();
+        boolean randBoolean = rand.nextBoolean();
+        GridObjectHandler.bug1_yellow.setChaser(randBoolean);
+        GridObjectHandler.bug2_red.setChaser(!randBoolean);
+
+
     }
 
     /**
@@ -120,9 +128,19 @@ public class GameHandler{
     }
 
     /**
-     * set the greeting notifying who is the chaser
+     * flip-flops the chaser each round and sets the greeting notifying who is the chaser
      */
-    void setChaserStatus(Bug bug1_yellow, Bug bug2_red){
+    void setChaserStatus(Bug bug1_yellow, Bug bug2_red, boolean yellowIsChaser){
+
+        if(yellowIsChaser){
+            bug1_yellow.setChaser(false);
+            bug2_red.setChaser(true);
+        }
+        else{
+            bug1_yellow.setChaser(true);
+            bug2_red.setChaser(false);
+        }
+
 
         if (bug1_yellow.isChaser())
             notifyChaser = "Yellow bug is the chaser!";
