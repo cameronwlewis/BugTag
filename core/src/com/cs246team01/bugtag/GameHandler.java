@@ -9,13 +9,11 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
-import static com.badlogic.gdx.Input.Keys.M;
-
 /**
  * Tracks all variables that are not grid objects but still essential to game play.
  */
 
-public class GameHandler {
+public class GameHandler{
 
     //game state variables
     private static final int GAME_NOT_STARTED = 0;

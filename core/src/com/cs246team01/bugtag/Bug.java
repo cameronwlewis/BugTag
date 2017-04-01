@@ -72,9 +72,10 @@ public class Bug extends GridObject {
         // initialize player scores preferences files
         MyScores = Gdx.app.getPreferences("MyScores");
 
-
         if (playerID == 1) {
+
             // retrieve old scores from last round for yellow bug
+            MyScores = Gdx.app.getPreferences("MyScores");
             setPlayerScore(MyScores.getInteger("YellowScores"));
 
             currentPosition = new GridPoint2((int) playArea.getWidth()+ (int) playArea.getX(),
@@ -167,6 +168,17 @@ public class Bug extends GridObject {
         }
         else if (playerID == 2) {
             MyScores.putInteger("RedScores", currentScore);
+        }
+        MyScores.flush();
+    }
+    void resetScore(){
+        currentScore = 0;
+
+        if (playerID == 1) {
+            MyScores.putInteger("YellowScores", 0);
+        }
+        else if (playerID == 2) {
+            MyScores.putInteger("RedScores", 0);
         }
         MyScores.flush();
     }
