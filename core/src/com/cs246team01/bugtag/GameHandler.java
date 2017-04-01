@@ -247,9 +247,16 @@ public class GameHandler{
      */
     void displayMenu() {
         if (gameState == GAME_NOT_STARTED) {
+
+            GlyphLayout gl = new GlyphLayout();
+            float w;
+            String bugtagText = "BUGTAG!";
+            gl.setText(font, bugtagText);
+            w = gl.width;
+
             welcome.begin();
-            font.draw(welcome, "BUGTAG!",
-                    Gdx.graphics.getHeight() - (Gdx.graphics.getWidth() / 8),
+            font.draw(welcome, bugtagText,
+                    (Gdx.graphics.getWidth() - w) / 2,
                     Gdx.graphics.getWidth() / 2);
             welcome.draw(startGame.getTexture(), startGame.getX(), startGame.getY(), startButtonWidth, startButtonHeight);
             welcome.end();
