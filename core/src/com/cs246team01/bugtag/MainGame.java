@@ -125,6 +125,8 @@ class MainGame extends Game {
             reset = true;
             // make sure we notify the winner
             game.setWinnerMessage(winStatus.whoIsWinner());
+
+            // and make sure we only calculate the score one time!
             if (!areScoresCalculated) {
                 game.calculateScore(gameState, bugGame.getBugOne(), bugGame.getBugTwo());
                 areScoresCalculated = true;

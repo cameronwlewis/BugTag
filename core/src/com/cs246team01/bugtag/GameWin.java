@@ -4,11 +4,8 @@ import com.badlogic.gdx.math.Rectangle;
 
 /**
  * Responsible for tracking and checking if the game should end, based on whether the bugs are touching.
- *
- * @author Cameron Lewis (cameronwlewis@gmail.com)
- * @since 3/16/2017
  */
-public class GameWin {
+class GameWin {
     private int win_status;
     private String whoIsWinner;
 

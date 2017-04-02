@@ -297,7 +297,7 @@ public class GameHandler{
     /**
      * Display Message
      * displays all other text on screen during gameplay
-     * @param batch
+     * @param batch required SpriteBatch parameter
      */
     void displayMessage(SpriteBatch batch, Bug bug1_yellow, Bug bug2_red) {
 
