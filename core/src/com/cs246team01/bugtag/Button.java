@@ -6,21 +6,20 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
+ * Class : Button
  * This class will be used to display and implement all 8 buttons
  * for the game. It will have a int ID (1 - 4 for player 1, 5 - 8 for player 2)
  * that we will use to keep track of what button is pushed and how to handle input.
  */
-
 public class Button extends GridObject {
 
     private Rectangle clickArea;
     private int ID;
 
-    public Button() {
-        //Do not use this constructor
-    }
+    public Button() {}
 
     /**
+     * Button
      * This constructor takes the Textures and assigns
      *
      * @param ID    Integers to number each button
@@ -44,9 +43,10 @@ public class Button extends GridObject {
         int button7y = Gdx.graphics.getHeight() / 4;
         int button8y = 0;
         //StartGame Button
-        int startGameX = (Gdx.graphics.getWidth()/2)-(objectTexture.getWidth()/2);
-        int startGameY = (Gdx.graphics.getHeight()/2)-(objectTexture.getHeight()/2);
+        int startGameX = (Gdx.graphics.getWidth()/2)-((Gdx.graphics.getWidth()/3)/2);
+        int startGameY = (Gdx.graphics.getHeight()/3)-(Gdx.graphics.getWidth()/3/2/2);
 
+        //check which button we are
         switch (ID) {
             case 1:
                 currentPosition = new GridPoint2(buttonx, button1y);
@@ -80,8 +80,8 @@ public class Button extends GridObject {
         //Now set the area to be clicked. first two parameters are position, then size
         if (ID == 9)
         {
-            clickArea = new Rectangle(currentPosition.x, currentPosition.y,
-                    objectTexture.getWidth(), objectTexture.getHeight());
+            clickArea = new Rectangle(startGameX, Gdx.graphics.getHeight()-startGameY-(Gdx.graphics.getWidth()/3/2),
+                    Gdx.graphics.getWidth()/3, (Gdx.graphics.getWidth()/3)/2);
         }
         else {
             clickArea = new Rectangle(currentPosition.x, currentPosition.y,

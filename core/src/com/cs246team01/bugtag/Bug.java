@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
+ * Class : Bug
  * This class contains the implementation of a bug, which extends GridObject
  * A bug will have a specific texture and a player ID. This object will
  * be controlled by the player. When the bug goes offscreen, its "hide"
@@ -58,7 +59,10 @@ public class Bug extends GridObject {
         refreshed   = true;
     }
 
-    //non-default constructor. Used in GridObjectHandler to initialize bugs
+    /**
+     * Bug
+     * non-default constructor. Used in GridObjectHandler to initialize bugs
+     */
     Bug(Texture bugImage, int playerID) {
 
 
@@ -119,7 +123,7 @@ public class Bug extends GridObject {
     }
 
     /**
-     *
+     * Set Current Direction
      * @param dir
      */
     void setCurrentDirection(Direction dir) {
@@ -144,7 +148,7 @@ public class Bug extends GridObject {
     }
 
     /**
-     *
+     * Get Current Direction
      * @return
      */
     Direction getCurrentDirection() { return currentDirection; }
@@ -158,8 +162,16 @@ public class Bug extends GridObject {
         return bug_hitbox;
     }
 
+    /**
+     * Get Player Score
+     * @return
+     */
     int getPlayerScore(){return currentScore;}
 
+    /**
+     * Save New Score
+     * @param newScore
+     */
     void saveNewScore(int newScore){
         currentScore += newScore;
         if (playerID == 1) {
@@ -170,6 +182,10 @@ public class Bug extends GridObject {
         }
         MyScores.flush();
     }
+
+    /**
+     * Reset Score
+     */
     void resetScore(){
         currentScore = 0;
 
@@ -182,10 +198,13 @@ public class Bug extends GridObject {
         MyScores.flush();
     }
 
+    /**
+     * Get Player ID
+     * @return
+     */
     int getPlayerID() {
         return playerID;
     }
-
 
     /* hiding notes
     * with each hide method, the bug moves slightly off screen and is not visible for

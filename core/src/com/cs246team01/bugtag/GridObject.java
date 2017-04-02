@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 //todo hit boxes MUST update over and over as the game is running
 
 /**
- * Class: GridObject
+ * Class : GridObject
  * The base class for all objects to appear on the grid. This class will contain the
  * texture, priority and the position of each GridObject
  */
@@ -37,6 +37,7 @@ abstract public class GridObject {
 
 
     /**
+     * Grid Object
      * Default constructor which creates a new GridObject. It will set the
      * priority to zero
      */
@@ -46,6 +47,7 @@ abstract public class GridObject {
     }
 
     /**
+     * Grid Object
      * Non-default constructor which creates a new GridObject. It will set the
      * position and the priority
      *
@@ -59,6 +61,7 @@ abstract public class GridObject {
     }
 
     /**
+     * Set Position
      * Public setter which sets the position of the GridObject
      *
      * @param pos position of the GridObject
@@ -68,6 +71,7 @@ abstract public class GridObject {
     }
 
     /**
+     * Set Priority
      * Public setter which sets the priority of the GridObject
      *
      * @param myPriority priority of the GridObject
@@ -77,6 +81,7 @@ abstract public class GridObject {
     }
 
     /**
+     * Set Texture
      * Public setter which sets the texure of the GridObject
      *
      * @param myTexture texture of the GridObject
@@ -86,6 +91,7 @@ abstract public class GridObject {
     }
 
     /**
+     * Get Position
      * Public getter which gets the position of the GridObject
      */
     public GridPoint2 getPosition() {
@@ -93,6 +99,7 @@ abstract public class GridObject {
     }
 
     /**
+     * Get Priority
      * Public getter which gets the priority of the GridObject
      */
     public int getPriority() {
@@ -100,6 +107,7 @@ abstract public class GridObject {
     }
 
     /**
+     * Get X
      * Public getter which gets the x position of the GridObject
      */
     int getX() {
@@ -107,6 +115,7 @@ abstract public class GridObject {
     }
 
     /**
+     * Set X
      * Public setter
      * @param newX
      * @return
@@ -116,6 +125,7 @@ abstract public class GridObject {
     }
 
     /**
+     * Get Y
      * Public getter which gets the y position of the GridObject
      */
     int getY() {
@@ -123,6 +133,7 @@ abstract public class GridObject {
     }
 
     /**
+     * Set Y
      * Public setter
      * @param newY
      * @return
@@ -132,6 +143,7 @@ abstract public class GridObject {
     }
 
     /**
+     * Get Texture
      * Public getter which gets the texture of the GridObject
      */
     Texture getTexture() {
@@ -166,6 +178,7 @@ abstract public class GridObject {
     // ex. moveRight is used for player 1's right button, and player 2's left button
 
     /**
+     * Move Right
      * This function when called, moves the GridObject to the right
      */
     void moveRight() {
@@ -187,6 +200,7 @@ abstract public class GridObject {
     }
 
     /**
+     * Move Left
      * This function when called, moves the GridObject to the left
      */
     void moveLeft() {
@@ -207,6 +221,7 @@ abstract public class GridObject {
     }
 
     /**
+     * Move Up
      * This function when called, moves the GridObject towards left side of screen
      */
     void moveUp() {
@@ -224,6 +239,7 @@ abstract public class GridObject {
     }
 
     /**
+     * Move Down
      * This function when called, moves the GridObject towards right side of screen
      */
     void moveDown() {

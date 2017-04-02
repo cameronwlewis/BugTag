@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.RandomXS128;
 import java.util.Random;
 
 /**
- * Class:Obstacle
+ * Class : Obstacle
  * A grid-object obstacle that will obstruct view of the player onscreen
  * Obstacles onscreen will appear in a random location at the start of the
  * game, and move in a direction continuously throughout. When a player
@@ -41,6 +41,7 @@ public class Obstacle extends GridObject {
     int  getID()         { return ID; }
 
     /**
+     * Move Left
      * This function when called, moves the GridObject to the left
      */
     void moveLeft() {

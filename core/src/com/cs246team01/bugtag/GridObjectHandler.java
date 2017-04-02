@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
+ * Class : Grid Object Handler
  * Handles movement and visualization for all {@link GridObject} instances
  * <p>
  * All of the GridObjects are stored in an array list. The list is iterated through and each object
@@ -18,7 +19,6 @@ import java.util.Random;
  *
  * @author everyone
  */
-
 public class GridObjectHandler {
 
     //log tagger
@@ -42,14 +42,13 @@ public class GridObjectHandler {
     public static Bug bug2_red;
 
     /**
+     * Grid Object Handler
      * This will be initialized during the create method
      * of the main game.
      */
     GridObjectHandler() {
 
         gridObjects = new ArrayList<GridObject>();
-
-
 
         // Player Textures
         Texture bug1_texture = new Texture("bugs/yellow_idle_large.png");
@@ -101,10 +100,10 @@ public class GridObjectHandler {
 
         //set the chaser buttons to the correct color
         int chaserID = 0;
-
     }
 
     /**
+     * Run
      * This is the only method we will call in the render method.
      */
     void run() {
@@ -116,8 +115,8 @@ public class GridObjectHandler {
     }
 
     /**
+     * Get Bug One
      * Getter for Bug[1] object.
-     *
      * @return bug1_yellow object.
      */
     Bug getBugOne() {
@@ -125,8 +124,8 @@ public class GridObjectHandler {
     }
 
     /**
+     * Get Bug Two
      * Getter for Bug[2] object.
-     *
      * @return bug2_red object.
      */
     Bug getBugTwo() {
@@ -134,6 +133,7 @@ public class GridObjectHandler {
     }
 
     /**
+     * Set Chaser Button Color
      * Will set the buttons of the player who is the chaser to the color of their bug
      * @param redIsChaser Who the chaser is
      */
@@ -159,6 +159,7 @@ public class GridObjectHandler {
     }
 
     /**
+     * Update
      * Checks if screen has been tapped and moves the bug.
      * This method goes through each object in the game and determines which direction
      * they need to move. Bug movement is determined by the ButtonProcessor class.
@@ -205,6 +206,12 @@ public class GridObjectHandler {
     }
 
     //Keeping it modularized
+
+    /**
+     * Draw
+     * handles all drawing to the screen for grid objects
+     * @param batch
+     */
     void draw(SpriteBatch batch) {
 
         for (GridObject g : gridObjects) {
@@ -250,6 +257,7 @@ public class GridObjectHandler {
     }
 
     /**
+     * Make Visible
      * Moves the bug back on screen and makes it visible
      *
      * @param b
@@ -271,6 +279,7 @@ public class GridObjectHandler {
     }
 
     /**
+     * Handle Move Bug 1
      * Handles input from {@link ButtonProcessor} to move player 1
      *
      * The method takes taps received from player 1's buttons and checks if the player is currently
@@ -340,6 +349,7 @@ public class GridObjectHandler {
 
 
     /**
+     * Handle Move Bug 2
      * Handles input from {@link ButtonProcessor} to move player 2
      *
      * Important Note, Movement is inverted for player bug2_red buttons (upButton = moveDown())
@@ -410,12 +420,18 @@ public class GridObjectHandler {
             }
     }
 
+    /**
+     * Handle Move Obstacles
+     * Simple obstacle movement is defined here.
+     * @param o
+     */
     private void handlemoveObs(Obstacle o) {
 
         o.moveLeft();
     }
 
     /**
+     * Get Buttons
      * Takes all of the buttons and places them in a list for the input processor
      *
      * It iterates through all of the gridobjects in our array until it reaches a button. All 8

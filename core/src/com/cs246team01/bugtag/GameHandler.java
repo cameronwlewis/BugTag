@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
@@ -54,11 +55,9 @@ public class GameHandler{
     private static final String STATE = "GameState";
 
     /**
+     * Game handler
      * non-default constructor to pass in both Bug objects to check who is the chaser at any time
      */
-
-    //BOGUS COMMENTS HERE
-    // non-default constructor
     GameHandler() {
         // points given to player for a win
         winPoint = 1;
@@ -69,10 +68,10 @@ public class GameHandler{
         welcome = new SpriteBatch();
 
         startGame = new Button(9, new Texture("buttons/startgame_up.png"));
-        startButtonWidth = startGame.getTexture().getWidth();
-        startButtonHeight = startGame.getTexture().getHeight();
+        startButtonWidth = Gdx.graphics.getWidth()/3;
+        startButtonHeight = (Gdx.graphics.getWidth()/3)/2;
 
-        //Since this is a constant (or is it?)
+        //Since this is a constant
         //we can just assign a hardcoded value
         float totalTime = 63;
         timer = new GameTime(totalTime);
@@ -102,11 +101,10 @@ public class GameHandler{
         boolean randBoolean = rand.nextBoolean();
         GridObjectHandler.bug1_yellow.setChaser(randBoolean);
         GridObjectHandler.bug2_red.setChaser(!randBoolean);
-
-
     }
 
     /**
+     * Run
      * determines which method is being called based on the current game state
      */
     void run() {
@@ -128,6 +126,7 @@ public class GameHandler{
     }
 
     /**
+     * Set Chaser Status
      * flip-flops the chaser each round and sets the greeting notifying who is the chaser
      */
     void setChaserStatus(Bug bug1_yellow, Bug bug2_red, boolean yellowIsChaser){
@@ -148,15 +147,21 @@ public class GameHandler{
             notifyChaser = "Red bug is the chaser!";
     }
 
+    /**
+     * Set's the winner message to display correct winner
+     * @param message Correct winner message
+     */
     void setWinnerMessage(String message){winnerMessage = message;}
 
     /**
+     * Get Game time
      * returns time remaining on the timer
      * @return
      */
     int getGameTime(){return timer.getTimeRemaining();}
 
     /**
+     * Warm Up Game
      * resets the timer to 63 and counts down to the start of gameplay
      */
     private void warmUpGame() {
@@ -175,6 +180,14 @@ public class GameHandler{
 
     }
 
+    /**
+     * Calculate Score
+     * Adds a point to each player for each round they win, and saves to high score
+     * if the current score surpasses it.
+     * @param _gameState What state the game is in
+     * @param bug1_yellow Player 1
+     * @param bug2_red Player 2
+     */
     void calculateScore(int _gameState, Bug bug1_yellow, Bug bug2_red){
 
         if (_gameState == 3) {
@@ -196,20 +209,20 @@ public class GameHandler{
     }
 
     /**
+     * Update
      * runs the timer and checks if it runs out
      */
     private void update() {
-
         //update timer value
         timer.run();
 
         if (timer.getTimeRemaining() < 0) {
             MainGame.gameState = GAME_OVER;
         }
-
     }
 
     /**
+     * Display Time
      * draws timer to screen
      * @param batch
      */
@@ -258,8 +271,8 @@ public class GameHandler{
         }
     }
 
-
     /**
+     * Display Menu
      * displays main start menu before gameplay begins
      */
     void displayMenu(GlyphLayout gl) {
@@ -268,15 +281,21 @@ public class GameHandler{
         gl.setText(font, "Current high score: " + highScore_string);
         float w = gl.width;
 
+        Texture logo = new Texture("misc/Logo.png"); //Logo texture
+
         if (gameState == GAME_NOT_STARTED) {
             welcome.begin();
-            font.draw(welcome, gl, ((Gdx.graphics.getWidth() - w) / 2), Gdx.graphics.getWidth() / 7);
+            font.draw(welcome, gl, ((Gdx.graphics.getWidth() - w) / 2), Gdx.graphics.getWidth() / 14);
+            welcome.draw(logo, (Gdx.graphics.getWidth()/2) - ((Gdx.graphics.getWidth()/3)/2),
+                    (Gdx.graphics.getHeight()/2) + (Gdx.graphics.getHeight()/4) - ((Gdx.graphics.getWidth()/3)/2),
+                    Gdx.graphics.getWidth()/3, Gdx.graphics.getWidth()/3);
             welcome.draw(startGame.getTexture(), startGame.getX(), startGame.getY(), startButtonWidth, startButtonHeight);
             welcome.end();
         }
     }
 
     /**
+     * Display Message
      * displays all other text on screen during gameplay
      * @param batch
      */
@@ -286,9 +305,10 @@ public class GameHandler{
         float w;
 
         if (gameState == GAME_NOT_STARTED) {
-            displayMenu(gl);
+            displayMenu(gl); //For main menu only
         }
 
+        //Warm up text
         if (gameState == GAME_WARM_UP) {
             String chaserText=  notifyChaser;
             String warmUpText = "Game starts in";
@@ -314,7 +334,7 @@ public class GameHandler{
                     ((Gdx.graphics.getWidth()- w) / 2),
                     Gdx.graphics.getWidth() / 5);
 
-
+        //Pause screen message
         } else if (gameState == GAME_PAUSED) {
             String gamePausedText = "GAME PAUSED!";
             String pressResumeText = "Press anywhere to resume!";
@@ -332,6 +352,7 @@ public class GameHandler{
             font.draw(batch, pressResumeText,
                     (Gdx.graphics.getWidth() - w) / 2,
                     Gdx.graphics.getWidth() / 4);
+        //Endgame message
         } else if (gameState == GAME_OVER) {
 
             String gameOverText = "\t       GAME OVER!\n      " + winnerMessage +
@@ -346,42 +367,6 @@ public class GameHandler{
                     (Gdx.graphics.getWidth() - w) / 2,
                     Gdx.graphics.getWidth() / 2);
 
-
-            /*
-            String gameOverText = "GAME OVER!";
-            String yellowBugScoreText = "Yellow Bug score: " + bug1_yellow.getPlayerScore();
-            String redBugScoreText = "Red Bug score: " + bug2_red.getPlayerScore();
-            String restartText = "Press anywhere to restart!";
-
-            gl.setText(font, gameOverText);
-            w = gl.width;
-
-            font.draw(batch, gameOverText,
-                    (Gdx.graphics.getWidth() - w) / 2,
-                    Gdx.graphics.getWidth() / 2);
-
-            gl.setText(font, winnerMessage);
-            w = gl.width;
-
-            font.draw(batch, winnerMessage,
-                    (Gdx.graphics.getWidth() - w) / 2,
-                    Gdx.graphics.getWidth() / 3);
-
-            gl.setText(font, yellowBugScoreText);
-            w = gl.width;
-
-            font.draw(batch, yellowBugScoreText,
-                    (Gdx.graphics.getWidth() - w) / 2,
-                    Gdx.graphics.getWidth() / 4);
-
-            gl.setText(font, redBugScoreText);
-            w = gl.width;
-
-            font.draw(batch, redBugScoreText,
-                    (Gdx.graphics.getWidth() - w) / 2,
-                    Gdx.graphics.getWidth() / 5);
-            */
-
             gl.setText(font, restartText);
             w = gl.width;
 
@@ -391,11 +376,19 @@ public class GameHandler{
         }
     }
 
-
+    /**
+     * Get Start Button
+     * retrieves the start button
+     * @return
+     */
     static Button getStartButton() {
         return startGame;
     }
 
+    /**
+     * Dispose
+     * clean up crew
+     */
     void dispose() {
         font.dispose();
         digitalFont.dispose();

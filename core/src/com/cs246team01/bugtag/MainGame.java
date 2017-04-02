@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
+ * Class : MainGame
  * gameState tracks the state of the game.
  * 0 is start screen, 1 is in gameplay, and 2 is pause, 3 is game over.
  * When various screens are used. This is important to keep track of
@@ -17,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 class MainGame extends Game {
 
     private static Sprite backgroundSprite;
+    private static Sprite logoSprite;
     private SpriteBatch batch;
     private GridObjectHandler bugGame;
     private ButtonProcessor _buttonProcessor;
@@ -48,7 +50,7 @@ class MainGame extends Game {
 
         Texture backgroundTexture = new Texture("misc/background_wood.jpeg");
         backgroundSprite = new Sprite(backgroundTexture);
-        backgroundSprite.setScale(2f);
+        backgroundSprite.setScale(Gdx.graphics.getWidth()/600);
 
         batch = new SpriteBatch();
 

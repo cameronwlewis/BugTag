@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import static com.cs246team01.bugtag.GridObject.TAG;
 
 /**
+ * Class : Button Processor
  * Defines the areas for the user to click on and sends movement commands to
  * grid object handler.
  * <p>
@@ -65,6 +66,7 @@ public class ButtonProcessor implements InputProcessor {
     }
 
     /**
+     * Touch Down
      * Handles user input when they touch the screen
      *
      * <p>When the user touches down on the screen. This method checks for where on the screen they
@@ -99,7 +101,9 @@ public class ButtonProcessor implements InputProcessor {
 
         if (gameState == GAME_NOT_STARTED) {
             //Button press animation
-            startButton.setTexture(new Texture("buttons/startgame_down.png"));
+            if (startButton.getClickArea().contains(screenX, screenY)) {
+                startButton.setTexture(new Texture("buttons/startgame_down.png"));
+            }
         }
 
         if (gameState == GAME_STARTED) {
@@ -176,6 +180,7 @@ public class ButtonProcessor implements InputProcessor {
     }
 
     /**
+     * Get Game State
      * Getter for the game state.
      *
      * @return returns the gameState variable.
@@ -184,16 +189,18 @@ public class ButtonProcessor implements InputProcessor {
         return gameState;
     }
 
+    /**
+     * Set Game State
+     * @param state
+     */
     void setGameState(int state) {
         gameState = state;
     }
 
     /**
      * Checks if the main start button has been pressed and released
-     *
-     *
-     * @param screenX
-     * @param screenY
+     * @param screenX coordinate
+     * @param screenY coordinate
      * @param pointer
      * @param button
      * @return
@@ -222,6 +229,12 @@ public class ButtonProcessor implements InputProcessor {
         return true;
     }
 
+    /**
+     * Key Down
+     * simply for debugging and convenience purposes, allows easy emulator use.
+     * @param keycode
+     * @return
+     */
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
